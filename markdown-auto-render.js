@@ -1,2 +1,4 @@
 var DOMs = document.querySelectorAll('md');
-for (i)
+for (var i in DOMs){
+    console.log(i);
+}

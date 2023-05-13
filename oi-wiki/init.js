@@ -8,7 +8,7 @@
                 location.href = lockstr;
         }
     }
-    ajax.open("GET","/14/control/lock_conf?t=" + Math.random() + "" + Math.random());
+    ajax.open("GET","/oi-wiki/control/lock_conf?t=" + Math.random() + "" + Math.random());
     ajax.send();
 })();
 
