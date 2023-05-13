@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-language" content="zh-CN">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线多人聊天室</title>
+    <link rel="stylesheet" type="text/css" href="/all.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/form.css">
+    <link rel="stylesheet" type="text/css" href="/div.css">
+    <script src="/common.js"></script>
+    <script src="/14/init.js"></script>
+    <style>
+        input,button{
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <ers_bar></ers_bar>
+    <div id="join">
+        <div class="txtmid">
+            <p class="inl">
+                <span>请选择要加入的聊天室名称：</span>
+                <input id="chat-name" style="width: 200px; height: 30px" class="ft20">
+            </p>
+            <br>
+            <p class="inl">
+                <span>请选择昵称：</span>
+                <input id="nick-name" style="width: 200px; height: 30px" class="ft20">
+                <button type="button" onclick="join()" style="height: 30px;">加入聊天室</button>
+            </p>
+        </div>
+    </div>
+    <div id="chat" style="display: none">
+        <div>
+            <input style="margin: 20px; height: 20px; width: calc(100vw - 90px);" id="in1">
+            <button type="button" onclick="send()" style="margin: 10px; padding: 10px;">发送</button>
+        </div>
+        <div id="chat-msg"></div>
+    </div>
+    <script>
+        var nick,chat,ws;
+        function join(){
+            nick = getObj('nick-name');
+            chat = getObj('chat-name');
+            ws = new WebSocket('wss://' + getIP(17667).substring(8));
+            ws.onerror = function(){
+                alert('error!');
+            }
+        }
+    </script>
+</body>
+</html>

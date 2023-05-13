@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-language" content="zh-CN">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-app-status-bar-style" content="white">
+    <link rel="apple-touch-icon" href="//kevinwu521.gitee.io/res/banhui192.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>supercalifragilisticexpialidocious</title>
+    <link rel="stylesheet" type="text/css" href="/all.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/form.css">
+    <link rel="stylesheet" type="text/css" href="/div.css">
+	<script src="/common.js"></script>
+    <script src="/14/init.js"></script>
+</head>
+<body>
+    <ers_bar></ers_bar>
+	<div class="allmid grey rad10 ft20" style="width: 600px; height: 420px; border: 3px solid black; padding: 10px;">
+		<p class="subtitle">
+			点击不同的一项！
+		</p>
+		<code><div class="inl txtmid" id="dv0" onclick="check(0);"></div></code><br>
+		<code><div class="inl txtmid" id="dv1" onclick="check(1);"></div></code><br>
+		<code><div class="inl txtmid" id="dv2" onclick="check(2);"></div></code><br>
+		<code><div class="inl txtmid" id="dv3" onclick="check(3);"></div></code><br>
+		<code><div class="inl txtmid" id="dv4" onclick="check(4);"></div></code><br>
+		<code><div class="inl txtmid" id="dv5" onclick="check(5);"></div></code><br>
+		<code><div class="inl txtmid" id="dv6" onclick="check(6);"></div></code><br>
+		<code><div class="inl txtmid" id="dv7" onclick="check(7);"></div></code><br>
+		<code><div class="inl txtmid" id="dv8" onclick="check(8);"></div></code><br>
+		<code><div class="inl txtmid" id="dv9" onclick="check(9);"></div></code><br>
+	</div>
+	<script>
+    
+    var word = "supercalifragilisticexpialidocious";
+	var abc = "abcdefghijklmnopqrstuvwxyz";
+	var diff;
+	function gen(){
+		for (var i = 0;i < 10;i ++)
+			getObj("dv" + i).innerHTML = word;
+		diff = Math.floor(Math.random() * 10);
+		var str = word;
+		while (1){
+			var idx = Math.floor(Math.random() * 1e9) % word.length;
+			var nlet = abc[Math.floor(Math.random() * 1e9) % abc.length];
+			str = setChar(str,idx,nlet);
+			if (str != word)break;
+		}
+		getObj("dv" + diff).innerHTML = str;
+	}
+	function check(x){
+		if (x == diff){
+			alert("答案正确！");
+			gen();
+		}
+		else
+			alert("答案错误！");
+	}
+	gen();
+	</script>
+</body>
+</html>

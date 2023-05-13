@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-language" content="zh-CN">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-app-status-bar-style" content="white">
+    <link rel="apple-touch-icon" href="//kevinwu521.gitee.io/res/banhui192.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板</title>
+    <link rel="stylesheet" type="text/css" href="/all.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/form.css">
+    <link rel="stylesheet" type="text/css" href="/div.css">
+    <script src="/common.js"></script>
+    <script src="/14/init.js"></script>
+    <style>
+        div.res{
+            width: calc(100vw - 80px);
+            margin: 10px 10px;
+            padding: 20px;
+            border: 10px solid rgb(255, 120, 120);
+            border-radius: 3px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <ers_bar></ers_bar>
+    <textarea id="cont" style="width: calc(100vw - 40px); margin: 0 10px;" placeholder="留言内容(不超过256字)"></textarea>
+    <button onclick="onCl();" style="width: calc(100vw - 20px); margin: 0 10px;padding: 10px"><div sty;e="background-color: #ddd; padding: 3px;">点击提交</div></button>
+    <h1>&ensp;留言列表</h1>
+    <div id="res">加载中……</div>
+    <script>
+        function onCl(){
+            var ajax = new XMLHttpRequest();
+            ajax.onload = GET;
+            console.log(getIP(17666));
+            ajax.open('POST',getIP(17666) + '/biaobaiinsert');
+            var msg = encodeURIComponent(getObj('cont').value);
+            if (msg.length > 256){
+                alert('留言过长！');
+                return;
+            }
+            ajax.send('msg=' + msg);
+            getObj("cont").value = "";
+        }
+        getObj('cont').addEventListener('keyup',function(e){
+            if (e.keyCode == 13)
+                onCl();
+        })
+        function GET(){
+            var ajax = new XMLHttpRequest();
+            ajax.onload = function(){
+                getObj('res').innerHTML = ajax.responseText;
+            }
+            ajax.open('GET',getIP(17666) + '/biaobai');
+            ajax.send();
+        }
+        /*
+        function GET(){
+            getObj('res').innerHTML = 
+            '<h2>恭喜你，表白墙已关闭！</h2><p>此举是迫于无奈，表白墙开着也是浪费服务器资源。咱们班天天就用那个Fu表白墙，那玩意没什么技术含量，随便一个人都可以搞，注册一个微信账号就行了，根本就用不着什么信息学的知识。再看看人家18班，从来没听说过有人用那个Fu表白墙，都用JZQ写的表白墙，为什么呢？这只能说明18班对信息学的重视程度比咱们班高出不少。18班有人主动找JZQ学习C++，有人在群里悬赏提问信息学问题，甚至有人编游戏把显卡都烧了。再看看咱们班，整天就想着打游戏（可能语气有点重了），18班编的游戏就给咱们班试玩，我们就是他们的“小白鼠”，难道这样很好吗？我们作为一个有实力的项目班，难道整天就要这样受到压迫吗？咱们班就不能像18班那样有一种浓厚的信息学风气吗？把问题说大一点，信息学一直就是我们师大附中的弱项，如果不营造一个浓厚的信息学风气，咱们学校怎么跟实验、人大附等学校PK？既然咱们班不重视信息学，那这个表白墙也失去了存在的意义。从今日起，关闭表白墙服务器，减少资源的浪费！给您带来的不便，敬请谅解！(2023/4/9 10:33)</p>';
+        }
+        */
+        window.addEventListener('load',GET);
+    </script>
+</body>
+</html>
