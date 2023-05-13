@@ -51,7 +51,7 @@ function ers_checkSz(){
     if (width < 700)
         getObj("bjsdfz17ban").innerHTML = "";
     else
-        getObj("bjsdfz17ban").innerHTML = "吴承坤个人网站";
+        getObj("bjsdfz17ban").innerHTML = "OI-wiki (WCK版)";
     /*
     if (width < 470)
         getObj("banhui2").style.display = "none";
