@@ -1,0 +1,79 @@
+.allmid{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin:auto;
+}
+.allhormid{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.bl-hormid{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.allnomargin{
+    margin: 0px;
+    padding: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.rad10{border-radius: 10px;}
+.rad3{border-radius: 3px;}
+.bor1{border: 1px solid black;}
+.bor3{border: 3px solid black;}
+
+.hor95p{width: 95vw;}
+.hor85p{width: 85vw;}
+.hor75p{width: 75vw;}
+.hor65p{width: 65vw;}
+.hor55p{width: 55vw;}
+.hor45p{width: 45vw;}
+.hor35p{width: 35vw;}
+.hor25p{width: 25vw;}
+.hor15p{width: 15vw;}
+.hor5p{width: 5vw;}
+
+.ver95p{height: 95vh;}
+.ver85p{height: 85vh;}
+.ver75p{height: 75vh;}
+.ver65p{height: 65vh;}
+.ver55p{height: 55vh;}
+.ver45p{height: 45vh;}
+.ver35p{height: 35vh;}
+.ver25p{height: 25vh;}
+.ver15p{height: 15vh;}
+.ver5p{height: 5vh;}
+
+.red{background-color: red;}
+.green{background-color: green;}
+.txtred{color: red;}
+.txtgreen{color: green;}
+.yellow{background-color: rgb(230,230,0);}
+.txtyellow{color: rgb(230,230,0);}
+.grey{background-color: #efefef}
+
+.nob{border: 0;}
+
+.pad10{padding: 10px;}
+
+html,body{
+    margin: 0;
+    padding: 0;
+}
+
+ers_bar{
+    height: 70px;
+}
+
+iframe{
+    border: none;
+}
