@@ -1,4 +1,3 @@
 var DOMs = document.querySelectorAll('md');
-for (var i in DOMs){
-    console.log(i);
-}
+for (var i = 0;i < DOMs.length;i ++)
+    DOMs[i].
