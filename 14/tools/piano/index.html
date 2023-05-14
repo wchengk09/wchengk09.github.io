@@ -44,24 +44,7 @@
 <body>
     <ers_bar></ers_bar>
     <br><br><br>
-    <div class="bl-hormid" style="width: 700px; height: 300px;">
-        <div style="width: 690px;" class="inl">
-            <p>方法一：按下键盘上的Q~U，A~J，Z～M，可以演奏乐曲。</p>
-            <p>按下空格键暂停。按住Shift升半音。</p>
-        </div>
-        <div style="width: 690px;" class="inl">
-            <p>方法二：点击下面的按钮弹奏乐曲</p>
-            <p id="pi"></p>
-            <p>
-                <div id="sh" class="piano txtmid" onclick="chSh()">
-                    &emsp;升号(关)&emsp;
-                </div>
-                <div class="piano" onclick="stopB();">
-                    &emsp;暂停&emsp;
-                </div>
-            </p>
-        </div>
-    </div>
+    <div id="piano" 
     <script defer>
         MIDI.loadPlugin({
             soundfontUrl: "/midi/examples/soundfont/",
