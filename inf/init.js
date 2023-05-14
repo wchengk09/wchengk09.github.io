@@ -22,7 +22,7 @@ window.addEventListener('load',function(){
     "<ers_div style=\"padding: 20px; background-color: #f8f9fa\">" + 
         "<span id=\"bjsdfz17ban\" class=\"ft20\" style=\"margin-left: 10px;\"></span>" +
         "<ers_div class=\"inl\" style=\"max-width: calc(100vw - 105px); float: right;\">" +
-            "<a href=\"/14\" class=\"text under\">首页</a>&emsp;" +
+            "<a href=\"/inf\" class=\"text under\">首页</a>&emsp;" +
             "<ers_div class=\"rad10 bor1 inl\">" +
                 "<input id=\"ers_in1\" class=\"inl rad10\" style=\"border: none; outline: none; font-size: 15px; height: 20px; width: 150px;\" placeholder=\"搜索...\">" +
                 "<ers_div onclick=\"ers_onSearch()\" class=\"inl\" style=\"background-image: url('https://kevinwu521.gitee.io/res/search.jpeg'); background-size: 100% 100%; width: 15px; height: 15px;\"></ers_div>" +
