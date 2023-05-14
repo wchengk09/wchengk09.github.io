@@ -48,7 +48,7 @@ function ers_onSearch(){
 
 function ers_checkSz(){
     var width = document.body.clientWidth;
-    if (width < 700)
+    if (width < 415)
         getObj("bjsdfz17ban").innerHTML = "";
     else
         getObj("bjsdfz17ban").innerHTML = "吴承坤个人网站";
