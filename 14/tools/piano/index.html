@@ -43,7 +43,7 @@
 <body>
     <ers_bar></ers_bar>
     <div id="desc">
-        <p id="loading">资源加载中……</p>
+        <p id="loading"></p>
     </div>
     <script defer>
         const keybd = [
@@ -57,14 +57,15 @@
         var idxs = new Array();
         var loaded = false;
         MIDI.loadPlugin({
-            soundfontUrl: "/midi/examples/soundfont/",
+            soundfontUrl: getIP(17667) + "/midi/examples/soundfont/",
             instrument: "acoustic_grand_piano",
             onprogress: function(state, progress) {
                 console.log(state, progress);
                 if (progress === 1){
                     getObj('loading').innerHTML = '';
                     loaded = true;
-                }
+                }else
+                    getObj('loading').innerHTML = '资源加载中 ' + Math.round(progress * 100) + '%';
             }
         });
         function getNote(e){
