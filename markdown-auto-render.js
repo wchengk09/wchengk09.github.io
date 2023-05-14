@@ -14,14 +14,17 @@ renderMathInElement(document.body, {
 function renderMd(DOM,src){
     var ajax = new XMLHttpRequest();
     ajax.onload = function(){
-    DOM.innerHTML = conv.makeHtml(DOM.innerHTML);
-    renderMathInElement(document.body, {
-        delimiters: [
-            {left: '$$', right: '$$', display: true},
-            {left: '$', right: '$', display: false},
-            {left: '\\(', right: '\\)', display: true},
-            {left: '\\[', right: '\\]', display: true}
-        ],
-        throwOnError : false
-    });
+        DOM.innerHTML = conv.makeHtml(src);
+        renderMathInElement(DOM, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false},
+                {left: '\\(', right: '\\)', display: true},
+                {left: '\\[', right: '\\]', display: true}
+            ],
+            throwOnError : false
+        });
+    }
+    ajax.open('GET',src);
+    ajax.send();
 }
