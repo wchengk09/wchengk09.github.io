@@ -31,20 +31,17 @@
 	<script src="/midi/js/util/dom_request_script.js" type="text/javascript"></script>
     <style>
         *{font-size: 16px;}
-        div.piano{
-            display: inline-block;
-            font-size: 15px;
-            background-color: rgb(230,230,230);
-            border: 2px solid black;
-            margin: 2px;
-            padding: 15px;
+        div#desc{
+            width: 100vw;
+            height: calc(100vw - 70px);
+            
         }
     </style>
 </head>
 <body>
     <ers_bar></ers_bar>
     <br><br><br>
-    <div id="piano" 
+    <div 
     <script defer>
         MIDI.loadPlugin({
             soundfontUrl: "/midi/examples/soundfont/",
