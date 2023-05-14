@@ -50,7 +50,7 @@
         const keybd = 'zxcvbnmasdfghjqwertyu1234567890iopkl';
         const nshift = [0,2,4,5,7,9,11];
         const shift = [1,3,5,6,8,10,12];
-        var str = '';
+        var idxs = new Array();
         MIDI.loadPlugin({
             soundfontUrl: "/midi/examples/soundfont/",
             instrument: "acoustic_grand_piano",
@@ -62,8 +62,8 @@
             e ||= window.event;
             const idx = keybd.indexOf(e.key.toLowerCase());
             if (idx < 0)return;
-            
-            str += e.key.toLowerCase();
+            console.log(idxs.find(idx));
+            idxs.push(idx);
             const gp = Math.floor(idx / 7);
             const basic = gp * 12 + 36;
             const mod = idx % 7;
