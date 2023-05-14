@@ -65,7 +65,7 @@
             const basic = gp * 12 + 24;
             const mod = idx % 7;
             const real = basic + (e.shiftKey ? shift[mod] : nshift[mod]);
-            console.log(real);
+            MIDI.noteOn(real)
         })
     </script>
 </body>
