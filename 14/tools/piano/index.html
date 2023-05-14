@@ -55,11 +55,16 @@
         ];
         const nshift = [0,2,4,5,7,9,11,12,14,16];
         var idxs = new Array();
+        var loaded = false;
         MIDI.loadPlugin({
             soundfontUrl: "/midi/examples/soundfont/",
             instrument: "acoustic_grand_piano",
             onprogress: function(state, progress) {
                 console.log(state, progress);
+                if (progress === 1){
+                    getObj('loading').innerHTML = '';
+                    loaded = true;
+                }
             }
         });
         function getNote(e){
