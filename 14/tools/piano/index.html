@@ -42,9 +42,15 @@
 </head>
 <body>
     <ers_bar></ers_bar>
-    <div id="desc">
-        <p id="loading"></p>
+    <div id="desc" style="display: none;">
+        <h2>电脑键盘映射</h2>
+        <p class="txtmid">Z~M 对应 C3~B3</p>
+        <p class="txtmid">A~L 对应 C4~D5</p>
+        <p class="txtmid">Q~P 对应 C5~E6</p>
+        <p class="txtmid">1~0 对应 C6~E7</p>
+        <p class="txtmid">按住Shift升半音</p>
     </div>
+    <p id="loading"></p>
     <script defer>
         const keybd = [
             'zxcvbnm',
@@ -56,6 +62,7 @@
         const nshift = [0,2,4,5,7,9,11,12,14,16];
         var idxs = new Array();
         var loaded = false;
+        var dt = Date.now();
         MIDI.loadPlugin({
             soundfontUrl: getIP(17667) + "/midi/examples/soundfont/",
             instrument: "acoustic_grand_piano",
@@ -63,9 +70,10 @@
                 console.log(state, progress);
                 if (progress === 1){
                     getObj('loading').innerHTML = '';
+                    getObj('desc').style.display = 'block';
                     loaded = true;
                 }else
-                    getObj('loading').innerHTML = '资源加载中 ' + Math.round(progress * 100) + '%';
+                    getObj('loading').innerHTML = '资源加载中 ' + Math.round(progress * 100) + '% 剩余' + Math.round(((Date.now() - dt) / Math.round(progress * 100) * (100 - Math.round(progress * 100))) / 1000) + '秒';
             }
         });
         function getNote(e){
@@ -83,12 +91,14 @@
             return 36 + 12 * row + nshift[idx] + (e.shiftKey ? 1 : 0);
         }
         function playNote(idx){
+            if (!loaded)return;
             if (idx < 0)return;
             if (idxs.includes(idx))return;
             idxs.push(idx);
             MIDI.noteOn(0,idx,127,0);
         }
         function stopNote(idx){
+            if (!loaded)return;
             if (idx < 0)return;
             if (!idxs.includes(idx))return;
             idxs.splice(idxs.indexOf(idx),1);
