@@ -14,6 +14,7 @@
     <script src="/katex.min.js"></script>
     <script src="/katex-auto-render.min.js"></script>
     <script src="/showdown.min.js"></script>
+    <script src="/markdown-auto-render.js"></script>
     <script src="/common.js"></script>
     <script src="/oi-wiki/init.js"></script>
 </head>
@@ -21,7 +22,7 @@
     <ers_bar></ers_bar>
     <md></md>
     <script defer>
-        
+        renderMd(document.querySelector('md'),'./index.md');
     </script>
 </body>
 </html>
