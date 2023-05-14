@@ -58,6 +58,9 @@
                 console.log(state, progress);
             },
         });
+        function getNote(e){
+
+        }
         document.addEventListener('keydown',function(e){
             e ||= window.event;
             const idx = keybd.indexOf(e.key.toLowerCase());
@@ -76,7 +79,7 @@
             if (idx < 0)return;
             if (!idxs.includes(idx))return;
             idxs.splice(idxs.indexOf(idx),1);;
-            MIDI.noteOff()
+            MIDI.noteOff(0,,0);
         })
     </script>
 </body>
