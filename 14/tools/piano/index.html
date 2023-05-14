@@ -59,19 +59,21 @@
             },
         });
         function getNote(e){
-
-        }
-        document.addEventListener('keydown',function(e){
-            e ||= window.event;
             const idx = keybd.indexOf(e.key.toLowerCase());
-            if (idx < 0)return;
-            if (idxs.includes(idx))return;
-            idxs.push(idx);
             const gp = Math.floor(idx / 7);
             const basic = gp * 12 + 36;
             const mod = idx % 7;
             const real = basic + (e.shiftKey ? shift[mod] : nshift[mod]);
-            MIDI.noteOn(0,real,127,0);
+            return real;
+        }
+        document.addEventListener('keydown',function(e){
+            e ||= window.event;
+            const idx = keybd.indexOf(e.key.toLowerCase());
+            if (idx < 0)return -1;
+            if (idxs.includes(idx))return -1;
+            idxs.push(idx);
+            var note = getNote(e);
+            if (note > -1)MIDI.noteOn(0,real,127,0);
         })
         document.addEventListener('keyup',function(e){
             e ||= window.event;
