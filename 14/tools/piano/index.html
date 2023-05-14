@@ -58,10 +58,10 @@
         document.addEventListener('keydown',function(e){
             e ||= window.event;
             const idx = keybd.indexOf(e.key.toLowerCase());
-            //if (idx < 0)return;
-            console.log(idx);
+            if (idx < 0)return;
             const gp = Math.floor(idx / 7);
-            const basic = gp * 12 + 
+            const basic = gp * 12 + 24;
+            console.log(basic);
         })
     </script>
 </body>
