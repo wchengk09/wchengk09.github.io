@@ -20,7 +20,8 @@
         ajax.onload = function(){
             document.body.innerHTML = conv.makeHtml(ajax.responseText);
         }
-        ajax.open('GET',getParam())
+        ajax.open('GET',getParam('url'));
+        ajax.send();
     </script>
 </body>
 </html>
