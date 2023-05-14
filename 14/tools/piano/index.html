@@ -66,14 +66,17 @@
             const real = basic + (e.shiftKey ? shift[mod] : nshift[mod]);
             return real;
         }
+        function playNote(id){
+            if (idxs.includes(idx))return;
+            idxs.push(idx);
+            MIDI.noteOn(id)
+        }
         document.addEventListener('keydown',function(e){
             e ||= window.event;
             const idx = keybd.indexOf(e.key.toLowerCase());
             if (idx < 0)return -1;
-            if (idxs.includes(idx))return -1;
-            idxs.push(idx);
             var note = getNote(e);
-            MIDI.noteOn(0,note,127,0);
+            playNote(id);
         })
         document.addEventListener('keyup',function(e){
             e ||= window.event;
