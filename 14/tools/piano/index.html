@@ -56,7 +56,7 @@
             instrument: "acoustic_grand_piano",
             onprogress: function(state, progress) {
                 console.log(state, progress);
-            },
+            }
         });
         function getNote(e){
             const idx = keybd.indexOf(e.key.toLowerCase());
@@ -73,7 +73,7 @@
             if (idxs.includes(idx))return -1;
             idxs.push(idx);
             var note = getNote(e);
-            if (note > -1)MIDI.noteOn(0,real,127,0);
+            MIDI.noteOn(0,note,127,0);
         })
         document.addEventListener('keyup',function(e){
             e ||= window.event;
@@ -81,7 +81,6 @@
             if (idx < 0)return;
             if (!idxs.includes(idx))return;
             idxs.splice(idxs.indexOf(idx),1);;
-            MIDI.noteOff(0,,0);
         })
     </script>
 </body>
