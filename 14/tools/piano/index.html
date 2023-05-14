@@ -51,7 +51,8 @@
             'zxcvbnm',
             'asdfghjkl',
             'qwertyuiop',
-            '1234567890'
+            '1234567890',
+            '!@#$%^&*()'
         ];
         const nshift = [0,2,4,5,7,9,11,12,14,16];
         var idxs = new Array();
@@ -65,13 +66,14 @@
         function getNote(e){
             var idx;
             var row;
-            for (var i = 0;i < 4;i ++){
+            for (var i = 0;i < 5;i ++){
                 idx = keybd[i].indexOf(e.key.toLowerCase());
                 if (idx > -1){
                     row = i;
                     break;
                 }
             }
+            if (idx === 5)idx = 4;
             if (idx < 0)return -1;
             return 36 + 12 * row + nshift[idx] + (e.shiftKey ? 1 : 0);
         }
