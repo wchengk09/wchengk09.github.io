@@ -73,7 +73,7 @@
                 }
             }
             if (idx < 0)return -1;
-            return 36 + ;
+            return 36 + 12 * row + nshift[idx] + (e.shiftKey ? 1 : 0);
         }
         function playNote(idx){
             if (idx < 0)return;
