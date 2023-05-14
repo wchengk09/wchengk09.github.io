@@ -57,7 +57,9 @@
         });
         document.addEventListener('keydown',function(e){
             e ||= window.event;
-            console.log(e.key);
+            var idx = keybd.indexOf(e.key);
+            if (idx < 0)return;
+            console.log(keybd.indexOf(e.key));
         })
     </script>
 </body>
