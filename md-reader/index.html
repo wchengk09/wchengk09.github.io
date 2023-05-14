@@ -11,7 +11,10 @@
     <link rel="stylesheet" type="text/css" href="/form.css">
     <link rel="stylesheet" type="text/css" href="/div.css">
     <script src="/common.js"></script>
+    <script src="/katex.min.js"></script>
+    <script defer src="/katex-auto-render.min.js"></script>
     <script src="/showdown/showdown.min.js"></script>
+    <script defer src="/markdown-auto-render.js"></script>
 </head>
 <body>
     <script defer>
@@ -20,6 +23,15 @@
         var conv = new showdown.Converter();
         ajax.onload = function(){
             document.body.innerHTML = conv.makeHtml(ajax.responseText);
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: true},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError : false
+            });
         }
         ajax.open('GET',getParam('url'));
         ajax.send();
