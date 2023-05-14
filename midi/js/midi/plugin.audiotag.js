@@ -38,7 +38,6 @@
 				}
 				audio.src = root.Soundfont[instrumentId][note.id];
 				audio.volume = volume / 127;
-				audio.loop = true;
 				audio.play();
 				buffer_nid = nid;
 			}
