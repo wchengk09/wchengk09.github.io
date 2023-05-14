@@ -15,7 +15,7 @@
 </head>
 <body>
     <script defer>
-        document.querySelector('title').innerHTML = getParam('title') || 'Markdown 阅读器';
+        document.querySelector('title').innerHTML = decodeURI(getParam('title')) || 'Markdown 阅读器';
         var ajax = new XMLHttpRequest();
         var conv = new showdown.Converter();
         ajax.onload = function(){
