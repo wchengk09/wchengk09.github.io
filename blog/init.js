@@ -51,7 +51,7 @@ function ers_checkSz(){
     if (width < 700)
         getObj("bjsdfz17ban").innerHTML = "";
     else
-        getObj("bjsdfz17ban").innerHTML = "在线博客";
+        getObj("bjsdfz17ban").innerHTML = "个人博客";
     /*
     if (width < 470)
         getObj("banhui2").style.display = "none";
