@@ -47,8 +47,12 @@
         <h2>按住Shift升半音</h2>
     </div>
     <script defer>
-        const keybd = 'zxcvbnmasdfghjqwertyu1234567890iopkl';
-        const ID = [0,]
+        const keybd = [
+            'zxcvbnm',
+            'asdfghjkl',
+            'qwertyuiop',
+            '1234567890'
+        ];
         var idxs = new Array();
         MIDI.loadPlugin({
             soundfontUrl: "/midi/examples/soundfont/",
