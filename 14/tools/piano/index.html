@@ -53,6 +53,7 @@
             'qwertyuiop',
             '1234567890'
         ];
+        const nshift = [0,2,4,5,7,9,11];
         var idxs = new Array();
         MIDI.loadPlugin({
             soundfontUrl: "/midi/examples/soundfont/",
@@ -67,7 +68,7 @@
             const gp = Math.floor(idx / 7);
             const basic = gp * 12 + 36;
             const mod = idx % 7;
-            const real = basic + (e.shiftKey ? shift[mod] : nshift[mod]);
+            const real = basic + nshift[mod] + (e.shiftKey ? 1 : 0);
             return real;
         }
         function playNote(idx){
