@@ -91,7 +91,7 @@
                 var htm = getObj("result").innerHTML;
                 htm += '<a href="' + url + '" class="text" target="_blank">'
                 htm += '<div class=\"search1\">';
-                htm += '<img class=\"search2\" src=\"https://kevinwu521.gitee.io/res/' + img + '\">';
+                if (img)htm += '<img class=\"search2\" src=\"https://kevinwu521.gitee.io/res/' + img + '\">';
                 htm += '<div class=\"inl\">';
                 htm += '<h2>' + name + '</h3><br>';
                 htm += '<p class="inl">' + intr + '</p>';
