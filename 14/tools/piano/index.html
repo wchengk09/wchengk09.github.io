@@ -47,7 +47,7 @@
         <h2>按住Shift升半音</h2>
     </div>
     <script defer>
-        const keybd = 'zxcvbnmasdfghjqwertyu1234567`890-=iop[]\kl;\',./ ';
+        const keybd = 'zxcvbnmasdfghjqwertyu1234567890iopkl';
         MIDI.loadPlugin({
             soundfontUrl: "/midi/examples/soundfont/",
             instrument: "acoustic_grand_piano",
@@ -57,8 +57,8 @@
         });
         document.addEventListener('keydown',function(e){
             e ||= window.event;
-            var idx = keybd.indexOf(e.key);
-            if (idx < 0)return;
+            var idx = keybd.indexOf(e.key.toLowerCase);
+            //if (idx < 0)return;
             console.log(e.shiftKey);
         })
     </script>
