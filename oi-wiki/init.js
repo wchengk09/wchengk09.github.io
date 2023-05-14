@@ -48,7 +48,7 @@ function ers_onSearch(){
 
 function ers_checkSz(){
     var width = document.body.clientWidth;
-    if (width < 00)
+    if (width < 435)
         getObj("bjsdfz17ban").innerHTML = "";
     else
         getObj("bjsdfz17ban").innerHTML = "OI-wiki (WCK版)";
