@@ -95,8 +95,8 @@
             var sx = moX - balls[0].x;
             var sy = moY - balls[0].y;
             var dis = Math.sqrt(sx * sx + sy * sy);
-            balls[0].dx = sx / dis * (li + 10);
-            balls[0].dy = sy / dis * (li + 10);
+            balls[0].dx = sx / dis * (li * 5);
+            balls[0].dy = sy / dis * (li * 5);
         })
         function dispLi(){
             if (over)return;
