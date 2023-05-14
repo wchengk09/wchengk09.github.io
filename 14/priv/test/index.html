@@ -16,14 +16,14 @@
     <link rel="stylesheet" type="text/css" href="/katex.min.css">
     <script src="/common.js"></script>
     <script src="/14/init.js"></script>
-    <script src="/katex.min.js"></script>
-    <script src="/katex-auto-render.min.js"></script>
+    <script src="/14/search.js"></script>
 </head>
 <body>
     <ers_bar></ers_bar>
-    <p id="math-p">$$\sqrt{5}$$</p>
     <script>
-        renderMathInElement(getObj('math-p'));
+        for (var i in DataBase){
+            document.body.innerHTML += '&lt;a href="' + DataBase[i][2] + '"&gt;&lt;/a&gt;<br>';
+        }
     </script>
 </body>
 </html>
