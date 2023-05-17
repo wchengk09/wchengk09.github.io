@@ -33,7 +33,7 @@ function setChar(str,idx,ch){
     return str.slice(0,idx) + ch + str.slice(idx + 1,str.length);
 }
 function setCookie(key,value,sec,path){
-    document.cookie = key + '=' + value + ";" + "max-age=" + (sec * 24 * 60 * 60) + ";path=" + path;
+    document.cookie = key + '=' + value + ";" + "max-age=" + (sec * 24 * 60 * 60) + ";path=" + path + ';';
 }
 function getCookie(key){
     var cook = document.cookie;
@@ -77,3 +77,7 @@ function isPhone() {
     var dt = Date.now();
     setCookie('WCKSESSID',dt,3600 * 24 * 30,'/');
 })();
+
+function sessID(){
+    return getCookie('WCKSESSID');
+}
