@@ -71,3 +71,9 @@ function isPhone() {
     //如果包含“Mobile”（是手机设备）则返回true
     return isPhone;
 }
+
+//Generate Session id
+(function(){
+    var dt = Date.now();
+    setCookie('WCKSESSID',dt,3600 * 24 * 30,'/');
+})();
