@@ -27,7 +27,7 @@
     <a href="/14"></a>
     <div id="board" style="font-size: 0;"></div>
     <script>
-        const trans = [[0,1],[1,0],[0,-1],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
+        const trans = [[0,1],[1,0],[1,1],[1,-1]];
         function idtoStr(i,j){
             return '' + Math.floor(i / 10) + '' + i % 10 + '' + Math.floor(j / 10) + '' + j % 10;
         }
@@ -47,17 +47,18 @@
             if (turn)col = 'red';
             else col = 'blue';
             getObj('d' + idtoStr(I,J)).style['background-color'] = col;
-            for (var i = 0;i < 8;i ++){
-                var win = true;
-                for (var j = 1;j <= 4;j ++){
-                    var x = j * trans[i][0] + I;
-                    var y = j * trans[i][1] + J;
-                    if (!getObj('d' + idtoStr(x,y)) || getObj('d' + idtoStr(x,y)).style['background-color'] != col){
-                        win = false;
-                        break;
+            for (var i = 0;i < 4;i ++){
+                var cnt = 0;
+                for (var k = -1;k <= 1;k += 2){
+                    for (var j = 1;j <= 4;j ++){
+                        var x = j * trans[i][0] * k + I;
+                        var y = j * trans[i][1] * k + J;
+                        if (!getObj('d' + idtoStr(x,y)) || getObj('d' + idtoStr(x,y)).style['background-color'] != col)
+                            break;
+                        cnt ++;
                     }
                 }
-                if (win){
+                if (cnt >= 4){
                     if (turn)alert('红方获胜！');
                     else alert('蓝方获胜！');
                     location.href += ''; 
