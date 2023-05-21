@@ -13,8 +13,14 @@
     <link rel="stylesheet" type="text/css" href="/text.css">
     <link rel="stylesheet" type="text/css" href="/form.css">
     <link rel="stylesheet" type="text/css" href="/div.css">
-    <script type="text/javascript" src="//qzonestyle.gtimg.cn/qzone/hybrid/app/404/search_children.js" charset="utf-8" homePageUrl="product.php" homePageName="返回"></script>
+    <script src="/common.js"></script>
+    <script src="/vector.js"></script>
+    <script src="/ball.js"></script>
 <body>
     <ers_bar></ers_bar>
+    <canvas id="can"></canvas>
+    <script>
+        new Ball(getObj('can'),10,1,'#000',10,10,10,10).draw();
+    </script>
 </body>
 </html>

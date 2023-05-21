@@ -36,9 +36,11 @@
         const ctx = canvas.getContext('2d');
         const RADIUS = 10;
         const HOLE = 30;
+        var cs;
         var CX = window.innerWidth,CY = window.innerHeight - 40;
         canvas.width = CX;
         canvas.height = CY;
+        var CS = Math.sqrt(canvas.width * canvas.height) / 500;
         var balls = new Array();
         balls.push(new Ball(canvas,RADIUS,1,'#ccc',CX / 4,CY / 2 + 3,0,0));
         const xBase = CX / 3 * 2 - 10;
@@ -55,8 +57,9 @@
                 if (i == 2 && j == 1)color = '#000';
                 else if (col_flag)color = '#f9b';
                 else color = '#89f';
-                balls.push(new Ball(canvas,RADIUS,1,color,xBase + (RADIUS) * 2 * i,yBase - (RADIUS) * i + (RADIUS) * 2 * j,0,0));
+                balls.push(new Ball(canvas,RADIUS * CS,1,color,xBase + (RADIUS * CS) * 2 * i,yBase - (RADIUS * CS) * i + (RADIUS * CS) * 2 * j,0,0));
             }
+        console.log(balls);
         var moX = CX / 2,moY = CY / 2;
         var li = 5,cl = false;
         var mouseline = true;
@@ -64,16 +67,16 @@
             if (over)return;
             e = e || window.event;
             if (e.layerX >= 0 && e.layerX < CX && e.layerY >= 0 && e.layerY < CY){
-                moX = e.layerX;
-                moY = e.layerY;
+                moX = e.layerX ;
+                moY = e.layerY ;
             }
         });
         document.addEventListener('mouseup',function(e){
             if (over)return;
             cl = false;
             e = e || window.event;
-            moX = e.layerX;
-            moY = e.layerY;
+            moX = e.layerX ;
+            moY = e.layerY ;
             if (moX < 0 || moX >= CX || moY < 0 || moY >= CY)
                return;
             if (put){
@@ -94,8 +97,8 @@
             var sx = moX - balls[0].x;
             var sy = moY - balls[0].y;
             var dis = Math.sqrt(sx * sx + sy * sy);
-            balls[0].dx = sx / dis * (li * 5);
-            balls[0].dy = sy / dis * (li * 5);
+            balls[0].dx = sx / dis * (li) * CS;
+            balls[0].dy = sy / dis * (li) * CS;
         })
         function dispLi(){
             if (over)return;
@@ -114,32 +117,32 @@
         function gameLoop(){
             if (over)return;
             ctx.clearRect(0,0,CX,CY);
-            ctx.strokeRect(HOLE,HOLE,CX - HOLE - HOLE,CY - HOLE - HOLE);
-            new Ball(canvas,HOLE,1,'#0d0',HOLE,HOLE,0,0).draw();
-            new Ball(canvas,HOLE,1,'#0d0',CX / 2,HOLE,0,0).draw();
-            new Ball(canvas,HOLE,1,'#0d0',CX - HOLE,HOLE,0,0).draw();
-            new Ball(canvas,HOLE,1,'#0d0',HOLE,CY - HOLE,0,0).draw();
-            new Ball(canvas,HOLE,1,'#0d0',CX / 2,CY - HOLE,0,0).draw();
-            new Ball(canvas,HOLE,1,'#0d0',CX - HOLE,CY - HOLE,0,0).draw();
+            ctx.strokeRect(HOLE * CS,HOLE * CS,CX - HOLE * 2 * CS,CY - HOLE * 2 * CS);
+            new Ball(canvas,HOLE * CS,1,'#0d0',HOLE,HOLE,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',CX / 2,HOLE,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',CX - HOLE,HOLE,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',HOLE,CY - HOLE,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',CX / 2,CY - HOLE,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',CX - HOLE ,(CY - HOLE) ,0,0).draw();
             new Ball(canvas,0,1,'#000',0,0,0,0).draw();
             if (mouseline){
                 ctx.moveTo(moX,moY);
                 ctx.lineTo(balls[0].x,balls[0].y);
                 ctx.stroke();
-                new Ball(canvas,RADIUS,1,'#dd0',moX,moY,0,0).draw();
+                new Ball(canvas,RADIUS * CS,1,'#dd0',moX,moY,0,0).draw();
             }
             var all = true;
             for (var i = 0;i < balls.length;i ++){
                 balls[i].move();
-                balls[i].dx *= 0.98;
-                balls[i].dy *= 0.98;
+                balls[i].dx *= 0.99;
+                balls[i].dy *= 0.99;
                 if (Math.abs(balls[i].dx) > 0.05 || Math.abs(balls[i].dy) > 0.05)
                     all = false;
                 else balls[i].dx = balls[i].dy = 0;
-                if (balls[i].isCrashEdge(HOLE,HOLE,HOLE,HOLE).either){
-                    balls[i].crashEdge(HOLE,HOLE,HOLE,HOLE);
-                    balls[i].dx *= 0.75;
-                    balls[i].dy *= 0.75;
+                if (balls[i].isCrashEdge(HOLE * CS,HOLE * CS,HOLE * CS,HOLE * CS).either){
+                    balls[i].crashEdge(HOLE * CS,HOLE * CS,HOLE * CS,HOLE * CS);
+                    balls[i].dx *= 0.8;
+                    balls[i].dy *= 0.8;
                 }
             }
             if (all){
@@ -172,7 +175,7 @@
                 }
                 else if (i || !put)balls[i].draw();
             }
-            requestAnimationFrame(gameLoop);
+            setTimeout(gameLoop,4);
         }
         gameLoop();
     </script>
