@@ -123,7 +123,7 @@
             new Ball(canvas,HOLE * CS,1,'#0d0',CX / 2,HOLE * CS,0,0).draw();
             new Ball(canvas,HOLE * CS,1,'#0d0',CX - HOLE * CS,HOLE * CS,0,0).draw();
             new Ball(canvas,HOLE * CS,1,'#0d0',HOLE * CS,CY - HOLE,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',CX / 2,CY - HOLE * CS,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',CX * CS / 2,CY - HOLE * CS,0,0).draw();
             new Ball(canvas,HOLE * CS,1,'#0d0',CX - HOLE * CS,(CY - HOLE * CS) ,0,0).draw();
             new Ball(canvas,0,1,'#000',0,0,0,0).draw();
             if (mouseline){
@@ -135,8 +135,8 @@
             var all = true;
             for (var i = 0;i < balls.length;i ++){
                 balls[i].move();
-                balls[i].dx *= 0.992;
-                balls[i].dy *= 0.992;
+                balls[i].dx *= 0.995;
+                balls[i].dy *= 0.995;
                 if (Math.abs(balls[i].dx) > 0.05 || Math.abs(balls[i].dy) > 0.05)
                     all = false;
                 else balls[i].dx = balls[i].dy = 0;
