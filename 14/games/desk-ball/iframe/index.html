@@ -37,14 +37,18 @@
         const RADIUS = 10;
         const HOLE = 30;
         var cs;
+        const CS = 1;
         var CX = window.innerWidth,CY = window.innerHeight - 40;
-        canvas.width = CX;
-        canvas.height = CY;
-        var CS = Math.sqrt(canvas.width * canvas.height) / 500;
+        if (CX / 2 > CY)CX = CY * 2;
+        else CY = CX / 2;
+        canvas.width = 1000;
+        canvas.height = 500;
+        canvas.style.setAttribute;
+        canvas.style.height = CY;
         var balls = new Array();
         balls.push(new Ball(canvas,RADIUS,1,'#ccc',CX / 4,CY / 2 + 3,0,0));
-        const xBase = CX / 3 * 2 - 10;
-        const yBase = CY / 2;
+        const xBase = 1000 / 3 * 2 - 10;
+        const yBase = 500 / 2;
         var over = false;
         var bnClicked = false;
         var put = false;
@@ -107,23 +111,23 @@
         function isGoal(ball){
             return (
                 (ball.x < 2 * HOLE && ball.y < 2 * HOLE)
-                || (ball.x < CX / 2 + HOLE && ball.x > CX / 2 - HOLE && ball.y < 2 * HOLE)
-                || (ball.x > CX - 2 * HOLE && ball.y < 2 * HOLE)
-                || (ball.x < 2 * HOLE && ball.y > CY - 2 * HOLE)
-                || (ball.x < CX / 2 + HOLE && ball.x > CX / 2 - HOLE && ball.y > CY - 2 * HOLE)
-                || (ball.x > CX - 2 * HOLE && ball.y > CY - 2 * HOLE)
+                || (ball.x < 1000 / 2 + HOLE && ball.x > 1000 / 2 - HOLE && ball.y < 2 * HOLE)
+                || (ball.x > 1000 - 2 * HOLE && ball.y < 2 * HOLE)
+                || (ball.x < 2 * HOLE && ball.y > 500 - 2 * HOLE)
+                || (ball.x < 1000 / 2 + HOLE && ball.x > 1000 / 2 - HOLE && ball.y > 500 - 2 * HOLE)
+                || (ball.x > 1000 - 2 * HOLE && ball.y > 500 - 2 * HOLE)
             );
         }
         function gameLoop(){
             if (over)return;
             ctx.clearRect(0,0,CX,CY);
-            ctx.strokeRect(HOLE * CS,HOLE * CS,CX - HOLE * 2 * CS,CY - HOLE * 2 * CS);
+            ctx.strokeRect(HOLE * CS,HOLE * CS,1000 - HOLE * 2 * CS,500 - HOLE * 2 * CS);
             new Ball(canvas,HOLE * CS,1,'#0d0',HOLE,HOLE,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',CX / 2,HOLE,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',CX - HOLE,HOLE,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',HOLE,CY - HOLE,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',CX / 2,CY - HOLE,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',CX - HOLE ,(CY - HOLE) ,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',1000 / 2,HOLE,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',1000 - HOLE,HOLE,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',HOLE,500 - HOLE,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',1000 / 2,500 - HOLE,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'#0d0',1000 - HOLE ,(500 - HOLE) ,0,0).draw();
             new Ball(canvas,0,1,'#000',0,0,0,0).draw();
             if (mouseline){
                 ctx.moveTo(moX,moY);
