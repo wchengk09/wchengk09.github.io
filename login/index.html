@@ -12,16 +12,72 @@
     <link rel="stylesheet" type="text/css" href="/text.css">
     <link rel="stylesheet" type="text/css" href="/form.css">
     <link rel="stylesheet" type="text/css" href="/div.css">
-    <link rel="stylesheet" type="text/css" href="/katex.min.css">
-    <script src="/katex.min.js"></script>
-    <script src="/katex-auto-render.min.js"></script>
-    <script src="/showdown/showdown.min.js"></script>
-    <script src="/markdown-auto-render.js"></script>
     <script src="/common.js"></script>
-    <script src="/oi-wiki/init.js"></script>
+    <style>
+        .w250{
+            width: 250px;
+        }
+        input{
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <a href="/">&lt;&nbsp;返回首页</a>
-    <div 
+    <div style="width: 300px; background-color: #eee; border-radius: 10px; padding: 10px;" class="allhormid">
+        <h1>用户信息</h1>
+        <div id="usreinfo">
+            <p id="username">请先登录！</p>
+            <div id="modifypasswd" style="display: none;">
+                <input type="passwd" id="pass" placeholder="新密码" disabled>
+                <button type="button" onclick="modifyPasswd()">修改密码(开发中)</button>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <h1>登录新帐号</h1>
+            <input id="usernamein" placeholder="用户名" class="w250">
+            <br>
+            <input id="passwd" type="password" placeholder="密码" class="w250">
+            <br>
+            <button type="button" onclick="Login()" class="w250" style="padding: 8px; border-radius: 8px">登录</button>
+            <p>没有帐号将自动注册</p>
+        </div>
+    </div>
+    <script defer>
+        var ajax = new XMLHttpRequest();
+        function UserInfo(){
+            ajax.onload = function(){
+                const user = ajax.responseText;
+                console.log(user);
+                if (user){
+                    getObj('modifypasswd').style.display = 'block';
+                    ajax.onload = function(){
+                        getObj('username').innerHTML = ajax.responseText;
+                    }
+                    ajax.onerror = function(){
+                        console.log(ajax.responseText);
+                    }
+                    ajax.open('POST',getIP(17666) + '/userinfo');
+                    ajax.send('id=' + user);
+                }
+            }
+            ajax.onerror = function(){
+                console.log(ajax.responseText);
+            }
+            ajax.open('POST',getIP(17666) + '/sessuser');
+            ajax.send('sessid=' + sessID());
+        }
+        UserInfo();
+        function Login(){
+            ajax.onload = function(){
+                alert(ajax.responseText);
+                UserInfo();
+            }
+            ajax.open('POST',getIP(17666) + '/login');
+            console.log('name=' + encodeURIComponent(getObj('usernamein').value) + '&passwd=' + encodeURIComponent(getObj('passwd').value) + '&sessid=' + sessID());
+            ajax.send('name=' + encodeURIComponent(getObj('usernamein').value) + '&passwd=' + encodeURIComponent(getObj('passwd').value) + '&sessid=' + sessID());
+        }
+    </script>
 </body>
 </html>
