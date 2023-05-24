@@ -16,5 +16,6 @@ const DataBase = [
     ['有理数复盘（youlishu）','#个人（persoal）','/14/person/youlishu','search/math.png',true],
     ['音效（sound）','#工具（tools）','/14/tools/sound','search/music.png'],
     ['查看网站的404页面','这个网站的404页面很好玩，不信你看看。','/404.html','search/404.png',true],
+    ['论坛','','/14/forum','',true],
     ['登录后台','','/14/control/back','search/vscode.png',true]
 ];

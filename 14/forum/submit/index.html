@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+    poststr：提交
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布讨论串</title>
+	<link rel="stylesheet" type="text/css" href="https://jiziqian.github.io/style.css">
+    <script src="https://jiziqian.github.io/bjsdfz18ban/forum/script.js"></script>
+    <script src="https://jiziqian.github.io/bjsdfz18ban/script.js"></script>
+    <script src="https://jiziqian.github.io/bjsdfz18ban/user.js"></script>
+    <style>
+        #title {
+            width: 95%;
+            margin: 10pt;
+        }
+        #paragraph {
+            margin: 10pt;
+        }
+        #submit {
+            width: 80%;
+            height: 50pt;
+            background-color: aqua;
+            font-size: xx-large;
+            font-family: 'Javanese Text';
+        }
+    </style>
+</head>
+<body>
+    <div id="content" style="width: 100%;height: auto;">
+        <div class="head">
+            <h1>发布讨论串</h1>
+            <div class="user" id="user"></div>
+        </div>
+        <div class="main" style="text-align: center;">
+            <textarea id="paragraph" rows="20" cols="180" placeholder="请输入正文，如果想对某条信息进行回复，请标明回复的帖子编号"></textarea>
+        </div>
+        <div class="submit" style="text-align: center;">
+            <button id="submit" onclick="poststr()">PUBLISH!</button>
+        </div>
+    </div>
+    <script>
+        userInit();
+    </script>
+</body>
+</html>
