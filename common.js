@@ -74,8 +74,13 @@ function isPhone() {
 
 //Generate Session id
 (function(){
-    var dt = Date.now();
-    setCookie('WCKSESSID',dt,3600 * 24 * 30,'/');
+    if (getCookie('WCKSESSID'))return;
+    var ajax = new XMLHttpRequest();
+    ajax.onload = function(){
+        setCookie('WCKSESSID',ajax.responseText,3600*24*30,'/');
+    }
+    ajax.open('POST',getIP(17666) + '/sessionid');
+    ajax.send();
 })();
 
 function sessID(){
