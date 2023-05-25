@@ -70,7 +70,6 @@
         var ajax = new XMLHttpRequest();
         var str = '';
         function GET(id,dep){
-            console.log('GET ' + id + ' ' + dep);
             ajax.open('POST',getIP(17666) + '/getforum',false);
             ajax.send('fa=' + id);
             var spl1 = ajax.responseText.split(';');
@@ -83,13 +82,25 @@
                 str += '<div class="forum"><h3>' + decodeURIComponent(spl2[3]) + '</h3>' + decodeURIComponent(spl2[2]);
                 GET(spl2[0],dep + 1);
                 str += '</div>';
-                console.log(str);
             }
         }
         GET(getParam('id'),0);
         getObj('forumlist').innerHTML = str;
         function startForum(){
-            
+            ajax.onload = function(){
+                var user = ajax.responseText;
+                if (!user){
+                    alert('请先登录！');
+                    return;
+                }
+                ajax.onload = function(){
+
+                }
+                ajax.open('POST',getIP(17666) + '/insertforum');
+                ajax.send('fa=');
+            }
+            ajax.open('POST',getIP(17666) + '/sessuser');
+            ajax.send('sessid=' + sessID());
         }
     </script>
 </body>

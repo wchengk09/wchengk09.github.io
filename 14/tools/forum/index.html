@@ -71,7 +71,6 @@
                 var spl1 = ajax.responseText.split(';');
                 for (var i = 0;i < spl1.length;i ++){
                     var spl2 = spl1[i].split('&');
-                    console.log(spl2);
                     getObj('forumlist').innerHTML += 
                     '<a class="text" href="./every/?id=' + decodeURIComponent(spl2[0]) + '"><div class="forum"><h3>' + decodeURIComponent(spl2[3]) + '</h3>' + decodeURIComponent(spl2[2]) + '</div></a>';
                 }
