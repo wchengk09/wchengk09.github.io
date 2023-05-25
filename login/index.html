@@ -33,18 +33,21 @@
         <div id="usreinfo">
             <p id="username">请先登录！</p>
             <div id="modifypasswd" style="display: none;">
-                <input type="passwd" id="pass" placeholder="新密码" disabled>
-                <button type="button" onclick="modifyPasswd()">修改密码(开发中)</button>
+                <input type="password" id="pass" placeholder="新密码">
+                <button type="button" onclick="modifyPasswd()">修改密码</button>
+                <br>
                 <button type="button" onclick="logOut()">退出登录</button>
             </div>
         </div>
         <hr>
         <div>
             <h1>登录新帐号</h1>
-            <input id="usernamein" placeholder="用户名" class="w250">
-            <br>
-            <input id="passwd" type="password" placeholder="密码" class="w250">
-            <br>
+            <form>
+                <input id="usernamein" placeholder="用户名" autocomplete class="w250">
+                <br>
+                <input id="passwd" type="password" autocomplete placeholder="密码" class="w250">
+                <br>
+            </form>
             <button type="button" onclick="Login()" class="w250" style="padding: 8px; border-radius: 8px">登录</button>
             <p>没有帐号将自动注册</p>
         </div>
@@ -53,7 +56,7 @@
         var ajax = new XMLHttpRequest();
         var user;
         function goBack(){
-            if (getParam('prev'))location.href = getPatam('prev');
+            if (getParam('prev'))location.href = getParam('prev');
             else location.href = '/';
         }
         function UserInfo(){
@@ -82,7 +85,7 @@
         function Login(){
             ajax.onload = function(){
                 alert(ajax.responseText);
-                UserInfo();
+                location.href += '';
             }
             ajax.open('POST',getIP(17666) + '/login');
             console.log('name=' + encodeURIComponent(getObj('usernamein').value) + '&passwd=' + encodeURIComponent(getObj('passwd').value) + '&sessid=' + sessID());
@@ -90,11 +93,17 @@
         }
         function logOut(){
             ajax.onload = function(){
-                alert('退出登录成功！');
-                UserInfo();
+                location.href += '';
             }
             ajax.open('POST',getIP(17666) + '/logout');
             ajax.send('id=' + user);
+        }
+        function modifyPasswd(){
+            ajax.onload = function(){
+                alert('修改密码成功！');
+            }
+            ajax.open('POST',getIP(17666) + '/modifypassword');
+            ajax.send('passwd=' + encodeURIComponent(getObj('pass').value) + '&id=' + user);
         }
     </script>
 </body>

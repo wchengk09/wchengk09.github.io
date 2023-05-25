@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-language" content="zh-CN">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线博客/论坛——吴承坤个人网站</title>
+    <meta name="description" content="在线博客/论坛。可以用于讨论问题、教学等用途。">
+    <meta name="keywords" content=""
+    <link rel="stylesheet" type="text/css" href="/all.css">
+    <link rel="stylesheet" type="text/css" href="/text.css">
+    <link rel="stylesheet" type="text/css" href="/form.css">
+    <link rel="stylesheet" type="text/css" href="/div.css">
+    <script src="/common.js"></script>
+    <script src="/14/init.js"></script>
+    <style>
+        select#type{
+            width: 100px;
+            height: 24px;
+            font-size: 16px;
+            display: inline-block;
+            margin: 0;
+        }
+        #srch{
+            width: calc(100vw - 160px);
+            height: 24px;
+        }
+        #forum{
+            width: calc(100vw - 20px);
+            height: 300px;
+        }
+        #srch,#forum{
+            border: 1px solid black;
+            border-radius: 10px;
+        }
+        #startforum{
+            width: 80px;
+            border-radius: 10px;
+            padding: 4px;
+        }
+        div.forum{
+            margin: 10px;
+            padding: 5px;
+            padding-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid black;
+            background-color: rgb(245,245,245);
+        }
+    </style>
+</head>
+<body>
+    <a href="/14"></a>
+    <ers_bar></ers_bar>
+    <h1>WCK博客/论坛</h1>
+    <a href="../" class="text">&lt;&ensp;返回</a><br><br>
+    <select id="type">
+        <option>按作者搜索</option>
+        <option>按名称搜索</option>
+    </select>
+    <input id="srch" onchange="srchChange()" placeholder="搜索……">
+    <hr>
+    <h2>添加回答</h2>
+    <textarea id="forum" placeholder="请输入论坛标题……"></textarea>
+    <button id="startforum" onclick="startForum()">回复</button>
+    <hr>
+    <h2>回答列表</h2>
+    <div id="forumlist"></div>
+    <script defer>
+        var ajax = new XMLHttpRequest();
+        var str = '';
+        function GET(id,dep){
+            console.log('GET ' + id + ' ' + dep);
+            ajax.open('POST',getIP(17666) + '/getforum',false);
+            ajax.send('fa=' + id);
+            var spl1 = ajax.responseText.split(';');
+            if (!spl1[0])return;
+            console.log(spl1);
+            for (var i = 0;i < spl1.length;i ++){
+                var spl2 = spl1[i].split('&');
+                for (var j = 0;j < dep;j ++)
+                    str += '&emsp;';
+                str += '<div class="forum"><h3>' + decodeURIComponent(spl2[3]) + '</h3>' + decodeURIComponent(spl2[2]);
+                GET(spl2[0],dep + 1);
+                str += '</div>';
+                console.log(str);
+            }
+        }
+        GET(getParam('id'),0);
+        getObj('forumlist').innerHTML = str;
+    </script>
+</body>
+</html>
