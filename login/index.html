@@ -20,10 +20,14 @@
         input{
             margin-bottom: 10px;
         }
+        button{
+            padding: 5px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <a href="/">&lt;&nbsp;返回首页</a>
+    <a href="javascript:void(0)" onclick="goBack()">&lt;&nbsp;返回</a>
     <div style="width: 300px; background-color: #eee; border-radius: 10px; padding: 10px;" class="allhormid">
         <h1>用户信息</h1>
         <div id="usreinfo">
@@ -31,6 +35,7 @@
             <div id="modifypasswd" style="display: none;">
                 <input type="passwd" id="pass" placeholder="新密码" disabled>
                 <button type="button" onclick="modifyPasswd()">修改密码(开发中)</button>
+                <button type="button" onclick="logOut()">退出登录</button>
             </div>
         </div>
         <hr>
@@ -46,9 +51,14 @@
     </div>
     <script defer>
         var ajax = new XMLHttpRequest();
+        var user;
+        function goBack(){
+            if (getParam('prev'))location.href = getPatam('prev');
+            else location.href = '/';
+        }
         function UserInfo(){
             ajax.onload = function(){
-                const user = ajax.responseText;
+                user = ajax.responseText;
                 console.log(user);
                 if (user){
                     getObj('modifypasswd').style.display = 'block';
@@ -77,6 +87,14 @@
             ajax.open('POST',getIP(17666) + '/login');
             console.log('name=' + encodeURIComponent(getObj('usernamein').value) + '&passwd=' + encodeURIComponent(getObj('passwd').value) + '&sessid=' + sessID());
             ajax.send('name=' + encodeURIComponent(getObj('usernamein').value) + '&passwd=' + encodeURIComponent(getObj('passwd').value) + '&sessid=' + sessID());
+        }
+        function logOut(){
+            ajax.onload = function(){
+                alert('退出登录成功！');
+                UserInfo();
+            }
+            ajax.open('POST',getIP(17666) + '/logout');
+            ajax.send('id=' + user);
         }
     </script>
 </body>
