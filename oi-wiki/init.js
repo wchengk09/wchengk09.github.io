@@ -22,7 +22,7 @@ window.addEventListener('load',function(){
     "<ers_div style=\"padding: 20px; background-color: #f8f9fa\">" + 
         "<span id=\"bjsdfz17ban\" class=\"ft20\" style=\"margin-left: 10px;\"></span>" +
         "<ers_div class=\"inl\" style=\"max-width: calc(100vw - 105px); float: right;\">" +
-            "<a href=\"/oi-wiki\" class=\"text under\">首页</a>&emsp;" +
+            "<a href=\"/oi-wiki?prev=/oi-wiki\" class=\"text under\">首页</a>&emsp;" +
             "<a target=\"_blank\" href=\"/login\" class=\"text under\">帐号管理</a>&emsp;" +
             "<ers_div class=\"rad10 bor1 inl\">" +
                 "<input id=\"ers_in1\" class=\"inl rad10\" style=\"border: none; outline: none; font-size: 15px; height: 20px; width: 150px;\" placeholder=\"搜索...\">" +
