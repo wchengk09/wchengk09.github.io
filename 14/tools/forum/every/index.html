@@ -69,7 +69,7 @@
     <script defer>
         var ajax = new XMLHttpRequest();
         var str = '';
-        function GET(id,dep){
+        function GET(id,dep){console.log(id);
             ajax.open('POST',getIP(17666) + '/getforum',false);
             ajax.send('fa=' + id);
             var spl1 = ajax.responseText.split(';');
