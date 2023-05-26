@@ -97,7 +97,7 @@
                     locatiin.href += '';
                 }
                 ajax.open('POST',getIP(17666) + '/insertforum');
-                ajax.send('fa=' + getParam('id') + '&msg=' + getObj('forum') + '&user=' + user);
+                ajax.send('fa=' + getParam('id') + '&msg=' + getObj('forum').value + '&userid=' + user);
             }
             ajax.open('POST',getIP(17666) + '/sessuser');
             ajax.send('sessid=' + sessID());
