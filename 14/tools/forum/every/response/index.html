@@ -57,46 +57,12 @@
 <body>
     <a href="/14"></a>
     <ers_bar></ers_bar>
-    <h1 id="title"></h1>
+    <h1>回复论坛</h1>
     <a href="../" class="text">&lt;&ensp;返回</a><br><br>
-    <select id="type">
-        <option>按作者搜索</option>
-        <option>按名称搜索</option>
-    </select>
-    <input id="srch" onchange="srchChange()" placeholder="搜索……">
     <hr>
-    <h2>添加回答</h2>
-    <textarea id="forum" class="forum" placeholder="请输入回复……"></textarea>
+    <textarea id="forum" class="forum" placeholder="请输入回复"></textarea>
     <button id="startforum" onclick="startForum()">回复</button>
-    <hr>
-    <h2>回答列表</h2>
-    <div id="forumlist"></div>
     <script defer>
-        if (!getParam('title') || !getParam('id')){
-            alert('参数不合法！');
-            location.href = '../';
-        }
-        getObj('title').innerHTML = decodeURIComponent(getParam('title'));
-        var ajax = new XMLHttpRequest();
-        var str = '';
-        function GET(id,dep){
-            ajax.open('POST',getIP(17666) + '/getforum',false);
-            ajax.send('fa=' + id);
-            var spl1 = ajax.responseText.split(';');
-            if (!spl1[0])return;
-            console.log(spl1);
-            for (var i = 0;i < spl1.length;i ++){
-                var spl2 = spl1[i].split('&');
-                for (var j = 0;j < dep;j ++)
-                    str += '&emsp;';
-                str += '<div class="forum"><h3>' + decodeURIComponent(spl2[3]) + '</h3>' + decodeURIComponent(spl2[2]) + '<br>';
-                str += '<br><img width="24" height="24" src="//kevinwu521.gitee.io/res/forum/zan0.png" onclick="Zan(this,' + decodeURIComponent(spl2[0]) + ')">&emsp;<text>回复</text>'
-                GET(spl2[0],dep + 1);
-                str += '</div>';
-            }
-        }
-        GET(getParam('id'),0);
-        getObj('forumlist').innerHTML = str;
         function startForum(){
             if (!getObj('forum').value){
                 alert('提交内容不能为空！');
@@ -109,7 +75,7 @@
                     return;
                 }
                 ajax.onload = function(){
-                    location.href += '';
+                    location.href = '../?id=' + getParam('id') + '&title=' + getParam('title');
                 }
                 ajax.open('POST',getIP(17666) + '/insertforum');
                 ajax.send('fa=' + getParam('id') + '&msg=' + getObj('forum').value + '&userid=' + user);
@@ -117,7 +83,6 @@
             ajax.open('POST',getIP(17666) + '/sessuser');
             ajax.send('sessid=' + sessID());
         }
-        function Zan()
     </script>
 </body>
 </html>
