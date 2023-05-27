@@ -94,7 +94,8 @@
                     return;
                 }
                 ajax.onload = function(){
-                    locatiin.href += '';
+                    alert('提交成功！');
+                    location.href += '';
                 }
                 ajax.open('POST',getIP(17666) + '/insertforum');
                 ajax.send('fa=' + getParam('id') + '&msg=' + getObj('forum').value + '&userid=' + user);
