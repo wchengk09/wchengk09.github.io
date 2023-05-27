@@ -52,7 +52,7 @@
 <body>
     <a href="/14"></a>
     <ers_bar></ers_bar>
-    <h1>WCK博客/论坛</h1>
+    <h1 id="title"></h1>
     <a href="../" class="text">&lt;&ensp;返回</a><br><br>
     <select id="type">
         <option>按作者搜索</option>
@@ -67,6 +67,7 @@
     <h2>回答列表</h2>
     <div id="forumlist"></div>
     <script defer>
+        getObj('title').innerHTML = decodeURIComponent(getParam('title'));
         var ajax = new XMLHttpRequest();
         var str = '';
         function GET(id,dep){console.log(id);
@@ -94,7 +95,6 @@
                     return;
                 }
                 ajax.onload = function(){
-                    alert('提交成功！');
                     location.href += '';
                 }
                 ajax.open('POST',getIP(17666) + '/insertforum');
