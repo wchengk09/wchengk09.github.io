@@ -34,7 +34,7 @@
     <script>
         const canvas = getObj('board');
         const ctx = canvas.getContext('2d');
-        const RADIUS = 10;
+        const RADIUS = 15;
         const HOLE = 30;
         var cs;
         var CXY = Math.min(window.innerWidth / 2,window.innerHeight - 40);
@@ -98,8 +98,8 @@
             var sx = moX - balls[0].x;
             var sy = moY - balls[0].y;
             var dis = Math.sqrt(sx * sx + sy * sy);
-            balls[0].dx = sx / dis * (li) * CS;
-            balls[0].dy = sy / dis * (li) * CS;
+            balls[0].dx = sx / dis * (li * 4) * CS;
+            balls[0].dy = sy / dis * (li * 4) * CS;
         })
         function dispLi(){
             if (over)return;
@@ -135,8 +135,8 @@
             var all = true;
             for (var i = 0;i < balls.length;i ++){
                 balls[i].move();
-                balls[i].dx *= 0.995;
-                balls[i].dy *= 0.995;
+                balls[i].dx *= 0.98;
+                balls[i].dy *= 0.98;
                 if (Math.abs(balls[i].dx) > 0.05 || Math.abs(balls[i].dy) > 0.05)
                     all = false;
                 else balls[i].dx = balls[i].dy = 0;
@@ -176,7 +176,7 @@
                 }
                 else if (i || !put)balls[i].draw();
             }
-            setTimeout(gameLoop,4);
+            requestAnimationFrame(gameLoop);
         }
         gameLoop();
     </script>
