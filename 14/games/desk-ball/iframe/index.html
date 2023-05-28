@@ -18,7 +18,7 @@
 <body>
     <a href="/14"></a>
     <ers_bar style="display: none"></ers_bar>
-    <canvas id="board" style="border: 1px solid black;"></canvas>
+    <canvas id="board"></canvas>
     <div id="stat" style="height: 30px;">
         力度：<span id="li">5</span>&emsp;
         红方：<span id="red">0</span>分&emsp;
@@ -43,7 +43,7 @@
         canvas.width = CX;
         canvas.height = CY;
         var balls = new Array();
-        balls.push(new Ball(canvas,RADIUS * CS,1,'#ccc',CX / 4,CY / 2 + 3,0,0));
+        balls.push(new Ball(canvas,RADIUS * CS,1,'#fff',CX / 4,CY / 2 + 3,0,0));
         const xBase = CX / 3 * 2 - 10;
         const yBase = CY / 2;
         var over = false;
@@ -57,7 +57,7 @@
                 var color;
                 if (i == 2 && j == 1)color = '#000';
                 else if (col_flag)color = '#f9b';
-                else color = '#89f';
+                else color = '#acf';
                 balls.push(new Ball(canvas,RADIUS * CS,1,color,xBase + (RADIUS * CS) * 2 * i,yBase - (RADIUS * CS) * i + (RADIUS * CS) * 2 * j,0,0));
             }
         console.log(balls);
@@ -107,7 +107,7 @@
         }
         function isGoal(ball){
             return (
-                (ball.x < 2 * HOLE * CS && ball.y < 2 * HOLE * CS)
+                ((ball.x - HOLE * CS) ** 2 )
                 || (ball.x < CX / 2 + HOLE * CS && ball.x > CX / 2 - HOLE * CS && ball.y < 2 * HOLE * CS)
                 || (ball.x > CX - 2 * HOLE * CS && ball.y < 2 * HOLE * CS)
                 || (ball.x < 2 * HOLE * CS && ball.y > CY - 2 * HOLE * CS)
@@ -119,24 +119,35 @@
             if (over)return;
             ctx.clearRect(0,0,CX,CY);
             ctx.strokeRect(HOLE * CS,HOLE * CS,CX - HOLE * 2 * CS,CY - HOLE * 2 * CS);
-            new Ball(canvas,HOLE * CS,1,'#0d0',HOLE * CS,HOLE * CS,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',CX / 2,HOLE * CS,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',CX - HOLE * CS,HOLE * CS,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',HOLE * CS,CY - HOLE * CS,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',CX / 2,CY - HOLE * CS,0,0).draw();
-            new Ball(canvas,HOLE * CS,1,'#0d0',CX - HOLE * CS,(CY - HOLE * CS) ,0,0).draw();
+            ctx.save();
+            ctx.fillStyle = 'rgb(138,52,52)';
+            ctx.fillRect(0,0,CX,CY);
+            ctx.fillStyle = 'rgb(0,197,127)';
+            ctx.fillRect(HOLE * CS,HOLE * CS,CX - HOLE * 2 * CS,CY - HOLE * 2 * CS);
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0,0,HOLE * CS,HOLE * CS);
+            ctx.fillRect(CX - HOLE * CS,0,HOLE * CS,HOLE * CS);
+            ctx.fillRect(0,CY - HOLE * CS,HOLE * CS,HOLE * CS);
+            ctx.fillRect(CX - HOLE * CS,CY - HOLE * CS,HOLE * CS,HOLE * CS);
+            ctx.restore();
+            new Ball(canvas,HOLE * CS,1,'rgb(84,84,84)',HOLE * CS,HOLE * CS,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'rgb(84,84,84)',CX / 2,HOLE * CS,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'rgb(84,84,84)',CX - HOLE * CS,HOLE * CS,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'rgb(84,84,84)',HOLE * CS,CY - HOLE * CS,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'rgb(84,84,84)',CX / 2,CY - HOLE * CS,0,0).draw();
+            new Ball(canvas,HOLE * CS,1,'rgb(84,84,84)',CX - HOLE * CS,(CY - HOLE * CS) ,0,0).draw();
             new Ball(canvas,0,1,'#000',0,0,0,0).draw();
             if (mouseline){
                 ctx.moveTo(moX,moY);
                 ctx.lineTo(balls[0].x,balls[0].y);
                 ctx.stroke();
-                new Ball(canvas,RADIUS * CS,1,'#dd0',moX,moY,0,0).draw();
+                new Ball(canvas,RADIUS * CS,1,'#ff7',moX,moY,0,0).draw();
             }
             var all = true;
             for (var i = 0;i < balls.length;i ++){
                 balls[i].move();
-                balls[i].dx *= 0.98;
-                balls[i].dy *= 0.98;
+                balls[i].dx *= 0.982;
+                balls[i].dy *= 0.982;
                 if (Math.abs(balls[i].dx) > 0.05 || Math.abs(balls[i].dy) > 0.05)
                     all = false;
                 else balls[i].dx = balls[i].dy = 0;
