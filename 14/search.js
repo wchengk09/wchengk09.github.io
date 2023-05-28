@@ -1,5 +1,5 @@
 const DataBase = [
-    ['博客/论坛','在线博客/论坛','/14/tools/forum','',true],
+    ['博客/论坛','在线博客/论坛','/14/tools/forum','search/talk.webp',true],
     ['附中电子铃声新版（bellfz3）','北京师大附中的电子铃声。','/14/tools/clock/fz3','search/bell.png'],
     ['附中电子铃声（无下课铃）（bellfz2）','北京师大附中电子铃声，没有下课铃。','/14/tools/clock/fz2','search/bell.png'],
     ['附中电子铃声（bellfz1）','北京师大附中的电子铃声。','/14/tools/clock/fz1','search/bell.png'],

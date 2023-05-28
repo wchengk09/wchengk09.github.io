@@ -28,7 +28,7 @@
         }
         textarea.forum{
             width: calc(100vw - 20px);
-            height: 300px;
+            height: 220px;
             border-radius: 10px;
             font-size: 18px;
         }
@@ -70,8 +70,9 @@
     <button id="startforum" onclick="startForum()">回复</button>
     <hr>
     <h2>回答列表</h2>
-    <div id="forumlist"></div>
+    <div id="forumlist">加载中……</div>
     <script defer>
+        const IP = getIP(17666);
         if (!getParam('title') || !getParam('id')){
             alert('参数不合法！');
             location.href = '../';
@@ -79,10 +80,23 @@
         getObj('title').innerHTML = decodeURIComponent(getParam('title'));
         var ajax = new XMLHttpRequest();
         var str = '';
-        function GET(id,dep){
-            ajax.open('POST',getIP(17666) + '/getforum',false);
-            ajax.send('fa=' + id);
-            var spl1 = ajax.responseText.split(';');
+
+        function FETCH(id){
+            console.log('FETCH ' + id);
+            return new Promise(function(resolve){
+                ajax.onload = function(){
+                    resolve(ajax.responseText.split(';'));
+                }
+                ajax.onerror = function(){
+                    alert('ERROR ' + id);
+                }
+                ajax.open('POST',IP + '/getforum');
+                ajax.send('fa=' + id);
+            })  
+        }
+
+        async function GET(id,dep,f){
+            var spl1 = await FETCH(id);
             if (!spl1[0])return;
             console.log(spl1);
             for (var i = 0;i < spl1.length;i ++){
@@ -94,9 +108,10 @@
                 GET(spl2[0],dep + 1);
                 str += '</div>';
             }
+            if (dep == 0)getObj('forumlist').innerHTML = str;
         }
         GET(getParam('id'),0);
-        getObj('forumlist').innerHTML = str;
+        
         function startForum(){
             if (!getObj('forum').value){
                 alert('提交内容不能为空！');
@@ -117,7 +132,9 @@
             ajax.open('POST',getIP(17666) + '/sessuser');
             ajax.send('sessid=' + sessID());
         }
-        function Zan()
+        function Zan(obj,id){
+            
+        }
     </script>
 </body>
 </html>
