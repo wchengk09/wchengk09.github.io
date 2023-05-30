@@ -107,7 +107,7 @@
         }
         function isGoal(ball){
             return (
-                ((ball.x - HOLE * CS) ** 2 )
+                (ball.x < 2 * HOLE * CS && ball.y < 2 * HOLE * CS)
                 || (ball.x < CX / 2 + HOLE * CS && ball.x > CX / 2 - HOLE * CS && ball.y < 2 * HOLE * CS)
                 || (ball.x > CX - 2 * HOLE * CS && ball.y < 2 * HOLE * CS)
                 || (ball.x < 2 * HOLE * CS && ball.y > CY - 2 * HOLE * CS)
