@@ -146,8 +146,8 @@
             var all = true;
             for (var i = 0;i < balls.length;i ++){
                 balls[i].move();
-                balls[i].dx *= 0.982;
-                balls[i].dy *= 0.982;
+                balls[i].dx *= 0.98;
+                balls[i].dy *= 0.98;
                 if (Math.abs(balls[i].dx) > 0.05 || Math.abs(balls[i].dy) > 0.05)
                     all = false;
                 else balls[i].dx = balls[i].dy = 0;
