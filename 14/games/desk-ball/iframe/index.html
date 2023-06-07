@@ -98,6 +98,11 @@
             var sx = moX - balls[0].x;
             var sy = moY - balls[0].y;
             var dis = Math.sqrt(sx * sx + sy * sy);
+            if (!dis){
+                mouseline = true;
+                if (!put)getObj('canhit').innerHTML = '可以击球';
+                return;
+            }
             balls[0].dx = sx / dis * (li * 4) * CS;
             balls[0].dy = sy / dis * (li * 4) * CS;
         })
@@ -115,6 +120,26 @@
                 || (ball.x > CX - 2 * HOLE * CS && ball.y > CY - 2 * HOLE * CS)
             );
         }
+
+        function moCa(dx,dy){
+            var dxneg = 1,dyneg = 1;
+            if (dx < 0)dx = -dx,dxneg = -1;
+            if (dy < 0)dy = -dy,dyneg = -1;
+            var sum = dx + dy;
+            dx -= dx / sum * 0.01;
+            dy -= dy / sum * 0.01;
+            return {
+                dx: dx * dxneg,
+                dy: dy * dyneg
+            }
+        }
+
+        function myCrashEdge(ball){
+            return ball.x <= HOLE * CS
+            || (ball.x >= CX / 2 - HOLE * CS + RADIUS * CS && ball.x <= CX / 2 + HOLE * CS + RADIUS * CS)
+            
+        }
+
         function gameLoop(){
             if (over)return;
             ctx.clearRect(0,0,CX,CY);
@@ -146,9 +171,10 @@
             var all = true;
             for (var i = 0;i < balls.length;i ++){
                 balls[i].move();
-                balls[i].dx *= 0.99;
-                balls[i].dy *= 0.99;
-                if (Math.abs(balls[i].dx) > 0.05 || Math.abs(balls[i].dy) > 0.05)
+                var dxdy = moCa(balls[i].dx,balls[i].dy);
+                balls[i].dx = dxdy.dx;
+                balls[i].dy = dxdy.dy;
+                if (Math.abs(balls[i].dx) > 0.02 || Math.abs(balls[i].dy) > 0.02)
                     all = false;
                 else balls[i].dx = balls[i].dy = 0;
                 if (balls[i].isCrashEdge(HOLE * CS,HOLE * CS,HOLE * CS,HOLE * CS).either){
