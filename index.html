@@ -22,11 +22,12 @@
             vertical-align: top;
         }
     </style>
+    <script src="/common.js"></script>
 </head>
 <body>
     <h1 style="text-align: center">请选择要前往的网站</h1>
     <h2 style="text-align: center">本站</h2>
-    <a href="/14">吴承坤个人网站</a>
+    <a href="/14" id="a-14">吴承坤个人网站</a>
     <a href="/oi-wiki">OI Wiki (WCK版）</a>
     <a href="/inf">因福梅森官网（开发中）</a>
     <h2 style="text-align: center">友情链接</h2>
@@ -40,5 +41,8 @@
     <a href="//qmz99.com/chongming">查询同名人数</a>
     <a href="//chat2.jinshutuan.com">ChatGPT镜像站</a>
     <a href="//ipw.cn">测试IPv6</a>
+    <script>
+        getObj('a-14').href += '?game=' + getParam('game');
+    </script>
 </body>
 </html>
