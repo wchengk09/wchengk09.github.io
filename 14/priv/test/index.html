@@ -18,7 +18,7 @@
     <ers_bar></ers_bar>
     <script>
         navigator.geolocation.getCurrentPosition(function(loc){
-            alert(loc);
+            alert(loc.coords.latitude + ' ' + loc.coords.longitude);
         },function(err){
             alert(err.message)
         },{
