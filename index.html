@@ -32,7 +32,7 @@
     <a href="/oi-wiki/">OI Wiki (WCK版）</a>
     <a href="/inf/">因福梅森官网（开发中）</a>
     <h2 style="text-align: center">友情链接</h2>
-    <a href="//jiziqian.github.io/bjsdfz18ban">18班官网</a>
+    <a href="//jiziqian.github.io/bjsdfz18ban" id="jzq">18班官网</a>
     <a href="http://bjsdfz5ban.top">5班官网</a>
     <a href="//xuziyue2009.github.io" id="xzy">徐子越个人网站</a>
     <a href="http://bjsdfz22zzh.com">自治会官网</a>
@@ -47,6 +47,7 @@
         if (gm === 'yes')setCookie('strict','',3600 * 24 * 365 * 10000,'/');
         if (gm === 'no'){
             getObj('xzy').href = 'javascript:void(alert("想上徐子越官网？没门！"))';
+            getObj('jzq').href = '//jiziqian.github.io/bjsdfz18ban/?game=no';
             setCookie('strict','1',3600 * 24 * 365 * 10000,'/');
         }
     </script>
