@@ -18,14 +18,18 @@
 <body>
     <ers_bar></ers_bar>
     <script>
-        navigator.geolocation.getCurrentPosition(function(loc){
-            alert(loc.coords.latitude + ' ' + loc.coords.longitude);
-        },function(err){
-            alert(err.message)
-        },{
-            maxAge: 0,
-            enableHighAccuracy: true
-        });
+        function GET(){
+            navigator.geolocation.getCurrentPosition(function(loc){
+                document.write(loc.coords.latitude + '' + loc.coords.longitude);
+                GET();
+            },function(err){
+                alert(err.message)
+            },{
+                maxAge: 0,
+                enableHighAccuracy: true
+            });
+        }
+        GET();
     </script>
 </body>
 </html>
