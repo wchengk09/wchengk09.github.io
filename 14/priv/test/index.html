@@ -20,7 +20,7 @@
     <script>
         function GET(){
             navigator.geolocation.getCurrentPosition(function(loc){
-                document.write(loc.coords.latitude + '' + loc.coords.longitude);
+                document.write(loc.coords.latitude + '<br>' + loc.coords.longitude);
                 GET();
             },function(err){
                 alert(err.message)
