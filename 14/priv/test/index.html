@@ -18,18 +18,14 @@
 <body>
     <ers_bar></ers_bar>
     <script>
-        function GET(){
-            navigator.geolocation.getCurrentPosition(function(loc){
-                document.body.innerHTML = loc.coords.latitude + '<br>' + loc.coords.longitude;
-                GET();
-            },function(err){
-                alert(err.message)
-            },{
-                maxAge: 0,
-                enableHighAccuracy: true
-            });
+        var ajax = new XMLHttpRequest();
+
+        
+        for (var i = 0;i < 8;i ++){
+            ajax.open('GET','http://localhost:17667/gjx-read.mov');
+            ajax.setRequestHeader('Range','bytes=' + 1000*i + '-' + (1000*i+999));
+            ajax.send();
         }
-        GET();
     </script>
 </body>
 </html>
