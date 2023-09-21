@@ -1,0 +1,25 @@
+#background-fill{
+    background-color: #376160;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+#foreground-fill{
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#title{
+    margin: 0;
+    padding: 8px 24px;
+}
+
+#site-name{
+    color: #fff;
+}

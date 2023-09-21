@@ -57,10 +57,7 @@ function Sleep(ms){
 }
 
 function getIP(port){
-    var ajax = new XMLHttpRequest();
-    ajax.open('GET','//wchengk09.github.io/domain/' + port + '.txt?' + Math.random(),false);
-    ajax.send();
-    return ajax.responseText;
+    return 'https://bjsdfz22zzh.com' + port;
 }
 
 function isPhone() {
