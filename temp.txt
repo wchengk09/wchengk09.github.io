@@ -1,0 +1,20 @@
+<a href="new\oyyx_zzh_wck.html">
+                <div class="news">
+                    <b>欧阳逸潇同学担任初二自治会会长</b>
+                </div>
+            </a>
+            <a href="new\csp_hzh.html">
+                <div class="news">
+                    <b>初二(17)班六位同学已顺利参加CSP初赛</b>
+                </div>
+            </a>
+            <a href="new\xtx_dlc.html">
+                <div class="news">
+                    <b>17班转来新同学</b>
+                </div>
+            </a>
+            <a href="new\nz.html">
+                <div class="news">
+                    <b>关于中国男足的新闻采访报告</b>
+                </div>
+            </a>
