@@ -1,0 +1,6 @@
+#!/bin/bash
+cd /home/kevin/www
+cd github
+git add .
+git commit -m "WCK changed some code"
+git push origin master -f
