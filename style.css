@@ -38,6 +38,11 @@
     margin-right: 32px;
 }
 
+.search-link{
+    color: black;
+    text-decoration: none;
+}
+
 .inl{
     display: inline-block;
     vertical-align: top;
