@@ -1,1 +1,1 @@
-my new file contents
+New content to be updated in the file.
