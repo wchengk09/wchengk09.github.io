@@ -1,20 +1,81 @@
-<a href="new\oyyx_zzh_wck.html">
-                <div class="news">
-                    <b>欧阳逸潇同学担任初二自治会会长</b>
-                </div>
-            </a>
-            <a href="new\csp_hzh.html">
-                <div class="news">
-                    <b>初二(17)班六位同学已顺利参加CSP初赛</b>
-                </div>
-            </a>
-            <a href="new\xtx_dlc.html">
-                <div class="news">
-                    <b>17班转来新同学</b>
-                </div>
-            </a>
-            <a href="new\nz.html">
-                <div class="news">
-                    <b>关于中国男足的新闻采访报告</b>
-                </div>
-            </a>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吴承坤个人网站</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="/common.js"></script>
+    <script defer src="/init.js"></script>
+    <script defer src="index.js"></script>
+</head>
+<body>
+    <div id="background-fill"></div>
+    <div id="transparent"></div>
+    <div id="title">
+        <img alt="wck" src="/static/wck.png" id="wck-icon">
+        <h1 id="site-name">吴承坤个人网站</h1>
+        <a id="login-p" href="/users/login">注册/登录</a>
+    </div>
+    <div id="zhanwei"></div>
+    <p id="p1" style="font-size: 80px; text-align: center; color: rgb(255,127,0)"></p>
+    <p id="p2" style="font-size: 30px; text-align: center; "></p>
+    <script>
+        var lt13s = "LHY";
+        var lt2s = "PZH";
+        var ltidx = (Math.floor(Math.random() * lt13s.length));
+        var lt13 = lt13s[ltidx];
+        var lt2 = lt2s[ltidx];
+        setTimeout(f1,500);
+        function f1(){
+            getObj("p1").innerHTML += lt13 + ' ';
+            setTimeout(f2,500);
+        }
+        function f2(){
+            getObj("p1").innerHTML += lt2 + ' ';
+            setTimeout(f3,500);
+        }
+        function f3(){
+            getObj("p1").innerHTML += lt13 + ' ';
+            setTimeout(f4,500);
+        }
+        function f4(){
+            getObj("p1").innerHTML += '?????';
+            setTimeout(f5,500);
+        }
+        function f5(){
+            getObj("p2").innerHTML += lt13 + '=4&emsp;';
+            setTimeout(f6,500);
+        }
+        function f6(){
+            getObj("p2").innerHTML += lt2 + '=0';
+            setTimeout(f7,500);
+        }
+        function f7(){
+            getObj("p1").innerHTML = lt13 + ' ' + lt2 + ' ' + lt13;
+            setTimeout(f8,500);
+        }
+        function f8(){
+            getObj("p2").innerHTML = "<span class=\"txtred\">" + lt13 + "=4</span>&emsp;" + lt2 + "=0";
+            setTimeout(f9,500);
+        }
+        function f9(){
+            getObj("p1").innerHTML = '<span class=\"txtred\">4</span> ' + lt2 + ' <span class=\"txtred\">4</span>';
+            setTimeout(f10,500);
+        }
+        function f10(){
+            getObj("p2").innerHTML = lt13 + '=4&emsp;<span class=\"txtyellow\">' + lt2 + '=0</span>';
+            setTimeout(f11,500);
+        }
+        function f11(){
+            getObj("p1").innerHTML = '<span class=\"txtred\">4</span> <span class=\"txtyellow\">0</span> <span class=\"txtred\">4</span>';
+            setTimeout(f12,500);
+        }
+        function f12(){
+            getObj("p1").innerHTML = "4 0 4";
+            getObj("p2").innerHTML = "你要访问的页面不存在！";
+        }
+    </script>
+</body>
+</html>

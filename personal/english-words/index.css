@@ -1,0 +1,17 @@
+#main{
+    width: calc(100vw - 112px);
+    height: calc(100vh - 105px - 96px);
+    margin: 16px;
+    padding: 32px;
+    background-color: #fff;
+}
+
+#word{
+    font-size: 48px;
+    text-align: center;
+}
+
+#number{
+    font-size: 24px;
+    text-align: center;
+}

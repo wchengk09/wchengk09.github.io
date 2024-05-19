@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        body{
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+        }
+        #clock{
+            color: #fff;
+            font-weight: 900;
+            font-size: 96px;
+            position: absolute;
+            left: 50vw;
+            top: 50vh;
+            transform: translate(-50%,-60%);
+        }
+    </style>
+</head>
+<body>
+    <div id="clock"></div>
+    <script>
+        function twoDigits(x){
+            if (x >= 10)return '' + x;
+            return '0' + x;
+        }
+        var first = true;
+        function dispTime(){
+            var date = new Date();
+            document.getElementById('clock').innerHTML = 
+                twoDigits(date.getHours()) + ':' + twoDigits(date.getMinutes()) + ':' + twoDigits(date.getSeconds());
+            if (first)setTimeout(dispTime,1000 - date.getMilliseconds());
+            else setTimeout(dispTime,500);
+        }
+        window.addEventListener('load',function(){
+            dispTime();
+        })
+    </script>
+</body>
+</html>

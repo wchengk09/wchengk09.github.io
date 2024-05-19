@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEX IQ PID模拟器</title>
+</head>
+<body>
+    <p id="stat"></p>
+    <canvas id="xc" width="800" height="600" style="border: 1px solid black;">
+        你的浏览器不支持canvas。
+    </canvas>
+    <script>
+        var canvas = document.getElementById('xc');
+        var ctx = canvas.getContext('2d');
+        var X = 400,Y = 0,deg = Math.PI / 4;
+        var vLeft = 0,vRight = 0;
+
+        const LEFT = 1.0,RIGHT = 0.99;
+        const D = 60;
+
+        function drawRobot(){
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0,0,800,600);
+            ctx.beginPath();
+            ctx.arc(400,0,D / 2,deg + Math.PI / 2,deg - Math.PI / 2,true);
+            ctx.fillStyle = '#aaf';
+            ctx.fill();
+            console.log('stroke');
+        }
+
+        drawRobot();
+
+        function debian(s1,s2){
+            var flag = false;
+            if (s1 > s2){
+                [s1,s2] = [s2,s1];
+                flag = true;
+            }
+            // var r = 
+        }
+        
+        function moveRobot(){
+            
+            requestAnimationFrame(moveRobot);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线台球模拟器(3D版) | 吴承坤个人网站</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script defer src="index.js"></script>
+    <script src="/common.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/three.js/0.156.1/three.min.js"></script>
+    <script src="https://johnson2heng.github.io/three.js-demo/lib/threebsp.js"></script>
+</head>
+<body>
+    <div id="background-fill"></div>
+    <div id="transparent"></div>
+    <div id="title">
+        <img alt="wck" src="/static/wck.png" id="wck-icon" onclick="location.href = '/'">
+        <h1 id="site-name">吴承坤个人网站</h1>
+        <a id="login-p" href="/users/login">注册/登录</a>
+    </div>
+    <div id="zhanwei"></div>
+    <canvas id="mainCanvas" width="1000" height="500"></canvas>
+</body>
+</html>

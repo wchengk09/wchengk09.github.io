@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组合数、杨辉三角与二项式定理</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" integrity="sha512-LQNxIMR5rXv7o+b1l8+N1EZMfhG7iFZ9HhnbJkTp4zjNr5Wvst75AqUeFDxeRUa7l5vEDyUiAip//r+EFLLCyA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <script src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.8/contrib/auto-render.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" integrity="sha512-iWiuBS5nt6r60fCz26Nd0Zqe0nbk1ZTIQbl3Kv7kYsX+yKMUFHzjaH2+AnM6vp2Xs+gNmaBAVWJjSmuPw76Efg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        #background{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: -1;
+            background-image: url("/static/fz2.jpg");
+            background-size: 100% 100%;
+        }
+        page{
+            display: block;
+            width: calc(100vw - 144px);
+            min-height: calc(100vh - 144px);
+            padding: 48px;
+            margin: 12px;
+            margin-bottom: 24px;
+            background-color: rgba(255,255,255,92%);
+        }
+        blue{
+            color: rgb(84,127,206);
+            font-weight: bold;
+        }
+        red{
+            color: red;
+            font-weight: bold;
+        }
+        h1{
+            font-size: 96px;
+            max-width: 50vw;
+        }
+        h2{
+            font-size: 36px;
+            color: rgb(84,127,206);
+        }
+        p{
+            line-height: 48px;
+            font-size: 24px;
+        }
+        half{
+            display: inline-block;
+            width: 49%;
+            margin: 0;
+            padding: 0;
+            vertical-align: top;
+        }
+        .ft60{
+            font-size: 60px;
+        }
+        img{
+            width: 100%;
+        }
+    </style>
+    <script>
+        function Render(){
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: true},
+                    {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+                    {left: "\\begin{align}", right: "\\end{align}", display: true},
+                    {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+                    {left: "\\begin{gather}", right: "\\end{gather}", display: true},
+                    {left: "\\begin{CD}", right: "\\end{CD}", display: true},
+                    {left: '\\[', right: '\\]', display: false}
+                ],
+                throwOnError : true,
+                ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code", "option"]
+            });
+        }
+        window.addEventListener('load',Render);
+    </script>
+</head>
+<body>
+    <div id="background"></div>
+    <page>
+        <h1>
+            <blue>组合数、杨辉三角与二项式定理</blue>
+        </h1>
+        <h2>
+            By WCK
+        </h2>
+    </page>
+    <page>
+        <h2>目录</h2>
+        <p>
+            0. 引言<br>
+            1. 组合数学初步<br>
+            &emsp;&emsp;1.0 加法原理与乘法原理<br>
+            &emsp;&emsp;1.1 排列数<br>
+            &emsp;&emsp;1.2 组合数<br>
+            2. 杨辉三角<br>
+            &emsp;&emsp;2.0 定义<br>
+            &emsp;&emsp;2.1 性质<br>
+            3. 二项式定理<br>
+            &emsp;&emsp;3.0 二项式定理<br>
+            &emsp;&emsp;3.1 二项式定理与杨辉三角<br>
+        </p>
+    </page>
+    <page>
+        <h2>0. 引言</h2>
+        <p>学完完全平方公式之后，我们知道：</p>
+        <p>$(a+b)^2=a^2+2ab+b^2$</p>
+        <p>于是我们想：</p>
+        <p>$(a+b)^3=?$</p>
+        <p>$(a+b)^4=?$</p>
+        <p>......</p>
+        <p>$(a+b)^n=?$</p>
+    </page>
+    <page>
+        <h2>0. 引言</h2>
+        <half>
+            <p style="font-size: 96px;">$(a+b)^n$</p>
+            <p>为什么杨辉三角的某一行</p>
+            <p>恰好是$(a+b)^n$每一项的系数？</p>
+        </half>
+        <half>
+            <img src="yh.png" alt="yh">
+        </half>
+    </page>
+    <page>
+        <h2>温馨提示</h2>
+        <p class="ft60"><red>以下内容大部分为超纲内容，听不懂没关系。</red></p>
+    </page>
+    <page>
+        <h2>1.0 加法原理与乘法原理</h2>
+        <p><red>加法原理：</red>如果完成一件事有 $n$ 种<red>方式</red>，每一种方式分别有 $a_1,a_2,...,a_n $种方法完成这件事，那么这件事总共有 $a_1+a_2+...+a_n$ 种方法。</p>
+        <p><red>乘法原理：</red>如果完成一件事需要 $n$ 个<red>步骤</red>，每个步骤下面分别有 $a_1,a_2,...,a_n$ 种方法完成这件事，那么这件事总共有 $a_1\times a_2\times ...\times a_n$ 种方法。</p>
+        <p class="ft60"><red>有啥区别？？？</red></p>
+    </page>
+    <page>
+        <h2>举个栗子</h2>
+        <half>
+            <p>如右图所示，有26个英文字母和10个数字。</p>
+            <p>1. 从中选择一个字母<red>或</red>一个数字，有多少种方法？</p>
+            <p>2. 从中选择一个字母<red>，再</red>选择一个数字，有多少种方法？</p>
+        </half>
+        <half>
+            <img src="letter.png "alt="letter">
+        </half>
+    </page>
+    <page>
+        <h2>举个栗子</h2>
+        <p>1. 从中选择一个字母<red>或</red>一个数字，有多少种方法？</p>
+        <p>注意到，“从中选择一个字母或一个数字”是一件事。</p>
+        <p>而完成这件事有两种<red>方式</red>：(1)选择一个字母。(2)选择一个数字。</p>
+        <p>这两种方式，你<red>只能选择其中一种</red>，不能两种都选，也不能都不选。</p>
+        <p>因此，我们应该使用<red>加法原理。</red></p>
+    </page>
+    <page>
+        <h2>举个栗子</h2>
+        <p>1. 从中选择一个字母<red>或</red>一个数字，有多少种方法？</p>
+        <p>第一种方式：选择一个字母。由于字母有 $26$ 个，所以选择字母有 $26$ 种方法。</p>
+        <p>第二种方式：选择一个数字，同理有 $10$ 种方法。</p>
+        <p>运用加法原理，完成这件事的方法数为 $26+10=36$。</p>
+    </page>
+    <page>
+        <h2>举个栗子</h2>
+        <p>2. 从中选择一个字母<red>，再</red>选择一个数字，有多少种方法？</p>
+        <p>这件事有两个<red>步骤</red>：(1)先选择一个字母；(2)再选择一个数字。</p>
+        <p>这两个步骤必须<red>都做一遍</red>，才能完成这件事。并且<red>不论你第一步选择什么字母，第二步都要选择一个数字。</red></p>
+        <p>所以应该将两个方法数<red>乘起来</red>，故应该使用<red>乘法原理</red>。</p>
+        <p>总方法数为 $26\times 10=260$ 。</p>
+    </page>
+    <page>
+        <h2>方式和步骤的区别</h2>
+        <p><red>$n$种方式</red>：如果完成一件事有 $n$ 种方式，那么这 $n$ 种方式当中，你<red>只能选择其中一种方式</red>，不能多选，也不能少选。这种情况应该使用<red>加法原理</red>。</p>
+        <p><red>$n$个步骤</red>：如果完成一件事有 $n$ 个步骤，那么这 $n$ 个步骤必须<red>依次进行，一个步骤也不能少。</red>这种情况应使用<red>乘法原理</red>。</p>
+        <p>简单理解：如果是<red>“先……再……”</red>则用乘法原理，<red>“……或……”</red>则用加法原理。</p>
+        <br><br>
+        <p>加法原理和乘法原理可能难以理解（尤其是对文科生而言），但是这两个原理<red>非常重要，是组合数学的大门</red>。</p>
+    </page>
+    <page>
+        <h2>例题</h2>
+        <p><p>选择一个字母或数字，再选择一个字母或数字，有多少种方法？</p></p>
+    </page>
+    <page>
+        <h2>例题</h2>
+        <p>选择一个字母或数字，再选择一个字母或数字，有多少种方法？</p>
+        <p>解析：这个问题总体上可以分为两个<red>步骤</red>：(1)选择一个字母或数字。(2)再选择一个字母或数字。</p>
+        <p>而两个步骤都有两种<red>方式</red>完成：(1)选择一个字母。(2)选择一个数字。</p>
+        <p>所以，我们应该使用加法原理计算每个步骤的方案数，再将结果乘起来。</p>
+        <p>总方案数为 $(26+10)\times (26+10)=1296$ 。</p>
+    </page>
+    <page>
+        <h2>1.1 排列数</h2>
+        <half>
+            <p>例1：DLC、XZY、WCK三位同学去秋游，想站成一排，合影留念。请问这 $3$ 位同学站成一排有多少种排列方法？</p>
+        </half>
+        <half>
+            <img src="3xiao.jpeg" alt="17班三小只">
+        </half>
+    </page>
+    <page>
+        <h2>例1</h2>
+        <half>
+            <p>这个问题相当于：有$3$个人和$3$个空位（如右图所示），每个空位上都要站一个人，这样就可以得到一种排列方式了。</p>
+            <p>我们首先考虑最左边那个空位。显然，这个空位DLC、XZY、WCK都可以站，因此这个空位上的人有 $3$ 种情况。</p>
+        </half>
+        <half>
+            <img src="a1.png" alt="A">
+        </half>
+    </page>
+    <page>
+        <h2>例1</h2>
+        <half>
+            <p>再看看第二个空位。由于<red>第一个空位已经站了一个人了，这个人不能再站在第二个空位上了</red>，所以第二个空位只有$2$个人可以站，共有 $2$ 种情况。</p>
+            <p>等到第三个空位的时候，已经有两个人分配完了，只剩下一个人了，所以只能这个人站在第三个空位上了。（可怜孩子～）总共有$1$种情况。</p>
+            <p>所以总方案数为 $3(\ \ )2(\ \ )1$。</p>
+            <p><red>思考：括号中的运算符号应该是加号还是乘号？</red></p>
+        </half>
+        <half>
+            <img src="a1.png" alt="A">
+        </half>
+    </page>
+    <page>
+        <h2>例1</h2>
+        <half>
+            <p>注意到，我们是先考虑第一个位置，再考虑第二个位置，再考虑第三个位置。</p>
+            <p>因此，我们是<red>一步一步</red>完成这个问题的，分了三个<red>步骤</red>。</p>
+            <p>因此，应该使用<red>乘法原理</red>。</p>
+            <p>总排列方法数为$3\times 2\times 1=6$ 。</p>
+        </half>
+        <half>
+            <img src="a1.png" alt="A">
+        </half>
+    </page>
+    <page>
+        <h2>1.1 排列数</h2>
+        <p>例2：17班<red>49位同学</red>当中，需要选出 $3$ 位同学站成一排，拍一张照，有几种方法？</p>
+    </page>
+    <page>
+        <h2>例2</h2>
+        <half>
+            <p>例2：17班<red>49位同学</red>当中，需要选出 $3$ 位同学站成一排，拍一张照，有几种方法？</p>
+            <p>与上一道题一样，还是有 $3$ 个空位，每个空位需要站一名同学。</p>
+            <p>第一个空位站的人有 $49$ 种情况，第二个有 $48$ 种情况，第三个有 $47$ 种情况。（与上文同理）</p>
+            <p>所以方案数为 $49\times 48\times 47$ 。</p>
+        </half>
+        <half>
+            <img src="a2.png" alt="A">
+        </half>
+    </page>
+    <page>
+        <h2>1.2 排列数</h2>
+        <p>注意到：上面两个问题都是“从$n$个人中选出$m$个人排成一排，有多少种方案”的问题。</p>
+        <p>我们定义 $A_n^m$ 表示<red>从$n$个物品中选出$m$个排成一排</red>的方案数，称为<red>排列数</red>。</p>
+        <p>$A_n^m$的计算公式是什么呢？</p>
+        <p>类似刚才的方法，这个问题相当于有 $m$ 个空位，每个空位对应一个物品。</p>
+        <p>第一个空位的物品有 $n$ 种可能，第二个空位有 $n-1$ 种可能，……，最后一个空位有 $n-m+1$ 种可能。</p>
+        <p>故$A_n^m=n\times(n-1)\times(n-2)\times...\times(n-m+1)$。</p>
+    </page>
+    <page>
+        <h2>1.1 排列数</h2>
+        <p>记忆技巧：<red>从$n$开始，往下乘$m$个整数，</red>就是$A_n^m$ 。</p>
+        <p>什么意思呢？</p>
+        <p>比如我们要计算 $A_6^3$ 。</p>
+        <p>从 $6$ 开始，往下找 $3$ 个整数：$6$ ，$5$，$4$ 。</p>
+        <p>把它们乘起来，得$A_6^3=6\times 5\times 4=120$ 。</p>
+        <p>很简单，对吧（bushi</p>
+    </page>
+    <page>
+        <h2>排列数的性质</h2>
+        <p>(1) $A_n^0=1$ 。</p>
+        <p>解析：$A_n^0$相当于从$n$个物品中选出 $0$ 个物品排成一排。这时候只有一种情况，就是啥也不选。<red>注意 $n$ 个物品中选出 $0$ 个物品的方案数是 $1$ 种，不是 $0$ 种！！！</red></p>
+        <p>(2) $A_n^n=n\times(n-1)\times(n-2)\times...\times 1$。</p>
+        <p>解析：由排列数公式可知，$A_n^n$相当于从 $n$ 开始，往下乘 $n$ 个数，即 $n$ 一直乘到 $1$ 。</p>
+    </page>
+    <page>
+        <h2>练习题</h2>
+        <p>计算：（只需要列出式子，不需要求出具体的值）</p>
+        <p>(1)$A_5^2$</p>
+        <p>(2)$A_6^4$</p>
+        <p>(3)$A_{10}^1$</p>
+        <p>(4)$A_4^3$</p>
+    </page>
+    <page>
+        <h2>1.2 组合数</h2>
+        <p>例：17班想从49名同学中选出 $3$ 个人<red>参加活动</red>，有多少种方案？（注意选择的人是<red>无顺序</red>的，也就是说：先选你再选我，和先选我再选你，是一样的。只要选择的人相同，就算作同一种方案）</p>
+    </page>
+    <page>
+        <h2>1.2 组合数</h2>
+        <p>例：17班想从49名同学中选出 $3$ 个人<red>参加活动</red>，有多少种方案？（注意选择的人是<red>无顺序</red>的，也就是说：先选你再选我，和先选我再选你，是一样的。只要选择的人相同，就算作同一种方案）</p>
+        <p>又是从 $n$ 个人中选出 $m$ 个人，这跟排列数多像啊！于是你本能地想到：共有$A_{49}^3=49\times 48\times 47$ 种方法。</p>
+        <p>但是由于选择是无顺序的，使用排列数可能会造成<red>重复统计</red>。</p>
+        <p>比如我选了DLC、XZY、WCK三个人。如果使用排列数的方法计算答案，那么先选DLC、再选XZY、再选WCK，和先选XZY、再选WCK、再选DLC都会被统计。但是这两种方案选择的人都是相同的，只是选择顺序不同，应该算作同一种方案。</p>
+        <p>换句话说，<red>$A_n^m$ 是有顺序的</red>。（相同的人，不同的顺序算作不同方案）</red></p>
+    </page>
+    <page>
+        <h2>例</h2>
+        <p>那么DLC、XZY、WCK这个组合会被重复计算多少次呢？</p>
+        <p>注意到这个问题和“DLC、XZY、WCK三个人排成一排，有几种方案"是<red>等价的</red>。</p>
+        <p>所以，“DLC、XZY、WCK“这个方案一共计算了 $A_3^3=6$次。</p>
+    </page>
+    <page>
+        <h2>例</h2>
+        <p>事实上，每一种方案都会被重复统计 $6$ 次。</p>
+        <p>那怎么办？直接将 $A_{49}^3$ 除以 $6$ ，就是方案数！</p>
+        <p>所以，本题方案数为 $\frac{A_{49}^3}{A_3^3}=\frac{49\times 48\times 47}{3\times 2\times 1}=\frac{49\times 48\times 47}{6}$ 。</p>
+    </page>
+    <page>
+        <h2>1.2 组合数</h2>
+        <p>我们定义 $C_n^m$ 表示<red>从$n$个物品中选出$m$个物品（无顺序）</red> 的方案数。</red></p>
+        <p>由上面的例子可得$C_n^m$ 的计算公式：$C_n^m=\frac{A_n^m}{A_m^m}$ 。</p>
+        <p>即：从 $n$ 个物品当中<red>有顺序</red>选出$m$个物品的方案数为$A_n^m$ 。但是因为选择无顺序，所以每一种选择方案都会被计算$A_n^m$ 次。所以需要除以 $A_n^m$ 。</p>
+    </page>
+    <page>
+        <h2>练习题</h2>
+        <p>计算：（只需要列出式子，不需要求出具体的值）</p>
+        <p>(1)$C_{10}^5$</p>
+        <p>(2)$C_{6}^2$</p>
+        <p>(3)$C_8^7$</p>
+    </page>
+    <page>
+        <h2>性质</h2>
+        <p>1. <red>$C_n^0=C_n^n=1$。</red></p>
+        <p>解析：$C_n^0$ 相当于从 $n$ 个物品中取出 $0$ 个物品，只有一种情况，什么也不选。</p>
+        <p>$C_n^n$ 相当于从 $n$ 个物品中选出 $n$ 个物品，只有一种情况，全选。</p>
+        <p>2. $C_n^m=C_n^{n-m}$ 。</p>
+        <p>解析：从$n$个物品中选出$m$ 个物品，相当于从 $n$个物品中<red>排除掉</red>$n-m$个物品不选，选择剩下的$m$ 个物品。</p>
+    </page>
+    <page>
+        <h2>性质</h2>
+        <half>
+            <p>3. <red>（非常重要）$C_n^m=C_{n-1}^{m-1}+C_{n-1}^m$</red>。</p>
+            <p>解析：在$n$个物品中选择$m$个物品，有两种<red>方式</red>。</p>
+            <p>方式一：选择<red>最后一个物品</red>。此时，在前$n-1$个物品当中，由于最后一个物品已经选上了，所以只需要再选$m-1$个物品。这种方式的方案数为 $C_{n-1}^{m-1}$。</p>
+            <p>方式二：<red>不选择</red>最后一个物品。此时需要在前 $n-1$个物品当中选择 $m$ 个，这种方式的方案数为 $C_{n-1}^m$ 。</p>
+        </half>
+        <half>
+            <img src="c.png" alt="c">
+        </half>
+    </page>
+    <page>
+        <h2>性质</h2>
+        <p>这两种<red>方式</red>应该使用<red>加法原理</red>加起来。因此，$C_n^m=C_{n-1}^{m-1}+C_{n-1}^m$ 。</p>
+        <p>综合上述性质，我们可以得出$C_n^m$ 的另一个等式：</p>
+        <p>$$C_n^m=\begin{cases}1, & m=0\text{或}m=n\\C_{n-1}^{m-1}+C_{n-1}^m, & 0\lt m\lt n\end{cases}$$</p>
+    </page>
+    <page>
+        <h2>练习题2</h2>
+        <p>利用组合数的性质快速计算：</p>
+        <p>$C_{2236}^{2235}=$?</p>
+    </page>
+    <page>
+        <p><red class="ft60">讲了那么半天，</red></p>
+        <p><red class="ft60">跟$(a+b)^n$有啥关系？</red></p>
+        <br>
+    </page>
+    <page>
+        <h2>2.0 杨辉三角的定义</h2>
+        <half>
+            <p><red>杨辉三角</red>是一种由数字组成的三角形。</p>
+            <p>它每行的<red>第一个数</red>和<red>最后一个数都是1</red>，</p>
+            <p>其余每个数等于它<red>左上方的数</red>与<red>右上方的数</red>的和。</p>
+        </half>
+        <half>
+            <img src="yh.png" alt="yh">
+        </half>
+    </page>
+    <page>
+        <h2>2.0 杨辉三角的定义</h2>
+        <half>
+            <p>为了接下来叙述方便，按照右图方式定义杨辉三角的<red>行</red>和<red>列</red>。</p>
+            <p>注意：行、列<red>均从0开始编号</red>。</p>
+        </half>
+        <half>
+            <img src="yh-rc.png" alt="yh-rc">
+        </half>
+    </page>
+    <page>
+        <h2>2.1 杨辉三角的性质</h2>
+        <half>
+            <p>杨辉三角每行的<red>第一个数</red>和<red>最后一个数都是1</red>，其余每个数等于它<red>左上方的数</red>与<red>右上方的数</red>的和。</p>
+            <p>设 $f(n,m)$ 表示杨辉三角第 $n$ 行第 $m$ 列的数，你能根据杨辉三角的定义，写出一个关于 $f$ 的等式吗？</p>
+            <p>提示：思考一下，第 $n$ 行第 $m$ 列的数，它左上方和右上方的数分别是第几行，第几列。</p>
+        </half>
+        <half>
+            <img src="yh-rc.png" alt="yh">
+        </half>
+    </page>
+    <page>
+        <h2>2.1 杨辉三角的性质</h2>
+        <half>
+            <p>可以得到等式：</p>
+            <p style="font-size: calc(50vw / 40)">$$f(n,m)=\begin{cases}1, & m=0\text{或}m=n\\f(n-1,m-1)+f(n-1,m), & 0\lt m\lt n\end{cases}$$</p>
+            <p><red>是不是很熟悉？</red></p>
+        </half>
+        <half>
+            <img src="yh-rc.png" alt="yh">
+        </half>
+    </page>
+    <page>
+        <h2>2.1 杨辉三角的性质</h2>
+        <p>$$f(n,m)=\begin{cases}1, & m=0\text{或}m=n\\f(n-1,m-1)+f(n-1,m), & 0\lt m\lt n\end{cases}$$</p>
+        <p>$$C_n^m=\begin{cases}1, & m=0\text{或}m=n\\C_{n-1}^{m-1}+C_{n-1}^m, & 0\lt m\lt n\end{cases}$$</p>
+        <p><red>这两个式子居然一模一样！！！</red></p>
+        <p>也就是说，$f(n,m)$ 和 $C_n^m$ 是等价的。</p>
+        <p>于是我们得到了杨辉三角最重要的性质：<red>杨辉三角第 $n$ 行第 $m$ 列的数等于 $C_n^m$ 。</red></p>
+    </page>
+    <page>
+        <h2>3.0 二项式定理</h2>
+        <p class="ft60">$(a+b)^n$=?</p>
+        <p>到底等于多少？</p>
+        <p>我们接下来将以 $(a+b)^3$ 为例，介绍 $(a+b)^n$ 的计算方法。</p>
+    </page>
+    <page>
+        <h2>3.0 二项式定理</h2>
+        <p>首先我们需要知道<red>若干个多项式相乘的法则</red>：几个多项式相乘，<red>从每个多项式中取一项，乘起来，再将所得的积相加。</red></p>
+        <p>啥意思呢？我们以$(a+b)^3=(a+b)(a+b)(a+b)$ 为例。</p>
+        <p>这是3个多项式相乘，从每一个多项式中取一项相乘，有如下几种方法：</p>
+        <p>1. 三个多项式都取 $a$ 这一项，乘积为 $a\cdot a\cdot a=a^3$ 。</p>
+        <p>2. 三个多项式分别取 $a,a,b$ ，乘积为$a\cdot a\cdot b=a^2b$ 。</p>
+        <p>3. 三个多项式分别取 $a,b,a$ ，乘积为 $a\cdot b\cdot a=a^2b$ 。</p>
+    </page>
+    <page>
+        <h2>3.0 二项式定理</h2>
+        <p>$(a+b)(a+b)(a+b)$</p>
+        <p>4. 三个多项式分别取 $a,b,b$ ，乘积为 $a\cdot b\cdot b=ab^2$ 。</p>
+        <p>5. 三个多项式分别取 $b,a,a$ ，乘积为 $b\cdot a\cdot a=a^2b$ 。</p>
+        <p>6. 三个多项式分别取 $b,a,b$ ，乘积为 $b\cdot a\cdot b=ab^2$ 。</p>
+        <p>7. 三个多项式分别取 $b,b,a$ ，乘积为 $b\cdot b\cdot a=ab^2$ 。</p>
+        <p>8. 三个多项式都取 $b$ 这一项，乘积为 $b\cdot b\cdot b=b^3$ 。</p>
+        <p>所以这三个多项式的乘积为 $a^3+a^2b+a^2b+ab^2+a^2b+ab^2+ab^2+b^3=a^3+3a^2b+3ab^2+b^3$ 。</p>
+    </page>
+    <page>
+        <h2>3.0 二项式定理</h2>
+        <p>$(a+b)(a+b)(a+b)$ </p>
+        <p>我们发现，这样实在太慢了。怎么加速呢？</p>
+        <p>注意到，上述过程中，很多项都是重复的。</p>
+        <p>例如，三个多项式分别取 $a,a,b$ 、$a,b,a$ 、$b,a,a$ 这三项，相乘的结果都是 $a^2b$ 。</p>
+        <p>不妨思考：有几种取法，能得到 $a^2b$ 这一项？</p>
+    </page>
+    <page>
+        <h2>3.0 二项式定理</h2>
+        <p>$(a+b)(a+b)(a+b)$</p>
+        <p>我们可以发现，只要有 $2$ 个多项式选的是 $a$ ，其他 $1$ 个多项式选的是 $b$ ，乘积就是 $a^2b$ 。</p>
+        <p>总共有多少种选法呢？</p>
+        <p>注意到，我们选择了两个 $a$ 后，剩下的 $b$ 的位置就固定了。</p>
+        <p>比如，如果我们第一个多项式和第三个多项式都选 $a$ 这一项，那么第二个多项式只能选 $b$ 。</p>
+        <p>因此，我们只需要在 $3$ 个多项式中选出两个，都取 $a$ 这一项就行了。</p>
+    </page>
+    <page>
+        <h2>3.0 二项式定理</h2>
+        <p>$(a+b)(a+b)(a+b)$</p>
+        <p>注意到这两个 $a$ 的选择是<red>无序</red>的。</p>
+        <p>因此应该使用<red>组合数</red>。</p>
+        <p>在 $3$ 个多项式中选出 $2$ 个，都取 $a$ 这一项，总方案数为 $C_3^2=3$ 。</p>
+        <p>所以这一项会被重复加 $3$ 次，故系数为 $3$ 。</p>
+    </page>
+    <page>
+        <h2>3.0 二项式定理</h2>
+        <p>同理，$a^3$ 这一项，必须每个多项式都取出 $a$ 这一项，才能得到 $a^3$ 。</p>
+        <p>因此 $a^3$ 有 $C_3^3=1$ 中方法得到，故系数为 $1$ 。</p>
+        <p>所以，$(a+b)^3=C_3^3a^3+C_3^2a^2b+C_3^1ab^2+C_3^0b^3$</p>
+        <p>$=a^3+3a^2b+3ab^2+b^3$ 。</p>
+    </page>
+    <page>
+        <h2>练习题</h2>
+        <p>计算：$(a+b)^5=?$</p>
+    </page>
+    <page>
+        <h2>练习题</h2>
+        <p>$(a+b)^5$</p>
+        <p>$=(a+b)(a+b)(a+b)(a+b)(a+b)$</p>
+        <p>$=C_5^5a^5+C_5^4a^4b+C_5^3a^3b^2+C_5^2a^2b^3+C_5^1ab^4+C_5^0b^5$ </p>
+        <p>$=a^5+5a^4b+10a^3b^2+10a^2b^3+5ab^4+b^5$ 。</p>
+        <p></p>
+    </page>
+    <page>
+        <h2>3.0 二项式定理</h2>
+        <p>推广到$(a+b)^n$的情况，我们可以得到：</p>
+        <p>$(a+b)^n=C_n^n\cdot a^n+C_n^{n-1}\cdot a^{n-1}b+C_n^{n-2}\cdot a^{n-2}b^2+...+C_n^2\cdot a^2b^{n-2}+C_n^1\cdot ab^{n-1}+C_n^0\cdot b^n$</p>
+        <p>这样我们就得到了$(a+b)^n$的展开式。这个展开的方法被称为<red>二项式定理</red>。</p>
+        <p>记忆技巧：注意到展开式中的每一项都是 $C_n^k\cdot a^kb^{n-k}$的形式，且$k$从$n$依次取到 $0$ 。</p>
+        <p>当然，<red>知道公式的原理</red>，更方便记忆。</p>
+    </page>
+    <page>
+        <h2>3.1 二项式定理与杨辉三角</h2>
+        <half>
+            <p>二项式定理我还是死活记不住，怎么办？</p>
+            <p>根据杨辉三角的性质（杨辉三角第 $n$ 行第 $m$ 列的数等于 $C_n^m$），我们可以知道：杨辉三角第 $n$ 行的每一个数从左往右依次是 $C_n^0,C_n^1,C_n^2,...,C_n^n$ 。</p>
+            <p>而 $(a+b)^n$ 的每一项系数分别是 $C_n^n,C_n^{n-1},C_n^{n-2},...,C_n^2,C_n^1,C_n^0$ 。</p>
+        </half>
+        <half>
+            <img src="yh-rc.png" alt="yh">
+        </half>
+    </page>
+    <page>
+        <h2>3.1 二项式定理与杨辉三角</h2>
+        <p>杨辉三角：$C_n^0,C_n^1,C_n^2,...,C_n^{n-2},C_n^{n-1},C_n^n$</p>
+        <p>每项系数：$C_n^n,C_n^{n-1},C_n^{n-2},...,C_n^2,C_n^1,C_n^0$</p>
+        <p>根据组合数的性质，我们可以知道：</p>
+        <p>$C_n^0=C_n^n$</p>
+        <p>$C_n^1=C_n^{n-1}$</p>
+        <p>$\cdots$</p>
+        <p>$C_n^n=C_n^0$</p>
+        <p>也就是说，$(a+b)^n$每一项的系数与杨辉三角第 $n$ 行的每个数是相等的。</p>
+    </page>
+    <page>
+        <h2>3.1 二项式定理与杨辉三角</h2>
+        <half>
+            <p>这样，我们就得到了计算 $(a+b)^n$ 展开式的另一种方法：</p>
+            <p><red>杨辉三角第 $n$ 行的每个数分别是 $(a+b)^n$ 展开式每一项的系数。</red></p>
+            <p>比如：$(a+b)^3$</p>
+            <p>杨辉三角第3行的四个数依次是：$1,3,3,1$ 。</p>
+            <p>所以 $(a+b)^3=1\cdot a^3+3\cdot a^2b+3\cdot ab^2+1\cdot b^3$ 。</p>
+        </half>
+        <half>
+            <img src="yh-rc.png" alt="yh">
+        </half>
+    </page>
+    <page>
+        <h2>练习题</h2>
+        <half>
+            <p>利用杨辉三角计算：</p>
+            <p>$(a+b)^5=$?</p>
+        </half>
+        <half>
+            <img src="yh-rc.png" alt="yh">
+        </half>
+    </page>
+    <page>
+        <h2>练习题</h2>
+        <half>
+            <p>利用杨辉三角计算：</p>
+            <p>$(a+b)^5$</p>
+            <p>$=1\cdot a^5+5\cdot a^4b+10\cdot a^2b^3+10\cdot a^3b^2+5\cdot a^4b+1\cdot b^5$</p>
+            </p>
+        </half>
+        <half>
+            <img src="yh-rc.png" alt="yh">
+        </half>
+    </page>
+    <page>
+        <h1><blue>谢谢大家！</blue></h1>
+        <h2>By. WCK</h2>
+    </page>
+</body>
+</html>

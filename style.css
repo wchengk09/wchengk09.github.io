@@ -1,5 +1,16 @@
 #background-fill{
-    background-color: #376160;
+    background-image: url('/static/fz2.jpg');
+    background-size: 100% 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -2;
+}
+
+#transparent{
+    background-color: rgba(255,255,255,90%);
     position: fixed;
     left: 0;
     right: 0;
@@ -16,18 +27,24 @@
 }
 
 #title{
-    margin: 0;
-    padding: 8px 24px;
+    padding: 2px 24px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: rgb(236,236,236);
 }
 
 #site-name{
-    color: #fff;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 20px;
 }
 
 .search-results{
-    margin: 16px;
+    margin: 20px;
     padding: 16px;
-    background-color: rgb(236,236,236);
+    background-color: #ffffff;
     border-radius: 32px;
 }
 
@@ -46,4 +63,98 @@
 .inl{
     display: inline-block;
     vertical-align: top;
+}
+
+#wck-icon{
+    width: 24px;
+    height: 24px;
+    padding-right: 8px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#zhanwei{
+    width: 100%;
+    height: 60px;
+    margin: 0;
+}
+
+#title-bar-right{
+    position: absolute;
+    right: 16px;
+    top: 16px;
+}
+
+a.login-p{
+    margin-left: 8px;
+    color: #000;
+    text-decoration: none;
+}
+
+a.login-p:hover{
+    margin-left: 8px;
+    color: rgb(0,87,213);
+    text-decoration: none;
+}
+
+#content-fixed{
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    top: 112px;
+    bottom: 16px;
+    z-index: -1;
+    background-color: #fff;
+    border-radius: 32px;
+}
+
+.inl{
+    display: inline-block;
+}
+
+.mid{
+    vertical-align: middle;
+}
+
+div.card,div.card:hover{
+    display: inline-block;
+    width: 240px;
+    height: 120px;
+    padding: 16px;
+    margin: 16px;
+    vertical-align: top;
+    background: linear-gradient(135deg,#f0f0f3,#ffffff);
+    position: relative;
+}
+
+div.card{
+    box-shadow: 8px 8px 20px rgba(55,99,170,10%), -8px -8px 20px #fff;
+}
+
+div.card:hover{
+    color: rgb(0,87,213);
+    box-shadow: 8px 8px 60px rgb(55,99,170,10%), -8px -8px 20px #fff;
+}
+
+h2.card-h2{
+    margin: 0;
+    padding: 0;
+}
+
+
+p.card-p{
+    margin: 8px 0 0 0;
+    padding: 0;
+    max-width: 150px;
+    word-break: break-all;
+    color: #000;
+}
+
+img.card-img{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
 }

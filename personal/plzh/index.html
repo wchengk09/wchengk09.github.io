@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排列组合</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js" integrity="sha512-LQNxIMR5rXv7o+b1l8+N1EZMfhG7iFZ9HhnbJkTp4zjNr5Wvst75AqUeFDxeRUa7l5vEDyUiAip//r+EFLLCyA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <script src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.8/contrib/auto-render.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" integrity="sha512-iWiuBS5nt6r60fCz26Nd0Zqe0nbk1ZTIQbl3Kv7kYsX+yKMUFHzjaH2+AnM6vp2Xs+gNmaBAVWJjSmuPw76Efg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        #background{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: -1;
+            background-image: url("/static/fz2.jpg");
+            background-size: 100% 100%;
+        }
+        page{display: none;}
+        blue{
+            color: rgb(84,127,206);
+            font-weight: bold;
+        }
+        red{
+            color: red;
+            font-weight: bold;
+        }
+        h1{
+            font-size: 96px;
+            max-width: 50vw;
+        }
+        h2{
+            font-size: 36px;
+            color: rgb(84,127,206);
+        }
+        p{
+            line-height: 48px;
+            font-size: 24px;
+        }
+        half{
+            display: inline-block;
+            width: 49%;
+            margin: 0;
+            padding: 0;
+            vertical-align: top;
+        }
+        .ft60{
+            font-size: 60px;
+        }
+        img{
+            width: 100%;
+        }
+        #display{
+            display: inline-block;
+            background-color: rgba(255,255,255,0.9);
+            width: calc(100vw - 144px);
+            min-height: calc(100vh - 144px);
+            margin: 12px;
+            position: relative;
+            padding: 48px;
+        }
+        #left{
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            cursor: pointer;
+        }
+        #right{
+            position: absolute;
+            right: 16px;
+            top: 16px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function Render(){
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: true},
+                    {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+                    {left: "\\begin{align}", right: "\\end{align}", display: true},
+                    {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+                    {left: "\\begin{gather}", right: "\\end{gather}", display: true},
+                    {left: "\\begin{CD}", right: "\\end{CD}", display: true},
+                    {left: '\\[', right: '\\]', display: false}
+                ],
+                throwOnError : true,
+                ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code", "option"]
+            });
+        }
+        window.addEventListener('load',Render);
+    </script>
+    <script defer>
+        var es;
+        var cur = 0;
+
+        function disp(){
+            document.getElementById('text').innerHTML = es[cur].innerHTML;
+        }
+        
+        function Init(){
+            es = document.querySelectorAll('page');
+            disp();
+        }
+
+        function Left(){
+            cur --;
+            if (cur < 0)cur = es.length - 1;
+            disp();
+        }
+
+        function Right(){
+            cur ++;
+            if (cur >= es.length)cur = 0;
+            disp();
+        }
+        
+        function keyDown(e){
+            console.log(e);
+            e = e || window.event;
+            if (e.keyCode === 37)
+                Left();
+            if (e.keyCode === 39)
+                Right();
+        }
+
+        window.addEventListener('load',Init);
+        window.addEventListener('keydown',keyDown);
+        document.getElementById('left').addEventListener('click',Left);
+        document.getElementById('right').addEventListener('click',Right);
+    </script>
+</head>
+<body>
+    <div id="background"></div>
+    <div id="display">
+        <div id="text">
+
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32px" height="32px" id="left"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM217.4 376.9L117.5 269.8c-3.5-3.8-5.5-8.7-5.5-13.8s2-10.1 5.5-13.8l99.9-107.1c4.2-4.5 10.1-7.1 16.3-7.1c12.3 0 22.3 10 22.3 22.3l0 57.7 96 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32l-96 0 0 57.7c0 12.3-10 22.3-22.3 22.3c-6.2 0-12.1-2.6-16.3-7.1z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32px" height="32px" id="right"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM294.6 135.1l99.9 107.1c3.5 3.8 5.5 8.7 5.5 13.8s-2 10.1-5.5 13.8L294.6 376.9c-4.2 4.5-10.1 7.1-16.3 7.1C266 384 256 374 256 361.7l0-57.7-96 0c-17.7 0-32-14.3-32-32l0-32c0-17.7 14.3-32 32-32l96 0 0-57.7c0-12.3 10-22.3 22.3-22.3c6.2 0 12.1 2.6 16.3 7.1z"/></svg>
+    </div>
+    <page>
+        <h1><blue>排列组合</blue></h1>
+        <h2>北京师范大学附属中学 初二17班 吴承坤</h2>
+    </page>
+    <page>
+        <h2><blue>提前说明</blue></h2>
+        <p>正常情况下，排列组合是<red>高中</red>才学的，听不懂很正常。（我会尽量使用通俗易懂的语言和例子来讲解）</p>
+        <p>在讲课过程中，我会<red>请一些人回答问题</red>。希望大家能踊跃举手。</p>
+        <p>如果你在课外已经学过排列组合了，可以在我讲课的时候做自己想做的事（比如写作业）。</p>
+    </page>
+    <page>
+        <h2><blue>目录</blue></h2>
+        <p>0. 加法原理和乘法原理</p>
+        <p>1. 排列数</p>
+        <p>2. 组合数</p>
+        <p>3. 排列组合的实际应用</p>
+    </page>
+    <page>
+        <half>
+            <h2><blue>0. 加法原理和乘法原理</blue></h2>
+            <p>先看一道简单的例题。</p>
+            <p>1. 如右图所示，有 $26$ 个英文字母和 $10$ 个阿拉伯数字。</p>
+            <p>从中选出一个字母<red>或者</red>一个数字，有多少种方法？</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+    <page>
+        <half>
+            <h2><blue>0. 加法原理和乘法原理</blue></h2>
+            <p>先看一道简单的例题。</p>
+            <p>1. 如右图所示，有 $26$ 个英文字母和 $10$ 个阿拉伯数字。</p>
+            <p>从中选出一个字母<red>或者</red>一个数字，有多少种方法？</p>
+            <p>由于字母有 $26$ 个，阿拉伯数字有 $10$ 个，显然有 $26+10=36$ 种方法。</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+    <page>
+        <half>
+            <h2>0. 加法原理</h2>
+            <p>仔细分析一下这个问题有什么特点。</p>
+            <p>“选出一个字母<red>或者</red>一个数字，有多少种方法？”</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+    <page>
+        <half>
+            <h2>0. 加法原理</h2>
+            <p>仔细分析一下这个问题有什么特点。</p>
+            <p>“选出一个字母<red>或者</red>一个数字，有多少种方法？”</p>
+            <p>首先，我们要完成的事情是“<red>选出一个字母或者一个数字</red>“。</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+    <page>
+        <half>
+            <h2>0. 加法原理</h2>
+            <p>仔细分析一下这个问题有什么特点。</p>
+            <p>“选出一个字母<red>或者</red>一个数字，有多少种方法？”</p>
+            <p>首先，我们要完成的事情是“<red>选出一个字母或者一个数字</red>“。</p>
+            <p>其次，题目中出现了<red>“或者“</red>二字，说明完成这件事有两种<red>方式</red>：</p>
+            <p>(1) 选出一个字母。</p>
+            <p>(2) 选出一个数字。</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+    <page>
+        <half>
+            <h2>0. 加法原理</h2>
+            <p>(1) 选出一个字母。</p>
+            <p>(2) 选出一个数字。</p>
+            <p>我们发现，这两种方式<red>只能选择一种</red>——选了字母就不能选数字，选了数字就不能选字母。</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+    <page>
+        <half>
+            <h2>0. 加法原理</h2>
+            <p>(1) 选出一个字母。</p>
+            <p>(2) 选出一个数字。</p>
+            <p>我们发现，这两种方式<red>只能选择一种</red>——选了字母就不能选数字，选了数字就不能选字母。</p>
+            <p>因此，两种方式的方案数加起来，就是完成这件事（选一个字母或数字）的<red>所有方案</red>。</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+    <page>
+        <half>
+            <h2>0. 加法原理</h2>
+            <p>(1) 选出一个字母。</p>
+            <p>(2) 选出一个数字。</p>
+            <p>我们发现，这两种方式<red>只能选择一种</red>——选了字母就不能选数字，选了数字就不能选字母。</p>
+            <p>因此，两种方式的方案数加起来，就是完成这件事（选一个字母或数字）的<red>所有方案</red>。</p>
+            <p>选出一个字母有 $26$ 种方案，选出一个数字有 $10$ 种方案，所以总共有 $26+10=36$ 种方案。</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+    <page>
+        <half>
+            <h2>0. 加法原理</h2>
+            <p>(1) 选出一个字母。</p>
+            <p>(2) 选出一个数字。</p>
+            <p>我们发现，这两种方式<red>只能选择一种</red>——选了字母就不能选数字，选了数字就不能选字母。</p>
+            <p>因此，两种方式的方案数加起来，就是完成这件事（选一个字母或数字）的<red>所有方案</red>。</p>
+            <p>选出一个字母有 $26$ 种方案，选出一个数字有 $10$ 种方案，所以总共有 $26+10=36$ 种方案。</p>
+            <p>这样，我们就得到了<red>加法原理</red>：如果完成一件事有几种<red>方式</red>，那么完成这件事的方案数等于每一种方式的方案数<red>之和</red>。</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+    <page>
+        <half>
+            <h2><blue>0. 加法原理和乘法原理</blue></h2>
+            <p>再看一道题。</p>
+            <p>2. 如右图所示，有 $26$ 个英文字母和 $10$ 个阿拉伯数字。</p>
+            <p>从中选出一个字母<red>然后再</red>选一个数字，有多少种方法？</p>
+        </half>
+        <half>
+            <img src="letter.png" alt="XC">
+        </half>
+    </page>
+</body>
+</html>
