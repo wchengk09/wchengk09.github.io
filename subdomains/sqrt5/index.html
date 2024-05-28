@@ -11,16 +11,72 @@
     <style>
         /* text block with grey background */
 
-        #text-block {
+        body{
+            padding: 32px 8px;
+        }
+
+        .text-block {
             background-color: #f2f2f2;
             padding: 20px;
             text-align: center;
+            border-radius: 32px;
         }
 
+        .blue{
+            color: #17a2b8;
+            font-weight: bolder;
+        }
+
+        .green{
+            font-weight: bolder;
+            color: #17d8a2;
+        }
+
+        .click{
+            cursor: pointer;
+        }
         
     </style>
 </head>
 <body>
-    
+    <div>
+        <span class="text-block blue" style="font-size: 72px">√5</span>
+        <span style="font-size: 24px; vertical-align: top">Powered by <span class="text-block blue"><a class="blue" href="//wchengk09.netlify.app">wchengk09</a></span></span>
+    </div>
+    <div style="margin: 48px 0 0 0">
+        <div>
+            <span class="click blue" style="font-size: 24px" id="copy">Copy result</span>
+            <span class="click blue" style="font-size: 24px" id="digits"></span>
+        </div>
+        <hr>
+        <div style="font-size: 60px; word-break: break-all; word-wrap:break-word;" class="blue" id="res">Calculating...</div>
+    </div>
+    <script>
+        var a = 1n,b = 5n;
+        var str = '';
+        window.addEventListener('load',function(){
+            setTimeout(function(){
+                function update(){
+                    a = (a + b / a) / 2n;
+                    a *= 10n;
+                    b *= 100n;
+                    str = String(a);
+                    document.getElementById('res').innerHTML = str.substring(0,1) + '.' + str.substring(1);
+                    document.getElementById('digits').innerHTML = `(${str.length - 1} digits)`;
+                    requestAnimationFrame(update);
+                }
+                update();
+            },750);
+        });
+        document.getElementById('copy').addEventListener('click',async function(){
+            await navigator.clipboard.writeText(str.substring(0,1) + '.' + str.substring(1));
+            document.getElementById('copy').className = 'click green';
+            document.getElementById('copy').innerHTML = 'Copied!';
+            setTimeout(function(){
+                document.getElementById('copy').className = 'click blue';
+                document.getElementById('copy').innerHTML = `Copy result (${str.length - 1} digits)`;
+            },750);
+        })
+    </script>
 </body>
 </html>
