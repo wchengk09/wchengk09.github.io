@@ -104,7 +104,7 @@
                     window.scrollTo(0,document.body.scrollHeight);
                     // document.body.scroll(0,document.body.scrollHeight);
 
-                    requestAnimationFrame(update);
+                    setTimeout(update,0);
                 }
                 update();
             },500);
