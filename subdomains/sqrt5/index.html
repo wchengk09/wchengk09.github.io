@@ -84,30 +84,32 @@
         <div class="blue" id="res">Calculating...</div>
     </div>
     <script>
-        var a = 1n,b = 5n;
         var str = '';
-        var start = performance.now();
+        
         window.addEventListener('load',function(){
+            const worker = new Worker('worker.js');
+            var start = performance.now();
             const h = document.getElementById('control-bar').clientHeight;
             console.log(`height ${h}`);
             document.getElementById('takeup').style.height = h + 'px';
-            setTimeout(function(){
-                function update(){
-                    a = (a + b / a) / 2n;
-                    a *= 10n;
-                    b *= 100n;
-                    str = String(a);
-                    document.getElementById('res').innerHTML = str.substring(0,1) + '.' + str.substring(1);
-                    document.getElementById('digits').innerHTML = `(${str.length - 1} digits)`;
-                    document.getElementById('speed').innerHTML = `Speed: ${((str.length - 1) * 60000 /(performance.now() - start)).toFixed(0)} digits/min`;
 
-                    window.scrollTo(0,document.body.scrollHeight);
-                    // document.body.scroll(0,document.body.scrollHeight);
 
-                    setTimeout(update,0);
-                }
-                update();
-            },500);
+            worker.addEventListener('message',function(e){
+                var a = e.data;
+                str = String(a);
+                document.getElementById('res').innerHTML = str.substring(0,1) + '.' + str.substring(1);
+                document.getElementById('digits').innerHTML = `(${str.length - 1} digits)`;
+                document.getElementById('speed').innerHTML = `Speed: ${((str.length - 1) * 60000 /(performance.now() - start)).toFixed(0)} digits/min`;
+
+                window.scrollTo(0,document.body.scrollHeight);
+                // document.body.scroll(0,document.body.scrollHeight);
+            });
+
+            function update(){
+                worker.postMessage('');
+                requestAnimationFrame(update);
+            }
+            update();
         });
         document.getElementById('copy').addEventListener('click',async function(){
             await navigator.clipboard.writeText(str.substring(0,1) + '.' + str.substring(1));
