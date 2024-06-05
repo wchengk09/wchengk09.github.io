@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>萱草</title>
+    <style>
+        *{
+            font-family: "Microsoft Yahei";
+        }
+        h1{
+            font-size: 48px;
+            font-weight: 900;
+        }
+
+        #shadow{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background-color: rgba(255,255,255,0.8);
+        }
+
+        #main{
+            margin: 8px;
+            padding: 8px;
+            border-radius: 32px;
+            background-color: rgba(255,255,255,0.7);
+        }
+
+        #enter{
+            margin: 16px;
+            padding: 48px 72px;
+            background-color: rgba(255,255,255,0.95);
+            border-radius: 100px;
+            position: fixed;
+            left: 50vw;
+            top: 50vh;
+            transform: translate(-50%,-50%);
+        }
+
+        #background{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/static/fz2.jpg');
+            background-size: 100% 100%;
+            z-index: -2;
+        }
+        #song{
+            width: calc(100vw - 64px);
+            border-radius: 32px;
+        }
+        .button{
+            background-color: #1874c3;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            padding: 8px 20px;
+            color: #fff;
+        }
+        .cat{
+            border: 2px dashed #1874c3;
+            padding: 4px;
+            margin: 16px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1874c3;
+        }
+
+        #xch-video{
+            width: calc(100vw - 64px);
+            border-radius: 32px;
+        }
+
+        #display{
+            padding: 0 0 0 32px;
+        }
+
+        span{
+            display: inline-block;
+        }
+
+        #blue{
+            background-color: #e3fcfc;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="background"></div>
+    <div id="shadow"></div>
+    <div id="main" style="display: none;">
+        <h1><center>萱草</center></h1>
+        <span class="cat">基本信息</span>
+        <div id="display">
+            <p><b>生物学分类</b>：???</p>
+            <p><b>学名(双名法)</b>：XXXXXX CCCCCCC</p>
+            <b>XXX</b>：CCC
+        </div>
+
+        <span class="cat">小游戏</span>
+        <div id="display">
+            <p>你能拼出萱草吗？</p>
+        </div>
+        <center><iframe style="width: min(300px,calc(100vw - 64px)); height: min(300px,calc(100vw - 64px)); border: none" src="//xuziyue2009.github.io/game/xc"></iframe></center>
+        
+        <span class="cat">更多信息</span>
+        <div id="display">
+            <p><b>能吃吗</b>：？</p>
+            <p>...</p>
+        </div>
+
+        <span class="cat">欣赏歌曲《萱草花》</span>
+        <div id="display">
+            <p>下面，让我们一起欣赏附中合唱团演唱的《萱草花》吧！</p>
+        </div>
+        <div id="song">
+            <video id="xch-video" src="./xch.mp4" loop controls></video>
+        </div>
+        <center><p>--- Powered by Grade 8 Class 17 Group 5 ---</p></center>
+    </div>
+    <div id="enter">
+        <h1><center>萱草</center></h1>
+        <button type="button" class="button" onclick="enter()">查看详情</button>
+    </div>
+    <script>
+        function getObj(id){
+            return document.getElementById(id);
+        }
+
+        function enter(){
+            getObj('enter').style.display = 'none';
+            getObj('main').style.display = 'block';
+            getObj('xch-video').play();
+        }
+    </script>
+</body>
+</html> 
