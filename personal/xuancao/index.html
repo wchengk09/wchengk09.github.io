@@ -88,6 +88,16 @@
         #blue{
             background-color: #e3fcfc;
         }
+
+        .game-block{
+            display: inline-block;
+            background-size: 100% 100%;
+            border: 1px solid #fff;
+            margin: 0;
+            padding: 0;
+            width: min(90px,calc(30vw - 18px));
+            height: min(90px,calc(30vw - 18px));
+        }
     </style>
 </head>
 <body>
@@ -98,21 +108,46 @@
         <h1><center>萱草</center></h1>
         <span class="cat">基本信息</span>
         <div id="display">
-            <p><b>生物学分类</b>：???</p>
-            <p><b>学名(双名法)</b>：XXXXXX XXXXXXXX</p>
-            <b>XXX</b>：XXX
+            <p><b>名称</b>：萱草</p>
+            <p><b>学名(双名法)</b>：<i>Hemerocallis fulva</i></p>
+            <p id="xuancao-png">
+                <img alt="萱草" src="./xc.png">
+            </p>
         </div>
 
         <span class="cat">小游戏</span>
         <div id="display">
             <p>你能拼出萱草吗？</p>
         </div>
-        <center><iframe style="width: min(300px,calc(100vw - 64px)); height: min(300px,calc(100vw - 64px)); border: none" src="//xuziyue2009.github.io/games/puzzle"></iframe></center>
+        <center>
+            <div style="width: min(300px,calc(100vw - 64px)); height: min(300px,calc(100vw - 64px)); border: none; padding: 0; margin: 0">
+                <div id="gameblocks">
+                    <img id="block11" class="game-block" src="./xuancao/0.png">
+                    <img id="block12" class="game-block" src="./xuancao/1.png">
+                    <img id="block13" class="game-block" src="./xuancao/2.png">
+                    <img id="block21" class="game-block" src="./xuancao/3.png">
+                    <img id="block22" class="game-block" src="./xuancao/4.png">
+                    <img id="block23" class="game-block" src="./xuancao/5.png">
+                    <img id="block31" class="game-block" src="./xuancao/6.png">
+                    <img id="block32" class="game-block" src="./xuancao/7.png">
+                    <img id="block33" class="game-block" src="./xuancao/8.png">
+                </div>
+                <div id="control-button" onclick="gameControl()" class="button">开始游戏</div>
+            </div>
+        </center>
         
         <span class="cat">更多信息</span>
         <div id="display">
-            <p><b>能吃吗</b>：？</p>
-            <p>...</p>
+            <p><b>别名</b>：有“金针”“黄花菜”“忘忧草”“宜男草”“疗愁”“鹿箭”等名。当食用时，多被称为“金针”（golden needle）英文中称萱草为“虎百合”（Tiger Lily）。</p>
+            <p><b>类型</b>：多年生宿根草本植物</p>
+            <p><b>适应气候、地理分布</b>：萱草类花卉虽原主产中国，但长期以来改良不多。全国各地常见栽培，秦岭以南各省区有野生的。性强健，耐寒，华北可露地越冬，适应性强，喜湿润也耐旱，喜阳光又耐半荫。对土壤选择性不强，但以富含腐殖质，排水良好的湿润土壤为宜。适应在海拔300-2500米生长。 </p>
+            <p><b>药用价值</b>：清热利尿，凉血止血。用于腮腺炎，黄疸，膀胱炎，尿血，小便不利，乳汁缺乏，月经不调，衄血，便血。外用治乳腺炎。 利水，凉血。治水肿，小便不利，淋浊，带下，黄疸，衄血，便血，崩漏，乳痈。</p>
+            <p><b>药理作用</b>：①对血吸虫病的治疗   ②抗结核作用</p>
+            <p><b>食用</b>：医药典故——明·高启《萱草》。萱草，俗称黄花菜，它不仅是名花佳卉，也是佳肴良蔬，自古以来就为历代诗人所吟咏。</p>
+            <p><b>其他价值</b>：萱草在现代化学染料出现之前，还是一种常用的染料。另外，萱草对氟十分敏感，当空气受到氟污染时，萱草叶子的尖端就变成红褐色，所以常被用来监测环境是否受到氟污染的指针植物。</p>
+            <p><b>寓意</b>：中国母亲花————早在康乃馨成为母爱的象征之前，我国也有一种母亲之花，它就是萱草花。因此，《萱草花》被选为电影《你好李焕英》的主题曲，附中合唱团也合唱了这首歌（见最底下）。</p>
+            <p><b>花语</b>：1. 遗忘的爱，萱草又名忘忧草，代表“忘却一切不愉快的事”。2. 放下他（她）放下忧愁。 3. 隐藏起来的心情。 4. 萱草的花语是爱的忘却。 5. 同时又是中国的母亲花。</p>
+            <p><b>记载</b>：萱草在中国有几千年载培历史，萱草又名谖草。最早文字记载见之于《诗经·卫风·伯兮》："焉得谖草，言树之背"。朱熹注曰："谖草，令人忘忧；背，北堂也。"另一称号忘忧（忘忧草），来自《博物志》中："萱草，食之令人好欢乐，忘忧思，故曰忘忧草。《诗经》疏称："北堂幽暗，可以种萱"；北堂即代表母亲之意。</p>
         </div>
 
         <span class="cat">欣赏歌曲《萱草花》</span>
@@ -137,6 +172,97 @@
             getObj('enter').style.display = 'none';
             getObj('main').style.display = 'block';
             getObj('xch-video').play();
+        }
+
+        function resetGame(){
+            X = Y = undefined;
+            for (var i = 1;i <= 3;i ++)
+                for (var j = 1;j <= 3;j ++){
+                    getObj(`block${i}${j}`).src = `./xuancao/${(i - 1) * 3 + (j - 1)}.png`;
+                    getObj(`block${i}${j}`).onclick = undefined;
+                }
+        }
+        
+        var X,Y;
+        function swap(x1,y1,x2,y2){
+            var t = getObj(`block${x1}${y1}`).src;
+            getObj(`block${x1}${y1}`).src = getObj(`block${x2}${y2}`).src;
+            getObj(`block${x2}${y2}`).src = t;
+        }
+
+        function move(x,y){
+            if (x !== X && y !== Y)
+                return;
+            if (x === X && y === Y)
+                return;
+            if (x === X){
+                if (y < Y)
+                    for (var i = Y;i > y;i --)
+                        swap(x,i,x,i - 1);
+                if (y > Y)
+                    for (var i = Y;i < y;i ++)
+                        swap(x,i,x,i + 1);
+            }
+            if (y === Y){
+                if (x < X)
+                    for (var i = X;i > x;i --)
+                        swap(i,y,i - 1,y);
+                if (x > X)
+                    for (var i = X;i < x;i ++)
+                        swap(i,y,i + 1,y);
+            }
+            X = x,Y = y;
+        }
+
+        function rnd(){
+            return Math.floor(Math.random() * 3) + 1;
+        }
+
+        function check(){
+            var ok = true;
+            for (var i = 1;i <= 3;i ++)
+                for (var j = 1;j <= 3;j ++)
+                    if (i !== 3 && j !== 3 && getObj(`block${i}${j}`).src !== `./xuancao/${(i - 1) * 3 + j - 1}.png`)
+                        ok = false;
+            if (ok){
+                resetGame();
+                getObj('control-button').style.backgroundColor = '#186d1d';
+                getObj('control-button').innerHTML = '<img src="./check.svg" style="width: 1em; height: 1em">挑战成功';
+            }
+        }
+
+        function generateGame(){
+            getObj('block33').src = './xuancao/w.png';
+            X = Y = 3;
+            for (var i = 0;i < 2236;i ++)
+                move(rnd(),rnd());
+            check();
+            getObj('block11').onclick = function(){move(1,1); check();};
+            getObj('block12').onclick = function(){move(1,2); check();};
+            getObj('block13').onclick = function(){move(1,3); check();};
+            getObj('block21').onclick = function(){move(2,1); check();};
+            getObj('block22').onclick = function(){move(2,2); check();};
+            getObj('block23').onclick = function(){move(2,3); check();};
+            getObj('block31').onclick = function(){move(3,1); check();};
+            getObj('block32').onclick = function(){move(3,2); check();};
+            getObj('block33').onclick = function(){move(3,3); check();};
+        }
+
+        var gamemode = false; //0-unstarted; 1-continuing;
+        
+        function gameControl(){
+            if (gamemode){
+                gamemode = false;
+                
+                resetGame();
+                getObj('control-button').style.backgroundColor = '#1874c3';
+                getObj('control-button').innerHTML = '开始游戏';
+            }else{
+                gamemode = true;
+                generateGame();
+                getObj('control-button').style.backgroundColor = '#b31a20';
+                getObj('control-button').innerHTML = '结束游戏';
+            }
         }
     </script>
 </body>
