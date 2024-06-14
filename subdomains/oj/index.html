@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在重定向……</title>
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded',async function(){
+            var res = await fetch('./backend-http.txt');
+            location.href = await res.text();
+        })
+    </script>
+</body>
+</html>
