@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>萱草</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <style>
         *{
             font-family: "Microsoft Yahei";
@@ -98,12 +99,28 @@
             width: min(90px,calc(30vw - 18px));
             height: min(90px,calc(30vw - 18px));
         }
+
+        #music{
+            box-shadow: 8px 8px 20px rgba(55, 99, 170, 10%), -8px -8px 20px #fff;
+            background: linear-gradient(135deg, #f0f0f3, #ffffff);
+            display: inline-block;
+            padding: 18px 12px 6px 12px;
+            margin: 0;
+            position: fixed;
+            right: 32px;
+            top: 32px;
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            border-radius: 30px;
+        }
     </style>
 </head>
 <body>
     
     <div id="background"></div>
     <div id="shadow"></div>
+    <div id="music"><i class="fa-solid fa-music"></i></div>
     <div id="main" style="display: none;">
         <h1><center>萱草</center></h1>
         <span class="cat">基本信息</span>
@@ -169,11 +186,46 @@
             return document.getElementById(id);
         }
 
+        var deg = 0;
+        var rotating = true;
+        
+        function rotate(){
+            if (rotating){
+                deg += 0.3;
+                getObj('music').style.transform = `rotate(${deg}deg)`;
+            }
+            setTimeout(rotate,10);
+        }
+
+
         function enter(){
             getObj('enter').style.display = 'none';
             getObj('main').style.display = 'block';
             getObj('xch-video').play();
+            rotate();
+            getObj('music').addEventListener('click',function(){
+                console.log('XC');
+                if (rotating){
+                    rotating = false;
+                    deg = 0;
+                    getObj('music').style.transform = '';
+                    getObj('xch-video').pause();
+                }else{
+                    rotating = true;
+                    getObj('xch-video').play();
+                }
+            })
+            getObj('xch-video').addEventListener('play',function(){
+                rotating = true;
+            })
+            getObj('xch-video').addEventListener('pause',function(){
+                rotating = false;
+                deg = 0;
+                getObj('music').style.transform = '';
+            })
         }
+
+        
 
         function resetGame(){
             X = Y = undefined;
