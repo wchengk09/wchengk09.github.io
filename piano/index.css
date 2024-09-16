@@ -1,0 +1,42 @@
+.piano {  
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0; 
+    width: 100vw;
+    height: 256px;
+    z-index: 1;
+}  
+  
+.key.white {  
+    display: inline-block;
+    width: calc(100vw / 15);
+    height: 100%;
+    background-color: white;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    /* z-index: 3; */
+}  
+  
+.key.black {  
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 60%;
+    width: calc(100vw / 20);
+    background-color: black;
+    transform: translate(80%,-1px);
+    z-index: 2236;
+}  
+
+.key.white:hover{
+    background-color: rgb(216,216,216);
+}
+
+.key.black:hover{
+    background-color: rgb(50,50,50);
+}
