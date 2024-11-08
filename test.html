@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="XC"></p>
+    <script>
+        alert("XC");
+        try{
+        class KalmanFilter {
+            constructor() {
+              // 假设的初始状态
+              this.A = 1; // 转移矩阵
+              this.B = 0; // 控制矩阵（在这个场景中未使用）
+              this.H = 1; // 观测矩阵
+              this.x = 0; // 估计的状态
+              this.P = 1; // 估计的协方差
+              this.Q = 0.001; // 过程噪声协方差
+              this.R = 1; // 测量噪声协方差
+            }
+          
+            update(acceleration) {
+              // 预测
+              this.x = this.A * this.x + this.B;
+              this.P = this.A * this.P * this.A + this.Q;
+          
+              // 更新
+              const K = this.P * this.H / (this.H * this.P * this.H + this.R);
+              this.x = this.x + K * (acceleration - this.H * this.x);
+              this.P = (1 - K * this.H) * this.P;
+            }
+          
+            getPosition() {
+              return this.x;
+            }
+          }
+          
+          const kalmanFilter = new KalmanFilter();
+          
+
+            window.addEventListener('devicemotion', function(event) {
+                var acceleration = event.accelerationIncludingGravity;
+                var xAcc = acceleration.x; // 获取X轴的加速度
+                
+                kalmanFilter.update(xAcc); // 使用卡尔曼滤波器更新状态
+                
+                const position = kalmanFilter.getPosition();
+                
+                document.getElementById('XC').innerHTML = position;
+            });
+          }catch (e){alert(e);}
+    </script>
+</body>
+</html>
+
