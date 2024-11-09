@@ -12,7 +12,7 @@
         let path = '';
         let spl = location.href.split('/');
         for (let i = 3;i < spl.length;i ++){
-            if (i !== 3)path += '/';
+            spath += '/';
             path += spl[i];
         }
         location.href = '//wchengk09.netlify.app/domain/redirect/?loc=../cpolar/oj.txt&path=' + path;
