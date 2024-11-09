@@ -17,7 +17,7 @@
             let txt = await f.text();
             txt = txt.split('/')[2];
             let spl = txt.split(':');
-            
+            document.getElementById('sshcmd').innerHTML = `ssh -p ${spl[1]} wzh@${spl[0]}`;
         })();
     </script>
 </body>
