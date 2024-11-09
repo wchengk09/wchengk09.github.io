@@ -11,9 +11,14 @@
     <script defer>
         (async function(){
             var url = getParam("loc");
+            var path = getParam("path") || '';
             console.log(url);
-            var res = await fetch(url);
-            location.href = await res.text();
+            var res = await fetch(url,{
+                headers:{
+                    'Cache-Control': 'no-cache'
+                }
+            });
+            location.href = await res.text() + path;
         })();
     </script>
 </body>
