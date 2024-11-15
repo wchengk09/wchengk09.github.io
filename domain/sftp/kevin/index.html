@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFTP command</title>
+</head>
+<body>
+    <p id="sshcmd"></p>
+    <script>
+        (async function(){
+            let f = await fetch('../../cpolar/ssh.txt',{
+                headers:{
+                    'cache-control': 'no-cache'
+                }
+            });
+            let txt = await f.text();
+            txt = txt.split('/')[2];
+            let spl = txt.split(':');
+            document.getElementById('sshcmd').innerHTML = `sftp://kevin@${spl[0]}:${spl[1]}`;
+        })();
+    </script>
+</body>
+</html>
