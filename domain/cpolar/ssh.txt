@@ -1,1 +1,1 @@
-tcp://3.tcp.cpolar.top:12212
+tcp://3.tcp.cpolar.top:12506
