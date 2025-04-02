@@ -214,7 +214,9 @@
             remainingRounds: 20,
             currentLevel: null,
             isPlaying: false,
-            timeoutId: null
+            timeoutId: null,
+            soluable: 10,
+            unsoluable: 10
         };
 
         // DOM元素
@@ -238,6 +240,8 @@
             gameState.score = 0;
             gameState.remainingRounds = 20;
             gameState.isPlaying = true;
+            gameState.soluable = 10;
+            gameState.unsoluable = 10;
             updateDisplay();
             certificate.style.display = 'none';
             resetButtons();
@@ -253,7 +257,11 @@
             }
 
             const activeBtn = getRandomButton();
-            const isCorrect = Math.random() < 0.5;
+            
+            let isCorrect;
+            if (!gameState.soluable)isCorrect = false;
+            else if (!gameState.unsoluable)isCorrect = true;
+            else isCorrect = Math.random() < 0.5;
             const text = isCorrect 
                 ? correctAnswers[Math.floor(Math.random() * correctAnswers.length)]
                 : wrongAnswers[Math.floor(Math.random() * wrongAnswers.length)];
@@ -282,7 +290,7 @@
             if (!gameState.isPlaying || !e.target.classList.contains('active')) return;
 
             const isCorrect = e.target.dataset.correct === 'true';
-            gameState.score += isCorrect ? 5 : -5;
+            gameState.score += isCorrect ? 10 : -10;
             gameState.score = Math.max(gameState.score, 0);
             
             e.target.classList.add(isCorrect ? 'correct' : 'wrong');
