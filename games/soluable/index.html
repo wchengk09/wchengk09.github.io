@@ -202,20 +202,20 @@
             'Ag2SO4' // 硫酸银微溶但初中按不溶处理
         ];
         const difficultySettings = {
-            1: { showTime: 3500, interval: 1000 },
-            2: { showTime: 2500, interval: 500 },
-            3: { showTime: 1500, interval: 100 },
+            1: { showTime: 4000, interval: 0 },
+            2: { showTime: 2500, interval: 0 },
+            3: { showTime: 1500, interval: 0 },
             4: { showTime: 750, interval: 0 }
         };
 
         // 游戏状态
         let gameState = {
             score: 0,
-            remainingRounds: 20,
+            remainingRounds: 25,
             currentLevel: null,
             isPlaying: false,
             timeoutId: null,
-            soluable: 10,
+            soluable: 15,
             unsoluable: 10
         };
 
@@ -238,7 +238,7 @@
             
             // 重置状态
             gameState.score = 0;
-            gameState.remainingRounds = 20;
+            gameState.remainingRounds = 30;
             gameState.isPlaying = true;
             gameState.soluable = 10;
             gameState.unsoluable = 10;
@@ -292,7 +292,7 @@
             if (!gameState.isPlaying || !e.target.classList.contains('active')) return;
 
             const isCorrect = e.target.dataset.correct === 'true';
-            gameState.score += isCorrect ? 10 : -10;
+            gameState.score += isCorrect ? 4 : -5;
             gameState.score = Math.max(gameState.score, 0);
             
             e.target.classList.add(isCorrect ? 'correct' : 'wrong');
