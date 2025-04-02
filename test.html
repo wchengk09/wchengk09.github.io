@@ -1,58 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <style>
+        /* 现代化渐变背景 */
+        body {
+            background: linear-gradient(135deg, #83a4d4, #b6fbff);
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial Rounded MT Bold';
+        }
+
+        /* 难度选择按钮 */
+        .difficulty-btn {
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            font-size: 18px;
+        }
+
+        /* 下落物质样式 */
+        .chemical {
+            position: absolute;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: transform 0.1s;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* 正确点击特效 */
+        .correct {
+            animation: explode 0.5s forwards;
+            background: linear-gradient(145deg, #4CAF50, #8BC34A);
+        }
+
+        /* 奖状样式 */
+        .certificate {
+            background: #fff3e0;
+            padding: 30px;
+            border: 5px solid #ffab00;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes fall {
+            from { top: -100px; }
+            to { top: 100vh; }
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-    <p id="XC"></p>
-    <script>
-        alert("XC");
-        try{
-        class KalmanFilter {
-            constructor() {
-              // 假设的初始状态
-              this.A = 1; // 转移矩阵
-              this.B = 0; // 控制矩阵（在这个场景中未使用）
-              this.H = 1; // 观测矩阵
-              this.x = 0; // 估计的状态
-              this.P = 1; // 估计的协方差
-              this.Q = 0.001; // 过程噪声协方差
-              this.R = 1; // 测量噪声协方差
-            }
-          
-            update(acceleration) {
-              // 预测
-              this.x = this.A * this.x + this.B;
-              this.P = this.A * this.P * this.A + this.Q;
-          
-              // 更新
-              const K = this.P * this.H / (this.H * this.P * this.H + this.R);
-              this.x = this.x + K * (acceleration - this.H * this.x);
-              this.P = (1 - K * this.H) * this.P;
-            }
-          
-            getPosition() {
-              return this.x;
-            }
-          }
-          
-          const kalmanFilter = new KalmanFilter();
-          
+    <div id="gameHeader">
+        <button class="difficulty-btn" onclick="startGame('easy')">简单模式</button>
+        <button class="difficulty-btn" onclick="startGame('medium')">中等模式</button>
+        <button class="difficulty-btn" onclick="startGame('hard')">困难模式</button>
+        <h2 id="score">当前得分：100</h2>
+    </div>
 
-            window.addEventListener('devicemotion', function(event) {
-                var acceleration = event.accelerationIncludingGravity;
-                var xAcc = acceleration.x; // 获取X轴的加速度
-                
-                kalmanFilter.update(xAcc); // 使用卡尔曼滤波器更新状态
-                
-                const position = kalmanFilter.getPosition();
-                
-                document.getElementById('XC').innerHTML = position;
-            });
-          }catch (e){alert(e);}
+    <div class="certificate">
+        <h1>🎉 溶解度大师奖状 🎉</h1>
+        <p>授予：<input type="text" id="userName" placeholder="请输入姓名"></p>
+        <p>最终得分：<span id="finalScore">100</span> 分</p>
+        <button onclick="printCertificate()">生成奖状</button>
+    </div>
+
+    <script>
+        // 溶解性数据库（根据初中化学溶解性表设计[4,5,6](@ref)）
+        const chemicals = {
+            soluble: ["KNO3","NaCl","NaOH","K2SO4","NH4Cl","Ca(OH)2","Na2CO3"],
+            insoluble: ["AgCl","BaSO4","CaCO3","Fe(OH)3","Cu(OH)2","Al(OH)3","MgCO3"]
+        };
+
+        let score = 100;
+        let speed = 3; // 初始下落速度
+
+        function startGame(difficulty) {
+            // 难度设置（参考网页3的速度控制）
+            speed = {easy:3, medium:5, hard:7}[difficulty];
+            setInterval(createChemical, 1500/speed);
+        }
+
+        function createChemical() {
+            const chemical = document.createElement('div');
+            chemical.className = 'chemical';
+            chemical.style.left = Math.random()*90 + '%';
+            
+            // 随机选择可溶/不可溶物质
+            const isInsoluble = Math.random() > 0.6;
+            const group = isInsoluble ? chemicals.insoluble : chemicals.soluble;
+            chemical.textContent = group[Math.floor(Math.random()*group.length)];
+            
+            // 添加点击判断逻辑
+            chemical.onclick = () => handleClick(chemical, isInsoluble);
+            
+            // 设置下落动画
+            chemical.style.animation = `fall ${8/speed}s linear`;
+            document.body.appendChild(chemical);
+            
+            // 自动移除元素
+            setTimeout(() => chemical.remove(), 8000/speed);
+        }
+
+        function handleClick(element, correct) {
+            if(correct) {
+                score += 10;
+                element.classList.add('correct');
+            } else {
+                score = Math.max(0, score-15);
+            }
+            
+            document.getElementById('score').textContent = `当前得分：${score}`;
+            
+            // 触发游戏结束
+            if(score <= 0 || score >= 200) showCertificate();
+        }
+
+        function showCertificate() {
+            document.querySelector('.certificate').style.display = 'block';
+        }
+
+        function printCertificate() {
+            const name = document.getElementById('userName').value || "化学小天才";
+            document.querySelector('.certificate').innerHTML = `
+                <h1>🏆 溶解度大师奖状 🏆</h1>
+                <h3>授予 ${name}</h3>
+                <p>在酸碱盐溶解度挑战中表现优异</p>
+                <p>最终得分：${score} 分</p>
+                <p>${new Date().toLocaleDateString()}</p>
+                <div style="color:gold;font-size:50px">🎉</div>
+            `;
+        }
     </script>
 </body>
 </html>
-

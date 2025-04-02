@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酸碱盐溶解性大挑战</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #34495e;
+        }
+
+        .button-container {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .game-btn {
+            padding: 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .game-btn.active {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .game-btn.correct {
+            background: #2ecc71 !important;
+        }
+
+        .game-btn.wrong {
+            background: #e74c3c !important;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            border: 2px solid #3498db;
+            border-radius: 25px;
+            background: white;
+            color: #3498db;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .difficulty-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .certificate {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .certificate h2 {
+            color: #e67e22;
+            margin-bottom: 20px;
+        }
+
+        .name-input {
+            padding: 10px;
+            margin: 15px 0;
+            width: 200px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .game-btn {
+                font-size: 16px;
+                padding: 15px;
+            }
+            
+            .difficulty-btn {
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="header">酸碱盐溶解性大挑战</h1>
+        <h3 class="header">找出所有可溶的酸碱盐！</h2>
+        <div class="game-info">
+            <div>当前分数：<span id="score">0</span></div>
+            <div>剩余轮数：<span id="round">20</span></div>
+        </div>
+
+        <div class="button-container">
+            <button class="game-btn"></button>
+            <button class="game-btn"></button>
+            <button class="game-btn"></button>
+            <button class="game-btn"></button>
+        </div>
+
+        <div class="control-panel">
+            <button class="difficulty-btn" data-level="1">简单</button>
+            <button class="difficulty-btn" data-level="2">中等</button>
+            <button class="difficulty-btn" data-level="3">困难</button>
+            <button class="difficulty-btn" data-level="4">专家</button>
+        </div>
+
+        <div class="certificate">
+            <h2>荣誉证书</h2>
+            <p id="certificate-text"></p>
+            <input type="text" class="name-input" placeholder="请输入您的名字">
+        </div>
+    </div>
+
+    <script>
+        // 配置项（保持不变）
+        // 可溶的酸碱盐（符合初中溶解性表规则）
+        const correctAnswers = [
+            // 酸类
+            'HNO3', 'H2SO4', 'HCl',
+            
+            // 可溶的碱
+            'NaOH', 'KOH', 'Ba(OH)2',
+            
+            // 硝酸盐（全溶）
+            'NaNO3', 'KNO3', 'Ba(NO3)2', 'Ca(NO3)2', 'Mg(NO3)2', 'Al(NO3)3', 
+            'Zn(NO3)2', 'Fe(NO3)2', 'Fe(NO3)3', 'Cu(NO3)2', 'AgNO3', 'NH4NO3',
+            
+            // 盐酸盐（除AgCl外）
+            'NaCl', 'KCl', 'BaCl2', 'CaCl2', 'MgCl2', 'AlCl3', 
+            'ZnCl2', 'FeCl2', 'FeCl3', 'CuCl2', 'NH4Cl',
+            
+            // 硫酸盐（除Ba、Ca、Pb）
+            'Na2SO4', 'K2SO4', 'MgSO4', 'Al2(SO4)3', 'ZnSO4', 
+            'FeSO4', 'Fe2(SO4)3', 'CuSO4', '(NH4)2SO4',
+            
+            'Na2CO3', 'K2CO3', '(NH4)2CO3'
+        ];
+
+        // 不可溶的酸碱盐（初中常见不溶物）
+        const wrongAnswers = [
+            // 不溶的碱
+            'Mg(OH)2', 'Al(OH)3', 'Fe(OH)2', 'Fe(OH)3', 'Cu(OH)2',
+            
+            // 盐酸盐不溶特例
+            'AgCl',
+            
+            // 硫酸盐不溶物
+            'BaSO4', 'CaSO4',
+            
+            // 碳酸盐（全不溶，除K、Na、NH4+）
+            'CaCO3', 'BaCO3', 'MgCO3', 'Al2(CO3)3', 'FeCO3', 
+            'CuCO3', 'Ag2CO3', 'ZnCO3', 'MnCO3',
+            
+            // 其他不溶物
+            'Ag2SO4' // 硫酸银微溶但初中按不溶处理
+        ];
+        const difficultySettings = {
+            1: { showTime: 3500, interval: 1000 },
+            2: { showTime: 2500, interval: 500 },
+            3: { showTime: 1500, interval: 100 },
+            4: { showTime: 750, interval: 0 }
+        };
+
+        // 游戏状态
+        let gameState = {
+            score: 0,
+            remainingRounds: 20,
+            currentLevel: null,
+            isPlaying: false,
+            timeoutId: null
+        };
+
+        // DOM元素
+        const gameBtns = document.querySelectorAll('.game-btn');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const scoreElement = document.getElementById('score');
+        const roundElement = document.getElementById('round');
+        const certificate = document.querySelector('.certificate');
+        const nameInput = document.querySelector('.name-input');
+        const certificateText = document.getElementById('certificate-text');
+        const difficulties = ['简单', '中等', '困难', '专家'];
+
+        // 初始化游戏
+        function initGame() {
+            // 停止现有游戏
+            if (gameState.timeoutId) {
+                clearTimeout(gameState.timeoutId);
+            }
+            
+            // 重置状态
+            gameState.score = 0;
+            gameState.remainingRounds = 20;
+            gameState.isPlaying = true;
+            updateDisplay();
+            certificate.style.display = 'none';
+            resetButtons();
+            startRound();
+        }
+
+        // 开始新一轮（保持不变）
+        function startRound() {
+            console.log(gameState.currentLevel);
+            if (gameState.remainingRounds <= 0) {
+                endGame();
+                return;
+            }
+
+            const activeBtn = getRandomButton();
+            const isCorrect = Math.random() < 0.5;
+            const text = isCorrect 
+                ? correctAnswers[Math.floor(Math.random() * correctAnswers.length)]
+                : wrongAnswers[Math.floor(Math.random() * wrongAnswers.length)];
+
+            activeBtn.textContent = text;
+            activeBtn.classList.add('active');
+            if (isCorrect) activeBtn.dataset.correct = 'true';
+
+            gameState.timeoutId = setTimeout(() => {
+                activeBtn.textContent = '';
+                activeBtn.classList.remove('active');
+                delete activeBtn.dataset.correct;
+                gameState.remainingRounds--;
+                updateDisplay();
+                
+                if (gameState.remainingRounds > 0) {
+                    setTimeout(startRound, difficultySettings[gameState.currentLevel].interval);
+                } else {
+                    endGame();
+                }
+            }, difficultySettings[gameState.currentLevel].showTime);
+        }
+
+        // 处理按钮点击（保持不变）
+        function handleClick(e) {
+            if (!gameState.isPlaying || !e.target.classList.contains('active')) return;
+
+            const isCorrect = e.target.dataset.correct === 'true';
+            gameState.score += isCorrect ? 5 : -5;
+            gameState.score = Math.max(gameState.score, 0);
+            
+            e.target.classList.add(isCorrect ? 'correct' : 'wrong');
+            clearTimeout(gameState.timeoutId);
+            gameState.remainingRounds--;
+            updateDisplay();
+            
+            setTimeout(() => {
+                resetButtons();
+                if (gameState.remainingRounds > 0) {
+                    startRound();
+                } else {
+                    endGame();
+                }
+            }, 250);
+        }
+
+        // 更新显示（保持不变）
+        function updateDisplay() {
+            scoreElement.textContent = gameState.score;
+            roundElement.textContent = gameState.remainingRounds;
+        }
+
+        // 结束游戏（保持不变）
+        function endGame() {
+            gameState.isPlaying = false;
+            certificate.style.display = 'block';
+            updateCertificate();
+        }
+
+        // 更新证书（保持不变）
+        function updateCertificate() {
+            const name = nameInput.value || '匿名玩家';
+            certificateText.innerHTML = 
+                `${name} 在 酸碱盐溶解性大挑战 <b>${difficulties[gameState.currentLevel - 1]}</b> 模式中获得<b>${gameState.score}</b>分，表现优异！<br>快发到朋友圈炫耀一下吧～`;
+        }
+
+        // 辅助函数（保持不变）
+        function getRandomButton() {
+            return gameBtns[Math.floor(Math.random() * gameBtns.length)];
+        }
+
+        function resetButtons() {
+            gameBtns.forEach(btn => {
+                btn.classList.remove('active', 'correct', 'wrong');
+                btn.textContent = '';
+                delete btn.dataset.correct;
+            });
+        }
+
+        // 事件监听（修改了难度按钮的处理逻辑）
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 更新难度级别
+                const selectedLevel = parseInt(btn.dataset.level);
+                gameState.currentLevel = selectedLevel;
+                
+                // 更新按钮状态
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 开始新游戏
+                initGame();
+            });
+        });
+
+        gameBtns.forEach(btn => btn.addEventListener('click', handleClick));
+        nameInput.addEventListener('input', updateCertificate);
+
+        // 初始化默认状态（移除自动开始游戏）
+        // difficultyBtns[0].classList.add('active');
+        gameState.currentLevel = 1;
+    </script>
+</body>
+</html>

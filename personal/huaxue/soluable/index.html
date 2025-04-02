@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初中化学记忆游戏 - 酸碱盐溶解度</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f0f8ff;
+            margin: 0;
+        }
+        #game-container {
+            position: relative;
+            width: 600px;
+            height: 800px;
+            background: url('https://via.placeholder.com/600x800?text=实验室') no-repeat center center/cover;
+        }
+        .chemical {
+            position: absolute;
+            bottom: -50px;
+            width: 100px;
+            height: 100px;
+            background-color: #ffcccb;
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 100px;
+            color: #000;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.5s;
+        }
+        #score-board {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        #end-screen {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #end-screen input {
+            margin: 10px 0;
+            padding: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #end-screen button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #certificate {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container"></div>
+    <div id="score-board">得分: 0</div>
+    <div id="end-screen">
+        <p>游戏结束！请输入你的姓名：</p>
+        <input type="text" id="name-input" placeholder="姓名">
+        <button onclick="generateCertificate()">生成奖状</button>
+    </div>
+    <div id="certificate">
+        <p>恭喜 <span id="name-on-certificate"></span> 同学！</p>
+        <p>你获得了本次化学溶解度记忆游戏的优秀成绩！</p>
+        <p>总分: <span id="final-score"></span></p>
+        <button onclick="restartGame()">再玩一次</button>
+    </div>
+
+    <script>
+        const gameContainer = document.getElementById('game-container');
+        const scoreBoard = document.getElementById('score-board');
+        let score = 0;
+        let visibleChemicals = [];
+        const solubles = ['NaCl', 'KCl', 'NH4Cl'];
+        const insolubles = ['AgCl', 'BaSO4', 'CaCO3'];
+        let intervalId;
+        let difficulty = 1; // 1: 初级, 2: 中级, 3: 高级
+        let fallSpeed = 1000; // ms
+
+        function createChemical() {
+            const chemical = document.createElement('div');
+            chemical.classList.add('chemical');
+            if (Math.random() < 0.7) {
+                chemical.textContent = solubles[Math.floor(Math.random() * solubles.length)];
+            } else {
+                chemical.textContent = insolubles[Math.floor(Math.random() * insolubles.length)];
+            }
+            const left = Math.random() * (gameContainer.clientWidth - 100);
+            chemical.style.left = `${left}px`;
+            gameContainer.appendChild(chemical);
+            visibleChemicals.push(chemical);
+            let timeToDisappear = Math.random() * 2000 + 1000;
+            let opacityChangeInterval = fallSpeed / 100;
+            let currentOpacity = 1;
+            chemical.style.opacity = currentOpacity;
+            let opacityInterval = setInterval(() => {
+                if (currentOpacity > 0.1) {
+                    currentOpacity -= opacityChangeInterval / 1000;
+                    chemical.style.opacity = currentOpacity;
+                }
+            }, opacityInterval);
+
+            setTimeout(() => {
+                clearInterval(opacityInterval);
+                chemical.remove();
+                visibleChemicals = visibleChemicals.filter(c => c !== chemical);
+            }, timeToDisappear);
+        }
+
+        function checkAnswer(event) {
+            const clickedChemical = event.target;
+            if (solubles.includes(clickedChemical.textContent)) {
+                score += 10;
+            } else {
+                score -= 5;
+            }
+            scoreBoard.textContent = `得分: ${score}`;
+            clickedChemical.remove();
+            visibleChemicals = visibleChemicals.filter(c => c !== clickedChemical);
+        }
+
+        function startGame() {
+            intervalId = setInterval(createChemical, fallSpeed);
+            gameContainer.addEventListener('click', checkAnswer);
+        }
+
+        function endGame() {
+            clearInterval(intervalId);
+            gameContainer.removeEventListener('click', checkAnswer);
+            document.getElementById('end-screen').style.display = 'block';
+        }
+
+        function generateCertificate() {
+            document.getElementById('name-on-certificate').textContent = document.getElementById('name-input').value;
+            document.getElementById('final-score').textContent = score;
+            document.getElementById('end-screen').style.display = 'none';
+            document.getElementById('certificate').style.display = 'block';
+        }
+
+        function restartGame() {
+            score = 0;
+            scoreBoard.textContent = `得分: ${score}`;
+            document.getElementById('certificate').style.display = 'none';
+            startGame();
+        }
+
+        // 开始游戏
+        startGame();
+
+        // 调整难度（这里仅做演示，默认难度为1，速度为1000ms）
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '1') {
+                difficulty = 1;
+                fallSpeed = 1000;
+            } else if (e.key === '2') {
+                difficulty = 2;
+                fallSpeed = 500;
+            } else if (e.key === '3') {
+                difficulty = 3;
+                fallSpeed = 250;
+            }
+        });
+    </script>
+</body>
+</html>
