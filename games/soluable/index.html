@@ -363,6 +363,21 @@
         // 初始化默认状态（移除自动开始游戏）
         // difficultyBtns[0].classList.add('active');
         gameState.currentLevel = 1;
+        
+        // iOS。。。
+        var lastTouchEnd = 0;
+        document.documentElement.addEventListener('touchend', function (event) {
+        var now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+            console.log('Prevented');
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+        }, false);
+        
+        document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+        });
     </script>
 </body>
 </html>
