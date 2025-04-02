@@ -126,6 +126,10 @@
                 padding: 8px 16px;
             }
         }
+        
+        #name-holder{
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -153,8 +157,11 @@
 
         <div class="certificate">
             <h2>荣誉证书</h2>
-            <p id="certificate-text"></p>
-            <input type="text" class="name-input" placeholder="请输入您的名字">
+            <p>
+                <span id="name-holder" contenteditable="true" spellcheck="false">点击输入姓名</span>
+                <span id="certificate-text"></span>
+            </p>
+            <!-- <input type="text" class="name-input" placeholder="请输入您的名字"> -->
         </div>
     </div>
 
@@ -240,7 +247,7 @@
             gameState.score = 0;
             gameState.remainingRounds = 30;
             gameState.isPlaying = true;
-            gameState.soluable = 10;
+            gameState.soluable = 20;
             gameState.unsoluable = 10;
             updateDisplay();
             certificate.style.display = 'none';
@@ -292,7 +299,7 @@
             if (!gameState.isPlaying || !e.target.classList.contains('active')) return;
 
             const isCorrect = e.target.dataset.correct === 'true';
-            gameState.score += isCorrect ? 4 : -5;
+            gameState.score += isCorrect ? 5 : -10;
             gameState.score = Math.max(gameState.score, 0);
             
             e.target.classList.add(isCorrect ? 'correct' : 'wrong');
@@ -325,9 +332,8 @@
 
         // 更新证书（保持不变）
         function updateCertificate() {
-            const name = nameInput.value || '匿名玩家';
             certificateText.innerHTML = 
-                `${name} 在 酸碱盐溶解性大挑战 <b>${difficulties[gameState.currentLevel - 1]}</b> 模式中获得<b>${gameState.score}</b>分，表现优异！<br>快发到朋友圈炫耀一下吧～`;
+                ` 在 酸碱盐溶解性大挑战 <b>${difficulties[gameState.currentLevel - 1]}</b> 模式中获得<b>${gameState.score}</b>分，表现优异！<br>快发到朋友圈炫耀一下吧～`;
         }
 
         // 辅助函数（保持不变）
@@ -360,7 +366,7 @@
         });
 
         gameBtns.forEach(btn => btn.addEventListener('click', handleClick));
-        nameInput.addEventListener('input', updateCertificate);
+        // nameInput.addEventListener('input', updateCertificate);
 
         // 初始化默认状态（移除自动开始游戏）
         // difficultyBtns[0].classList.add('active');
@@ -379,6 +385,14 @@
         
         document.addEventListener('gesturestart', function (e) {
         e.preventDefault();
+        });
+        
+        document.querySelector('#name-holder').addEventListener('keydown',(e) => {
+            e = e || window.event;
+            if (e.keyCode == 13){
+                e.preventDefault();
+                document.querySelector('#name-holder').blur();
+            }
         });
     </script>
 </body>
