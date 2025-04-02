@@ -262,6 +262,8 @@
             if (!gameState.soluable)isCorrect = false;
             else if (!gameState.unsoluable)isCorrect = true;
             else isCorrect = Math.random() < 0.5;
+            if (isCorrect)gameState.soluable --;
+            else gameState.unsoluable --;
             const text = isCorrect 
                 ? correctAnswers[Math.floor(Math.random() * correctAnswers.length)]
                 : wrongAnswers[Math.floor(Math.random() * wrongAnswers.length)];
