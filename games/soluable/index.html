@@ -135,7 +135,7 @@
 <body>
     <div class="container">
         <h1 class="header">酸碱盐溶解性大挑战</h1>
-        <h3 class="header">找出所有可溶的酸碱盐！</h2>
+        <h3 class="header">目标：找出所有可溶的酸碱盐！</h2>
         <div class="game-info">
             <div>当前分数：<span id="score">0</span></div>
             <div>剩余轮数：<span id="round">20</span></div>
@@ -155,14 +155,7 @@
             <button class="difficulty-btn" data-level="4">专家</button>
         </div>
 
-        <div class="certificate">
-            <h2>荣誉证书</h2>
-            <p>
-                <span id="name-holder" contenteditable="true" spellcheck="false">点击输入姓名</span>
-                <span id="certificate-text"></span>
-            </p>
-            <!-- <input type="text" class="name-input" placeholder="请输入您的名字"> -->
-        </div>
+        <div class="certificate"></div>
     </div>
 
     <script>
@@ -226,6 +219,18 @@
             unsoluable: 10
         };
 
+        let userId;
+
+        async function getUserId() {
+            userId = await fetch("/dashboard", {
+                "mode": "cors",
+                "credentials": "include"
+            });
+            userId = await userId.json();
+            userId = userId.userId;
+        }
+        getUserId();
+
         // DOM元素
         const gameBtns = document.querySelectorAll('.game-btn');
         const difficultyBtns = document.querySelectorAll('.difficulty-btn');
@@ -233,7 +238,7 @@
         const roundElement = document.getElementById('round');
         const certificate = document.querySelector('.certificate');
         const nameInput = document.querySelector('.name-input');
-        const certificateText = document.getElementById('certificate-text');
+        const certificateText = document.querySelector('.certificate');
         const difficulties = ['简单', '中等', '困难', '专家'];
 
         // 初始化游戏
@@ -257,7 +262,6 @@
 
         // 开始新一轮（保持不变）
         function startRound() {
-            console.log(gameState.currentLevel);
             if (gameState.remainingRounds <= 0) {
                 endGame();
                 return;
@@ -332,8 +336,13 @@
 
         // 更新证书（保持不变）
         function updateCertificate() {
+            console.log(certificateText);
             certificateText.innerHTML = 
-                ` 在 酸碱盐溶解性大挑战 <b>${difficulties[gameState.currentLevel - 1]}</b> 模式中获得<b>${gameState.score}</b>分，表现优异！<br>快发到朋友圈炫耀一下吧～`;
+                `得分：${gameState.score}分`
+            let score = Math.pow((0.01 * gameState.score),2) * Math.pow(2,gameState.currentLevel - 1);
+            console.log(`score ${score}`);
+            fetch(`/game/update?userId=${userId}&add=${score}&type=soluble`);
+            fetch(`/game/update?userId=${userId}&add=${score}&type=gameScore`);
         }
 
         // 辅助函数（保持不变）
@@ -385,14 +394,6 @@
         
         document.addEventListener('gesturestart', function (e) {
         e.preventDefault();
-        });
-        
-        document.querySelector('#name-holder').addEventListener('keydown',(e) => {
-            e = e || window.event;
-            if (e.keyCode == 13){
-                e.preventDefault();
-                document.querySelector('#name-holder').blur();
-            }
         });
     </script>
 </body>

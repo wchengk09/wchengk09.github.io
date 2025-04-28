@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现代响应式网站模板</title>
+    <style>
+        /* 重置默认样式 [3,6](@ref) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+
+        /* 导航栏样式 [1,6](@ref) */
+        .header {
+            background: linear-gradient(135deg, #0F172A, #7C3AED);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #FF6B6B;
+        }
+
+        /* 主视觉区 [1,5](@ref) */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(45deg, rgba(15,23,42,0.9), rgba(79,70,229,0.8)),
+                        url('https://source.unsplash.com/random/1920x1080');
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+        }
+
+        .hero-content {
+            color: white;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #FF6B6B, #FF8E53);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 功能卡片 [3,6](@ref) */
+        .features {
+            padding: 8rem 5% 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* 响应式设计 [6,7](@ref) */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .auth-buttons {
+            margin-left: auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-register, .btn-login {
+            padding: 8px 20px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-register {
+            background: #7C3AED;
+            border: 2px solid #7C3AED;
+        }
+
+        .btn-login {
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-register:hover {
+            background: #6D28D9;
+        }
+
+        /* 底栏样式 */
+        .site-footer {
+            background: #0F172A;
+            color: white;
+            padding: 3rem 5%;
+            margin-top: 5rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #7C3AED;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icons img {
+            width: 32px;
+            margin-right: 15px;
+            transition: opacity 0.3s;
+        }
+
+        .social-icons img:hover {
+            opacity: 0.8;
+        }
+
+        /* 新增卡片按钮样式 */
+        .card {
+            position: relative;
+            padding-right: 100px; /* 预留按钮空间 */
+        }
+
+        .card-entry {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            padding: 8px 20px;
+            background: linear-gradient(90deg, #7C3AED, #4F46E5);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .card-entry:hover {
+            transform: translateX(5px);
+        }
+
+        a{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">Brand</div>
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#about">关于</a>
+                <a href="#services">服务</a>
+                <div class="auth-buttons">
+                    <a href="#register" class="btn-register">注册</a>
+                    <a href="#login" class="btn-login">登录</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- <section class="hero">
+        <div class="hero-content">
+            <h1>创造数字未来</h1>
+            <p>专业网站开发与数字解决方案</p>
+            <button class="cta-btn">立即咨询</button>
+        </div>
+    </section> -->
+
+    <section class="features">
+        <h3>XC</h3>
+        <div class="card-container">
+            <div class="card">
+                <h3>响应式设计</h3>
+                <p>适配所有设备的最佳浏览体验</p>
+                <button class="card-entry">进入 →</button>
+            </div>
+            <div class="card">
+                <h3>现代技术栈</h3>
+                <p>基于最新Web标准开发</p>
+            </div>
+            <div class="card">
+                <h3>SEO优化</h3>
+                <p>提升搜索引擎排名</p>
+            </div>
+        </div>
+        <h3>ZYC</h3>
+        <div class="card-container">
+            <div class="card">
+                <h3>响应式设计</h3>
+                <p>适配所有设备的最佳浏览体验</p>
+                <button class="card-entry">进入 →</button>
+            </div>
+            <div class="card">
+                <h3>现代技术栈</h3>
+                <p>基于最新Web标准开发</p>
+            </div>
+            <div class="card">
+                <h3>SEO优化</h3>
+                <p>提升搜索引擎排名</p>
+            </div>
+        </div>
+        <h3>ZYC</h3>
+        <div class="card-container">
+            <div class="card">
+                <h3>响应式设计</h3>
+                <p>适配所有设备的最佳浏览体验</p>
+                <button class="card-entry">进入 →</button>
+            </div>
+            <div class="card">
+                <h3>现代技术栈</h3>
+                <p>基于最新Web标准开发</p>
+            </div>
+            <div class="card">
+                <h3>SEO优化</h3>
+                <p>提升搜索引擎排名</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>快速导航</h4>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>联系方式</h4>
+                <p>service@example.com</p>
+                <p>+86 400-123-4567</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 滚动动画 [5,8](@ref)
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                observer.observe(card);
+            });
+            document.querySelector('.features').style.marginBottom = document.querySelector('footer').clientHeight + 'px';
+        });
+
+        
+    </script>
+</body>
+</html>
