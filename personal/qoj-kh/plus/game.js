@@ -2622,7 +2622,7 @@ const eventSystem = {
                       , n = Math.min(.6, .05 * (playerStats.combinatorics || 0))
                       , r = Math.min(.7, .1 + e + t + n);
                     return {
-                        看不懂: 1 + r,
+                        看不懂: 1 - r,
                         学会Elegia: r
                     }
                 }
@@ -2632,7 +2632,7 @@ const eventSystem = {
                     let e = Math.min(.9, .1 * (playerStats.thinking || 0))
                       , t = Math.min(.9, .5 + e);
                     return {
-                        看不懂: 1 + t,
+                        看不懂: 1 - t,
                         学会zhoukangyang: t
                     }
                 }
@@ -2662,7 +2662,7 @@ const eventSystem = {
                       , n = Math.min(.95, .02 * (playerStats.thinking || 0))
                       , r = Math.min(.95, .4 + e + t + n);
                     return {
-                        看不懂: 1 + r,
+                        看不懂: 1 - r,
                         学会dottle: r
                     }
                 }
@@ -2674,7 +2674,7 @@ const eventSystem = {
                       , n = Math.min(.3, .02 * (playerStats.culture || 0))
                       , r = Math.min(.95, .4 + e + t + n);
                     return {
-                        抑郁: 1 + r,
+                        抑郁: 1 - r,
                         学会dXqwq: r
                     }
                 }
@@ -2690,7 +2690,7 @@ const eventSystem = {
                       , s = Math.min(.1, .05 * (playerStats.thinking || 0))
                       , i = Math.min(.99, .3 + e + t + n + r + a + o + s);
                     return {
-                        看不懂: 1 + i,
+                        看不懂: 1 - i,
                         学会djq_cpp: i
                     }
                 }
@@ -2718,7 +2718,7 @@ const eventSystem = {
                       , s = Math.min(.3, .05 * (playerStats.thinking || 0))
                       , i = Math.min(.9, 0 + e + t + n + r + a + o + s);
                     return {
-                        看不懂: 1 + i,
+                        看不懂: 1 - i,
                         学会最新科技: i
                     }
                 }
@@ -3047,7 +3047,7 @@ const eventSystem = {
                       , a = Math.min(.1, .02 * (playerStats.graph || 0))
                       , o = Math.min(.99, .4 + e + t + n + r + a);
                     return {
-                        做不出来数学题: 1 + o,
+                        做不出来数学题: 1 - o,
                         完成OMC: o
                     }
                 }
@@ -3062,7 +3062,7 @@ const eventSystem = {
                       , o = Math.min(.1, .02 * (playerStats.graph || 0))
                       , s = Math.min(.99, .1 + t + n + r + a + o + e);
                     return {
-                        做不出来数学题: 1 + s,
+                        做不出来数学题: 1 - s,
                         完成AoPS: s
                     }
                 }
@@ -3087,7 +3087,7 @@ const eventSystem = {
                       , n = Math.min(.3, .05 * (playerStats.geometry || 0))
                       , r = Math.min(.99, .3 + t + n + e);
                     return {
-                        做不出来数学题: 1 + r,
+                        做不出来数学题: 1 - r,
                         完成Euclidea: r
                     }
                 }
@@ -3099,7 +3099,7 @@ const eventSystem = {
                       , n = Math.min(.3, .03 * (playerStats.dp || 0))
                       , r = Math.min(.99, .4 + t + n + e);
                     return {
-                        玩不明白魔塔: 1 + r,
+                        玩不明白魔塔: 1 - r,
                         完成魔塔: r
                     }
                 }

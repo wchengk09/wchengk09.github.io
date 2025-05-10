@@ -1,0 +1,2839 @@
+const eventSystem = {
+    training: {
+        偷学: {
+            title: "偷学",
+            description: "在其他人摸鱼摆烂的时候，你却在偷偷学习。这样的学习方式也许会带来一些效果？你其实并不知道，你只是觉得在其他人休息的时候学习，会更有动力。这也是你引以为傲的一点。",
+            options: [{
+                text: "偷学被同学发现，被迫中断学习",
+                effects: {
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些线性代数",
+                effects: {
+                    linearalgebra: 1,
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些微积分",
+                effects: {
+                    calculus: 1,
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些数值方法",
+                effects: {
+                    numerical: 1,
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些概率论",
+                effects: {
+                    probability: 1,
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些复分析",
+                effects: {
+                    complexanalysis: 1,
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些线性规划",
+                effects: {
+                    linearprogramming: 1,
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些常数优化",
+                effects: {
+                    constant: 1,
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些计算几何",
+                effects: {
+                    geometry: 1,
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些字符串",
+                effects: {
+                    string: 1,
+                    mood: +1
+                }
+            }, {
+                text: "偷学了一些文化课",
+                effects: {
+                    culture: 1,
+                    mood: +1
+                }
+            }],
+            optionsToShow: 1
+        },
+        休息: {
+            title: "休息",
+            description: "竞赛生的生活非常忙碌，适当的休息也许可以让你更好地调整心态，迎接接下来的挑战。你期待着有个好梦，便躺在了床上。",
+            options: [{
+                text: "在床上躺着使你感到非常舒适，你很快就睡着了，至于虚幻的梦你醒来时已经记不清了",
+                effects: {
+                    mood: 2
+                }
+            }, {
+                text: "在床上躺着使你感到非常舒适，你很快就睡着了，至于虚幻的梦你醒来时已经记不清了",
+                effects: {
+                    mood: 1
+                }
+            }, {
+                text: "在梦里你梦到了很多：喜欢的女孩，曾经的老友，还有你那未完成的梦想",
+                effects: {
+                    determination: 500
+                }
+            }, {
+                text: "在梦里你梦到了很多：喜欢的女孩，曾经的老友，还有你那未完成的梦想",
+                effects: {
+                    determination: 1e3
+                }
+            }, {
+                text: "渐入梦境之时，你带上了你所有的决心……",
+                effects: {
+                    determination: 1e3
+                },
+                nextEvent: "决心商店"
+            }, {
+                text: "渐入梦境之时，你带上了你所有的决心……",
+                effects: {
+                    determination: 500
+                },
+                nextEvent: "决心商店"
+            }, {
+                text: "渐入梦境之时，你带上了你所有的决心……",
+                effects: {},
+                nextEvent: "决心商店"
+            }, {
+                text: "你被楼下的七八岁的小孩吵的无法安然入睡，这让你感到更加烦躁",
+                effects: {
+                    mood: +1
+                }
+            }, {
+                text: "你做了恐怖的噩梦，感到更焦虑了，这让你感到更加烦躁",
+                effects: {
+                    mood: +2
+                }
+            }],
+            optionsToShow: 1
+        },
+        打隔膜: {
+            title: "打隔膜",
+            description: "竞赛生的快乐来源之一，当然是打隔膜。你和你的朋友们一起在机房打隔膜，在享受着游戏的乐趣的同时，又要避开教练的视线——你的学长曾因为在机房打隔膜被教练抓到，然后被罚写检讨并被轰出了机房。",
+            options: [{
+                text: "轻轻松松带飞全场，你感受到了游戏带来的快感",
+                effects: {
+                    mood: 3
+                }
+            }, {
+                text: "游戏的时光让你忘记了烦恼，重新燃起了斗志",
+                effects: {
+                    mood: 2
+                }
+            }, {
+                text: "经过激烈的厮杀后，勉强获胜——这确实缓解了一些压力",
+                effects: {
+                    mood: 1
+                }
+            }, {
+                text: "打隔膜给你带来了必胜的决心：我在 OI 上也一定会赢！",
+                effects: {
+                    determination: 1e3
+                }
+            }, {
+                text: "被对面虐，心态爆炸。连开了五把却怎么都赢不了，你开始怀疑自己的实力",
+                effects: {
+                    mood: +1
+                }
+            }, {
+                text: "你在打隔膜时候被抓，跟学长一样地，被罚写检讨并被轰出了机房",
+                effects: {
+                    mood: +2
+                }
+            }],
+            optionsToShow: 1
+        },
+        摸鱼: {
+            title: "摸鱼",
+            description: "日常训练给你带来了巨大的压力，你决定在训练期间暂时放松一下，舒缓一下心情。总不会真的有学习机器，连摸鱼的时间都没有吧？",
+            options: [{
+                text: "刷了会手机，时间就过去了",
+                effects: {}
+            }, {
+                text: "去床上休息一下，缓解一下压力",
+                effects: {},
+                nextEvent: "休息"
+            }, {
+                text: "朋友都在旁边：为什么不一起打隔膜？",
+                effects: {},
+                nextEvent: "打隔膜"
+            }],
+            optionsToShow: 3
+        },
+        出游: {
+            title: "出游",
+            description: "竞赛生都是一些死宅，即使有空的时间也都是待在机房里。然而机房的气氛确实比较压抑，而且平时你也没有时间出去走走，那为什么不去感受一下外面的世界呢？",
+            options: [{
+                text: "你偶然遇上黄昏和晚霞：在另一个我不学 OI 的世界里，我此时会在做什么？",
+                effects: {
+                    mood: +1
+                }
+            }, {
+                text: "你在湖边的咖啡厅遇到了一位学长，你回心转意决定跟他学习一会",
+                effects: {},
+                nextEvent: "偷学"
+            }, {
+                text: "原本只想开开心心地溜达，怎料天下大雨，你被淋成了落汤鸡",
+                effects: {
+                    mood: +2
+                }
+            }, {
+                text: "后来你才知道：生活不只眼前的 OI，还有诗和远方",
+                effects: {
+                    mood: 1
+                }
+            }],
+            optionsToShow: 1
+        },
+        遗忘: {
+            title: "遗忘",
+            description: "一些知识总会在不知不觉中遗忘，就如同历史的长河终究会把你我淹没。——希望大家一直记得我，希望大家永远忘了我。",
+            options: [{
+                text: "忘记动态规划",
+                effects: {
+                    dp: +2
+                }
+            }, {
+                text: "忘记数据结构",
+                effects: {
+                    ds: +2
+                }
+            }, {
+                text: "忘记字符串",
+                effects: {
+                    string: +2
+                }
+            }, {
+                text: "忘记图论",
+                effects: {
+                    graph: +2
+                }
+            }, {
+                text: "忘记组合计数",
+                effects: {
+                    combinatorics: +2
+                }
+            }, {
+                text: "忘记计算几何",
+                effects: {
+                    geometry: +2
+                }
+            }, {
+                text: "忘记线性代数",
+                effects: {
+                    linearalgebra: +2
+                }
+            }, {
+                text: "忘记数论",
+                effects: {
+                    numbertheory: +2
+                }
+            }, {
+                text: "忘记博弈论",
+                effects: {
+                    gametheory: +2
+                }
+            }, {
+                text: "忘记构造",
+                effects: {
+                    construction: +2
+                }
+            }, {
+                text: "忘记多项式",
+                effects: {
+                    polynomial: +2
+                }
+            }, {
+                text: "忘记数学",
+                effects: {
+                    linearalgebra: +2,
+                    combinatorics: +2,
+                    numbertheory: +2,
+                    polynomial: +2,
+                    gametheory: +2,
+                    calculus: +2,
+                    numerical: +2,
+                    probability: +2,
+                    complexanalysis: +2,
+                    linearprogramming: +2
+                }
+            }, {
+                text: "忘记文化课",
+                effects: {
+                    culture: +2
+                }
+            }, {
+                text: "忘记怎么写代码",
+                effects: {
+                    coding: +1
+                }
+            }, {
+                text: "忘记如何管理情绪",
+                effects: {
+                    mental: +1
+                }
+            }, {
+                text: "忘记所有",
+                effects: {
+                    dp: +1,
+                    ds: +1,
+                    string: +1,
+                    graph: +1,
+                    combinatorics: +1,
+                    geometry: +1,
+                    linearalgebra: +1,
+                    numbertheory: +1,
+                    gametheory: +1,
+                    construction: +1,
+                    polynomial: +1,
+                    culture: +1
+                }
+            }],
+            optionsToShow: 3
+        },
+        焦虑: {
+            title: "焦虑",
+            description: "长期的高压生活，你总会陷入焦虑。一次次的挫折后，你开始怀疑自己是否真的适合 OI，是否真的有天赋。你觉得自己不再是三年前那个充满梦想和决心的自己了。但是走到这一步，你已经没有退路了。",
+            options: [{
+                text: "有时候你开始思考人生的意义：我到底在追求什么？——可惜你找不到答案",
+                effects: {
+                    mood: +2
+                }
+            }, {
+                text: "你开始轻微抑郁，你总觉得自己的努力没有意义，但也没有解决的办法，只能反复内耗",
+                effects: {
+                    mood: +3
+                }
+            }, {
+                text: "在焦虑中，你开始选择遗忘，选择逃避，选择放弃",
+                effects: {},
+                nextEvent: "遗忘"
+            }, {
+                text: "你在一次次的焦虑中，变得更没有底气和决心",
+                effects: {
+                    determination: +500
+                }
+            }],
+            optionsToShow: 2
+        },
+        长期训练: {
+            title: "长期训练",
+            description: "你很幸运地进入到了最好的高中，这里有着最好的师资力量，最好的学习氛围，最好的竞赛氛围。你开始进行长期训练，水平很快得到了提升。",
+            options: [{
+                text: "综合训练",
+                effects: {
+                    dp: 1,
+                    ds: 1,
+                    string: 1,
+                    graph: 1,
+                    combinatorics: 1,
+                    geometry: 1,
+                    linearalgebra: 1,
+                    gametheory: 1,
+                    construction: 1,
+                    polynomial: 1,
+                    numbertheory: 1,
+                    calculus: 1,
+                    matroid: 1,
+                    numerical: 1,
+                    complexanalysis: 1,
+                    linearprogramming: 1,
+                    crypto: 1
+                }
+            }, {
+                text: "动态规划专项训练",
+                effects: {
+                    dp: 6
+                }
+            }, {
+                text: "数据结构专项训练",
+                effects: {
+                    ds: 6
+                }
+            }, {
+                text: "字符串专项训练",
+                effects: {
+                    string: 6
+                }
+            }, {
+                text: "图论专项训练",
+                effects: {
+                    graph: 6
+                }
+            }, {
+                text: "计算几何专项训练",
+                effects: {
+                    geometry: 4,
+                    ds: 2
+                }
+            }, {
+                text: "多项式专项训练",
+                effects: {
+                    polynomial: 8
+                }
+            }, {
+                text: "数论专项训练",
+                effects: {
+                    numbertheory: 8
+                }
+            }, {
+                text: "博弈论专项训练",
+                effects: {
+                    gametheory: 8
+                }
+            }, {
+                text: "构造专项训练",
+                effects: {
+                    construction: 8
+                }
+            }, {
+                text: "线性规划专项训练",
+                effects: {
+                    linearprogramming: 8
+                }
+            }, {
+                text: "概率论专项训练",
+                effects: {
+                    probability: 8
+                }
+            }, {
+                text: "复分析专项训练",
+                effects: {
+                    complexanalysis: 8
+                }
+            }, {
+                text: "数值方法专项训练",
+                effects: {
+                    numerical: 8
+                }
+            }, {
+                text: "微积分专项训练",
+                effects: {
+                    calculus: 8
+                }
+            }, {
+                text: "拟阵专项训练",
+                effects: {
+                    matroid: 8
+                }
+            }, {
+                text: "数学专项训练",
+                effects: {
+                    linearalgebra: 3,
+                    combinatorics: 3,
+                    polynomial: 3,
+                    numbertheory: 3
+                }
+            }, {
+                text: "文化课训练",
+                effects: {
+                    culture: 8
+                }
+            }],
+            optionsToShow: 6
+        },
+        提升训练: {
+            title: "提升训练",
+            description: "人们只有会利用时间，才能真正地提升自己。你在碎片的时间里反复训练，水平也许会得到略微的提升——当然，你也可以选择摸鱼。",
+            options: [{
+                text: "动态规划专项训练",
+                effects: {
+                    dp: 2
+                }
+            }, {
+                text: "数据结构专项训练",
+                effects: {
+                    ds: 2
+                }
+            }, {
+                text: "字符串专项训练",
+                effects: {
+                    string: 2
+                }
+            }, {
+                text: "图论专项训练",
+                effects: {
+                    graph: 2
+                }
+            }, {
+                text: "组合计数专项训练",
+                effects: {
+                    combinatorics: 2
+                }
+            }, {
+                text: "计算几何专项训练",
+                effects: {
+                    geometry: 2
+                }
+            }, {
+                text: "线性代数专项训练",
+                effects: {
+                    linearalgebra: 2
+                }
+            }, {
+                text: "数论专项训练",
+                effects: {
+                    numbertheory: 2
+                }
+            }, {
+                text: "博弈论专项训练",
+                effects: {
+                    gametheory: 2
+                }
+            }, {
+                text: "构造专项训练",
+                effects: {
+                    construction: 2
+                }
+            }, {
+                text: "多项式专项训练",
+                effects: {
+                    polynomial: 2
+                }
+            }, {
+                text: "线性规划专项训练",
+                effects: {
+                    linearprogramming: 2
+                }
+            }, {
+                text: "概率论专项训练",
+                effects: {
+                    probability: 2
+                }
+            }, {
+                text: "复分析专项训练",
+                effects: {
+                    complexanalysis: 2
+                }
+            }, {
+                text: "数值方法专项训练",
+                effects: {
+                    numerical: 2
+                }
+            }, {
+                text: "微积分专项训练",
+                effects: {
+                    calculus: 2
+                }
+            }, {
+                text: "拟阵专项训练",
+                effects: {
+                    matroid: 2
+                }
+            }, {
+                text: "数学专项训练",
+                effects: {
+                    linearalgebra: 1,
+                    combinatorics: 1,
+                    numbertheory: 1,
+                    polynomial: 1,
+                    calculus: 1,
+                    numerical: 1,
+                    probability: 1,
+                    complexanalysis: 1
+                }
+            }, {
+                text: "文化课训练",
+                effects: {
+                    culture: 3
+                }
+            }, {
+                text: "训练不如摸鱼",
+                effects: {},
+                nextEvent: "摸鱼"
+            }],
+            optionsToShow: 6
+        },
+        比赛训练: {
+            title: "比赛训练",
+            description: "教练告诉你，比赛是检验你水平的最好方式。你开始参加比赛，你希望能在平时的比赛中找到自己的不足，并加以改进。这也许会给你正式的比赛带来帮助。",
+            options: [{
+                text: "按照教练推荐的，参加校内模拟赛",
+                effects: {},
+                nextEvent: "模拟赛"
+            }, {
+                text: "你注意到一些网站上也有比赛资源，也许可以打洛谷月赛",
+                effects: {},
+                nextEvent: "月赛"
+            }, {
+                text: "你注意到一些网站上也有比赛资源，也许可以打 Petrozavodsk Camp",
+                effects: {},
+                nextEvent: "PTZ"
+            }, {
+                text: "你偶然听说了 Codeforces，大家都说这里的题目质量很高，你决定去参加一下他们的比赛",
+                effects: {},
+                nextEvent: "Codeforces"
+            }, {
+                text: "你偶然听说了 Atcoder，大家都说这里的题目质量很高，你决定去参加一下他们的比赛",
+                effects: {},
+                nextEvent: "Atcoder"
+            }, {
+                text: "你偶然听说了 UOJ，大家都说这里的题目质量很高，你决定去参加一下他们的比赛",
+                effects: {},
+                nextEvent: "UOJ"
+            }, {
+                text: "你偶然听说了 LOJ，大家都说这里的题目质量很高，你决定去参加一下他们的比赛",
+                effects: {},
+                nextEvent: "LOJ"
+            }, {
+                text: "你偶然听说了 Universal Cup，大家都说这里的题目质量很高，你决定去参加一下他们的比赛",
+                effects: {},
+                nextEvent: "UCup"
+            }, {
+                text: "打比赛不如摸鱼",
+                effects: {},
+                nextEvent: "摸鱼"
+            }],
+            optionsToShow: 3
+        },
+        PA: {
+            title: "PA",
+            description: "“Runda 5 的题目好有难度...做了很久总算做完了...”，你看着屏幕上显示的“Accepted”，长舒了一口气。你决定继续做下去，你希望你能坚持下去，直到你成为一名优秀的 OIer。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    graph: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 3
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        QOJ: {
+            title: "QOJ",
+            description: "你不知道哪些题目是好的，于是你找了一场你顺眼的比赛，做了下去。你对你的选择感到很满意。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    string: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    string: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    string: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    gametheory: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    gametheory: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    polynomial: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    polynomial: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    polynomial: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    ds: 1,
+                    string: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    ds: 1,
+                    graph: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2,
+                    geometry: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 1,
+                    linearalgebra: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 1,
+                    numbertheory: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    polynomial: 1,
+                    combinatorics: 1,
+                    linearalgebra: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 2,
+                    ds: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    ds: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2,
+                    string: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    gametheory: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 3,
+                    graph: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 3,
+                    dp: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 3,
+                    string: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    polynomial: 3,
+                    string: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 3,
+                    gametheory: 1
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        JOI: {
+            title: "JOI",
+            description: "你做了一场 JOISC，你觉得题目质量很高，但难度有些大。你觉得自己获得了很多收获。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    ds: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2,
+                    dp: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 2,
+                    ds: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 2,
+                    combinatorics: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 2,
+                    construction: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 1,
+                    combinatorics: 2,
+                    construction: 2
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        KOITST: {
+            title: "KOI TST",
+            description: "你做了一场 KOI TST，有好多数据结构题，你坐起来很累，但收获很多。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    ds: 5
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2,
+                    dp: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2,
+                    graph: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2,
+                    combinatorics: 1
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        OpenCup: {
+            title: "OpenCup",
+            description: "你做了一场 OpenCup，你不明白 Grand Prix 后面的地点都是什么意思，而是选择了一场看着比较顺眼的比赛开始做题",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    geometry: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    ds: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    coding: 1,
+                    geometry: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    coding: 1,
+                    string: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 1,
+                    dp: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 1,
+                    dp: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 2,
+                    polynomial: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 2,
+                    linearalgebra: 2
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        Timus: {
+            title: "Timus",
+            description: "你去 Timus 上做了一些题目。你觉得这些题目很奇怪，很有年代感，做起来让自己很不舒服...",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    geometry: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    coding: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    coding: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    carefulness: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    coding: 1,
+                    geometry: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    coding: 1,
+                    linearalgebra: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    coding: 1,
+                    numbertheory: 3
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        TopCoder: {
+            title: "TopCoder",
+            description: "你费劲好久，终于明白如何在 TopCoder 上提交题目。啊哈，于是你打开了一场 SRM，做了起来",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    dp: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 1
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        CSES: {
+            title: "CSES",
+            description: "“嗯？这些题怎么都这么经典？”，你觉得这个 OJ 的题目很 educational，做起来确实很爽。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    graph: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    ds: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    string: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 1,
+                    graph: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 1,
+                    string: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 1,
+                    string: 1
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        SPOJ: {
+            title: "SPOJ",
+            description: "你打开了 SPOJ……题目很多，不知道该怎么做，那就做做这个试试……？",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    ds: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    string: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        刷题训练: {
+            title: "刷题训练",
+            description: "时间是事物的试金石。在网友的推荐下，你决定去板刷一些经典题库，你希望能在这些题目中找到自己的不足，并加以改进。",
+            options: [{
+                text: "你听说 PA 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "PA"
+            }, {
+                text: "你听说 KOI TST 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "KOITST"
+            }, {
+                text: "你听说 UOJ 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "UOJ"
+            }, {
+                text: "你听说 JOI 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "JOI"
+            }, {
+                text: "你听说 Open Cup 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "OpenCup"
+            }, {
+                text: "你听说 Timus 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "Timus"
+            }, {
+                text: "你听说 TopCoder 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "TopCoder"
+            }, {
+                text: "你听说 CSES 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "CSES"
+            }, {
+                text: "你听说 QOJ 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "QOJ"
+            }, {
+                text: "你听说 SPOJ 的题目质量不错，你打算尝试一下",
+                effects: {},
+                nextEvent: "SPOJ"
+            }, {
+                text: "打比赛不如摸鱼",
+                effects: {},
+                nextEvent: "摸鱼"
+            }],
+            optionsToShow: 4
+        },
+        决心商店: {
+            title: "决心商店",
+            description: "在梦境中，你到了一个神秘的商店。商店的老板告诉你，只要你愿意，你就可以用你的决心来提升你的能力。但也许你需要先慎重地考虑一下，你到底需要什么。每次购买后，商品的价格都会上涨。",
+            isShop: !0,
+            options: [{
+                text: "思维提升",
+                effects: {
+                    thinking: 1
+                },
+                cost: 300,
+                description: "花费300点决心提升1点思维能力（下次购买费用+200）"
+            }, {
+                text: "代码提升",
+                effects: {
+                    coding: 1
+                },
+                cost: 300,
+                description: "花费300点决心提升1点代码能力（下次购买费用+200）"
+            }, {
+                text: "细心提升",
+                effects: {
+                    carefulness: 1
+                },
+                cost: 300,
+                description: "花费300点决心提升1点细心（下次购买费用+200）"
+            }, {
+                text: "随机提升",
+                effects: {
+                    random: ["dp", "ds", "string", "graph", "combinatorics", "geometry", "linearalgebra", "numbertheory", "gametheory", "construction", "polynomial"]
+                },
+                cost: 150,
+                description: "花费300点决心随机提升一项算法能力（下次购买费用+200）"
+            }, {
+                text: "心态恢复",
+                effects: {
+                    mood: 3
+                },
+                cost: 500,
+                description: "花费500点决心提升3点心态（下次购买费用+100）"
+            }, {
+                text: "全面提升",
+                effects: {
+                    dp: 1,
+                    ds: 1,
+                    string: 1,
+                    graph: 1,
+                    combinatorics: 1,
+                    geometry: 1,
+                    linearalgebra: 1,
+                    numbertheory: 1,
+                    gametheory: 1,
+                    construction: 1,
+                    polynomial: 1
+                },
+                cost: 1e3,
+                description: "花费1000点决心提升所有算法能力（下次购买费用+1000）"
+            }, {
+                text: "速度提升",
+                effects: {
+                    quickness: 1
+                },
+                cost: 1500,
+                description: "花费1500点决心提升1点迅捷（下次购买费用+3000）"
+            }, {
+                text: "心理素质提升",
+                effects: {
+                    mental: 1
+                },
+                cost: 1500,
+                description: "花费1500点决心提升1点心理素质（下次购买费用+5000）"
+            }, {
+                text: "经验提升",
+                effects: {
+                    experience: 1
+                },
+                cost: 1500,
+                description: "花费1500点决心提升1点经验（下次购买费用+5000）"
+            }, {
+                text: "放弃购买",
+                effects: {},
+                description: "离开商店"
+            }],
+            optionsToShow: 6
+        },
+        好比赛: {
+            title: "比赛",
+            description: "你对这场比赛的质量十分满意，这确实是一场出的相当不错的比赛。不过他相当大的难度，让你感到有些力不从心。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    thinking: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    coding: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    string: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    gametheory: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    polynomial: 2
+                }
+            }, {
+                text: "在做比赛的时候，你更加坚定了你的决心",
+                effects: {
+                    determination: 500
+                }
+            }, {
+                text: "你觉得这不是你的正常发挥，你还能做的更好",
+                effects: {},
+                nextEvent: "焦虑"
+            }],
+            optionsToShow: 1
+        },
+        正常比赛: {
+            title: "比赛",
+            description: "这场比赛的质量还算中等，并没有到值得夸赞的地步，但你也许能从中获得一些启发，也可能因为打的不够好而陷入焦虑。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    thinking: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    coding: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    string: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    gametheory: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    polynomial: 1
+                }
+            }, {
+                text: "在做比赛的时候，你更加坚定了你的决心",
+                effects: {
+                    determination: 200
+                }
+            }, {
+                text: "做完比赛你改变了看法：你觉得做这种比赛就是在浪费时间",
+                effects: {
+                    mood: +1
+                }
+            }, {
+                text: "做完比赛你只觉得平平无奇，并没有带来什么实际效果",
+                effects: {}
+            }, {
+                text: "你觉得这不是你的正常发挥，你还能做的更好",
+                effects: {},
+                nextEvent: "焦虑"
+            }],
+            optionsToShow: 1
+        },
+        烂比赛: {
+            title: "比赛",
+            description: "你意识到这是一场极其糟糕的比赛！你坚持认为这场比赛就是垃圾中的王者，不仅浪费时间还搞人心态。",
+            options: [{
+                text: "尽管如此，你还是从中得到了一些提升",
+                effects: {
+                    ds: 1
+                }
+            }, {
+                text: "尽管如此，你还是从中得到了一些提升",
+                effects: {
+                    geometry: 1
+                }
+            }, {
+                text: "尽管如此，你还是从中得到了一些提升",
+                effects: {
+                    linearalgebra: 1
+                }
+            }, {
+                text: "尽管如此，你还是从中得到了一些提升",
+                effects: {
+                    numbertheory: 1
+                }
+            }, {
+                text: "建议不会出题就不要出比赛，出题人纯纯智障",
+                effects: {
+                    mood: +2
+                }
+            }, {
+                text: "好比赛，下次别出了",
+                effects: {
+                    mood: +1
+                }
+            }, {
+                text: "虽然很垃圾但也就这样，这不会影响什么事",
+                effects: {}
+            }, {
+                text: "这是不是我的问题？如果真正的比赛也是这样的，那我该怎么办？",
+                effects: {},
+                nextEvent: "焦虑"
+            }, {
+                text: "我再也不会笑了",
+                effects: {
+                    determination: +300
+                }
+            }, {
+                text: "做这场比赛不如去看奶龙大战暴暴龙",
+                effects: {
+                    determination: +500
+                }
+            }, {
+                text: "出题人，****",
+                effects: {
+                    determination: +1e3
+                }
+            }],
+            optionsToShow: 1
+        },
+        娱乐时间: {
+            title: "娱乐时间",
+            description: "每天反复想题写题的生活一定是很压抑的，你决定利用好你的娱乐时间，做一些你觉得有意义的事情。",
+            options: [{
+                text: "你趁其他人娱乐，想要偷学一会",
+                effects: {},
+                nextEvent: "偷学"
+            }, {
+                text: "你困得不行了，为什么不休息一会",
+                effects: {},
+                nextEvent: "休息"
+            }, {
+                text: "年少不知摸鱼好",
+                effects: {},
+                nextEvent: "摸鱼"
+            }, {
+                text: "打隔膜是一种很好的娱乐方式",
+                effects: {},
+                nextEvent: "打隔膜"
+            }, {
+                text: "有空的时候多去看看世界，看看大自然",
+                effects: {},
+                nextEvent: "出游"
+            }, {
+                text: "该去摸鱼，看看网友们都写了什么",
+                effects: {},
+                nextEvent: "阅读博客"
+            }],
+            optionsToShow: 3
+        },
+        模拟赛: {
+            title: "模拟赛",
+            description: "你参加了一场校内模拟赛...",
+            options: [{
+                text: "必须认真打好每一个部分分",
+                effects: {
+                    coding: 1,
+                    experience: 1
+                },
+                nextEventProbability: {
+                    好比赛: .1,
+                    正常比赛: .2,
+                    烂比赛: .7
+                }
+            }, {
+                text: "随便做做也许会稍微有点提升",
+                effects: {
+                    random: ["linearalgebra", "geometry", "string", "combinatorics", "experience"]
+                }
+            }, {
+                text: "有这时间不如打打隔膜",
+                effects: {},
+                nextEvent: "打隔膜"
+            }],
+            optionsToShow: 3
+        },
+        月赛: {
+            title: "月赛",
+            description: "你参加了一场洛谷月赛...",
+            options: [{
+                text: "必须认真打好每一个部分分",
+                nextEventProbability: {
+                    好比赛: .05,
+                    正常比赛: .15,
+                    烂比赛: .8
+                }
+            }, {
+                text: "有这时间不如打打隔膜",
+                effects: {},
+                nextEvent: "打隔膜"
+            }, {
+                text: "边做边摸鱼真是一件美妙的事情",
+                effects: {},
+                nextEvent: "摸鱼"
+            }, {
+                text: "做了一半你决定摆了",
+                effects: {}
+            }],
+            optionsToShow: 3
+        },
+        UCup: {
+            title: "Universal Cup",
+            description: "你参加了一场 Universal Cup 比赛...",
+            options: [{
+                text: "我要去找个队友，一起参赛",
+                effects: {
+                    mood: 2
+                },
+                nextEventProbability: {
+                    好比赛: .5,
+                    正常比赛: .35,
+                    烂比赛: .15
+                }
+            }, {
+                text: "我要来单挑 ucup，努力加训",
+                effects: {
+                    coding: 1
+                },
+                nextEventProbability: {
+                    好比赛: .5,
+                    正常比赛: .35,
+                    烂比赛: .15
+                }
+            }, {
+                text: "边做边摸鱼真是一件美妙的事情",
+                effects: {},
+                nextEvent: "摸鱼"
+            }, {
+                text: "做了一半你决定摆了",
+                effects: {}
+            }],
+            optionsToShow: 3
+        },
+        PTZ: {
+            title: "Petrozavodsk Camp",
+            description: "你参加了一场 Petrozavodsk Camp 比赛...",
+            options: [{
+                text: "我要去找个队友，一起参赛",
+                effects: {
+                    mood: 3
+                },
+                nextEventProbability: {
+                    好比赛: .4,
+                    正常比赛: .5,
+                    烂比赛: .1
+                }
+            }, {
+                text: "我要来单挑 PTZ Camp，努力加训",
+                effects: {
+                    coding: 1
+                },
+                nextEventProbability: {
+                    好比赛: .4,
+                    正常比赛: .5,
+                    烂比赛: .1
+                }
+            }, {
+                text: "边做边摸鱼真是一件美妙的事情",
+                effects: {},
+                nextEvent: "摸鱼"
+            }, {
+                text: "做了一半你决定摆了",
+                effects: {}
+            }]
+        },
+        看不懂: {
+            title: "看不懂这些东西",
+            description: "这也太难了，完全不能理解，你决定放弃。",
+            options: [{
+                text: "我再也不会笑了",
+                effects: {
+                    determination: +300
+                }
+            }, {
+                text: "自己这么笨，是不是要完蛋了",
+                effects: {
+                    mood: +2
+                }
+            }, {
+                text: "为什么我要学 OI 啊？？",
+                effects: {
+                    mood: +3
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会Elegia: {
+            title: "学习了 Elegia 的博客",
+            description: "你学习了 Elegia 的博客，你发现他的博客写的非常棒，你爱上了这些科技，决定以后多学习学习他的博客。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 8
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    polynomial: 8
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 8
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    calculus: 8
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    probability: 8
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    complexanalysis: 8
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 2,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 2,
+                    linearalgebra: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 2,
+                    dp: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 4
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会zhoukangyang: {
+            title: "学会zhoukangyang",
+            description: "你学会了zhoukangyang的博客，你惊讶的发现，原来OI还可以这么有趣，你决定以后多学习学习他的博客。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    thinking: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 1,
+                    dp: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 1,
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 1,
+                    numbertheory: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 1,
+                    ds: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 3
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会skip2004: {
+            title: "学会skip2004",
+            description: "你学会了skip2004的博客，发现了很多写代码的小技巧，现在你充满了力量！！",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    coding: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    carefulness: 1
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会Crysfly: {
+            title: "学会Crysfly",
+            description: "你阅读了Crysfly的博客，你很喜欢 xy 语语录，你觉得非常有趣。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    mood: 3
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会dottle: {
+            title: "学会dottle",
+            description: "你阅读了dottle的博客，你很喜欢他的这些文学作品，你的内心产生了一丝触动。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    mood: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    mood: 1,
+                    thinking: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    mental: 1
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会最新科技: {
+            title: "学会最新科技",
+            description: "你阅读了arXiv上的最新文章，你发现了一些新的科技，但你不知道除了把他们搬到联考还能干些什么。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    thinking: 3,
+                    combinatorics: 6
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 3,
+                    numbertheory: 6
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 3,
+                    gametheory: 6
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 3,
+                    graph: 4
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会dXqwq: {
+            title: "学会dXqwq",
+            description: "你阅读了dXqwq的推文后，他爱上了与你聊天，并向你传授了 OI 技巧",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    ds: 4
+                }
+            }, ]
+        },
+        学会adamant: {
+            title: "学会adamant",
+            description: "你阅读了adamant的博客，学到了一些奇奇怪怪的东西。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    numbertheory: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    polynomial: 4
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会号妈培训: {
+            title: "学会号妈培训",
+            description: "你阅读了号妈培训的博客，感慨到：铜鼓我的努力，我也可以变得比他们更加厉害。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    determination: 1e3,
+                    mood: 1
+                }
+            }, ]
+        },
+        学会djq_cpp: {
+            title: "学会djq_cpp",
+            description: "你阅读了djq_cpp的课件，这道题好像很有意思！",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    combinatorics: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 2
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会xudyh: {
+            title: "学会xudyh",
+            description: "你阅读了xudyh的课件，尽管非常难懂，你花了很久才理解这是在写什么，但是你学到了很多东西。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    combinatorics: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 4
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    string: 4
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        学会VFleaKing: {
+            title: "学会VFleaKing",
+            description: "你阅读了VFleaKing的博客，你非常喜欢 “四色的 NOI”这篇博客，你感受到了新的力量，并决定以后多多参加 UOJ 的比赛",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    mood: 2
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        "学会Petr Mitrichev": {
+            title: "学会Petr Mitrichev",
+            description: "你阅读了Petr Mitrichev的博客里提及的本周的比赛，并做了一下 Petr 认为有趣的题目。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    graph: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 1,
+                    string: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 1,
+                    ds: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 1,
+                    numbertheory: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 1,
+                    ds: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 1,
+                    graph: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 1,
+                    string: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    numbertheory: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    linearalgebra: 1
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        抑郁: {
+            title: "抑郁",
+            description: "完成后，你感到非常的抑郁。你觉得似懂非懂，又感到人生无比艰难，不知所措",
+            options: [{
+                text: "哎",
+                effects: {
+                    mood: +2
+                }
+            }, {
+                text: "哎",
+                effects: {
+                    mood: +3
+                }
+            }, {
+                text: "哎",
+                effects: {
+                    determination: +1e3
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        阅读博客: {
+            title: "阅读博客",
+            description: "你选择阅读网友留下的文字，汲取一些知识",
+            options: [{
+                text: "阅读 Elegia 的博客",
+                getNextEventProbability: function() {
+                    let e = Math.min(.6, .05 * (playerStats.polynomial || 0))
+                      , t = Math.min(.6, .05 * (playerStats.linearalgebra || 0))
+                      , n = Math.min(.6, .05 * (playerStats.combinatorics || 0))
+                      , r = Math.min(.7, .1 + e + t + n);
+                    return {
+                        看不懂: 1 - r,
+                        学会Elegia: r
+                    }
+                }
+            }, {
+                text: "阅读 zhoukangyang 的博客",
+                getNextEventProbability: function() {
+                    let e = Math.min(.9, .1 * (playerStats.thinking || 0))
+                      , t = Math.min(.9, .5 + e);
+                    return {
+                        看不懂: 1 - t,
+                        学会zhoukangyang: t
+                    }
+                }
+            }, {
+                text: "阅读 skip2004 的博客",
+                nextEventProbability: {
+                    看不懂: .2,
+                    学会skip2004: .8
+                }
+            }, {
+                text: "阅读 Petr Mitrichev 的博客",
+                nextEventProbability: {
+                    看不懂: .25,
+                    "学会Petr Mitrichev": .75
+                }
+            }, {
+                text: "阅读 Crysfly 的博客",
+                nextEventProbability: {
+                    看不懂: 0,
+                    学会Crysfly: 1
+                }
+            }, {
+                text: "阅读 dottle 的博客",
+                getNextEventProbability: function() {
+                    let e = Math.min(.95, .1 * (playerStats.culture || 0))
+                      , t = Math.min(.95, .01 * (playerStats.mental || 0))
+                      , n = Math.min(.95, .02 * (playerStats.thinking || 0))
+                      , r = Math.min(.95, .4 + e + t + n);
+                    return {
+                        看不懂: 1 - r,
+                        学会dottle: r
+                    }
+                }
+            }, {
+                text: "阅读 dXqwq 的 X",
+                getNextEventProbability: function() {
+                    let e = Math.min(.5, .1 * (playerStats.mental || 0))
+                      , t = Math.min(.3, .02 * (playerStats.mood || 0))
+                      , n = Math.min(.3, .02 * (playerStats.culture || 0))
+                      , r = Math.min(.95, .4 + e + t + n);
+                    return {
+                        抑郁: 1 - r,
+                        学会dXqwq: r
+                    }
+                }
+            }, {
+                text: "阅读 djq_cpp 的课件",
+                getNextEventProbability: function() {
+                    let e = Math.min(.2, .03 * (playerStats.dp || 0))
+                      , t = Math.min(.2, .03 * (playerStats.graph || 0))
+                      , n = Math.min(.2, .02 * (playerStats.ds || 0))
+                      , r = Math.min(.2, .02 * (playerStats.combinatorics || 0))
+                      , a = Math.min(.1, .01 * (playerStats.numbertheory || 0))
+                      , o = Math.min(.1, .01 * (playerStats.linearalgebra || 0))
+                      , s = Math.min(.1, .05 * (playerStats.thinking || 0))
+                      , i = Math.min(.99, .3 + e + t + n + r + a + o + s);
+                    return {
+                        看不懂: 1 - i,
+                        学会djq_cpp: i
+                    }
+                }
+            }, {
+                text: "阅读 xudyh 的课件",
+                nextEventProbability: {
+                    看不懂: .7,
+                    学会xudyh: .3
+                }
+            }, {
+                text: "阅读 VFleaKing 的博客",
+                nextEventProbability: {
+                    看不懂: .1,
+                    学会VFleaKing: .9
+                }
+            }, {
+                text: "阅读 arXiv 上的最新文章",
+                getNextEventProbability: function() {
+                    let e = Math.min(.2, .005 * (playerStats.dp || 0))
+                      , t = Math.min(.2, .01 * (playerStats.graph || 0))
+                      , n = Math.min(.2, .02 * (playerStats.ds || 0))
+                      , r = Math.min(.2, .02 * (playerStats.combinatorics || 0))
+                      , a = Math.min(.1, .01 * (playerStats.numbertheory || 0))
+                      , o = Math.min(.1, .01 * (playerStats.linearalgebra || 0))
+                      , s = Math.min(.3, .05 * (playerStats.thinking || 0))
+                      , i = Math.min(.9, 0 + e + t + n + r + a + o + s);
+                    return {
+                        看不懂: 1 - i,
+                        学会最新科技: i
+                    }
+                }
+            }, {
+                text: "阅读 adamant 的博客",
+                nextEventProbability: {
+                    看不懂: .3,
+                    学会adamant: .7
+                }
+            }, {
+                text: "阅读 号妈培训 的博客",
+                nextEventProbability: {
+                    抑郁: .5,
+                    学会号妈培训: .5
+                }
+            }],
+            optionsToShow: 3
+        },
+        "做不出来 Puzzle": {
+            title: "拼尽全力，无法战胜纸笔迷题",
+            description: "你参加了一场纸笔迷题比赛，但是你的成绩非常糟糕，你变得非常难过",
+            options: [{
+                text: "人生好艰难",
+                effects: {
+                    mood: +1
+                }
+            }, ]
+        },
+        "Puzzle 挂分": {
+            title: "Puzzle 挂分",
+            description: "你参加了一场纸笔迷题比赛，你觉得自己打的很好，结果比完后发现，自己竟然挂了很多分！",
+            options: [{
+                text: "什么锤子比赛？",
+                effects: {
+                    mood: +2
+                }
+            }, ]
+        },
+        完成Puzzle: {
+            title: "完成 Puzzle 比赛",
+            description: "你做了一场 Puzzle 比赛，你打得非常不错，提高了你的智慧水平！",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    thinking: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    carefulness: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 2
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        做不出来数学题: {
+            title: "做不出来数学题",
+            description: "这些数学问题很有趣，但是你的表现非常糟糕，你觉得自己的 OI 也要没救了",
+            options: [{
+                text: "怎么这么有难度",
+                effects: {
+                    mood: +1
+                }
+            }, {
+                text: "怎么这么有难度",
+                effects: {
+                    determination: +500
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        完成OMC: {
+            title: "完成 OMC",
+            description: "你参加了一场 OMC 比赛，你打得非常不错，提高了你的数学水平！",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    combinatorics: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 2
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        完成AoPS: {
+            title: "完成 AoPS",
+            description: "你在 AoPS 上看到了一道有趣的问题，你想了想，轻松将它解决，并从评论中获得了许多更有趣的解决方法！",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    combinatorics: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 3
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        完成Euclidea: {
+            title: "完成 Euclidea",
+            description: "你游玩了 Euclidea，显著提升了你的尺规作图水平，你感到几何很有意思",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    geometry: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 3
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        玩不明白魔塔: {
+            title: "玩不明白魔塔",
+            description: "你尝试游玩魔塔，但你无论怎么计算，都会卡在第 15 层。你 SL 了半天都无法战胜，只能遗憾离场",
+            options: [{
+                text: "太难了。",
+                effects: {
+                    mood: +2
+                }
+            }, ]
+        },
+        完成魔塔: {
+            title: "完成魔塔",
+            description: "你游玩了魔塔，显著提升了你的游戏水平与计算能力。你在想，如果未来我成为了出题人，我要给比赛投一道魔塔提答。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    dp: 2,
+                    construction: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 5
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        发现一个有趣的题目: {
+            title: "发现一个有趣的题目",
+            description: "在随机浏览的过程中，发现了一个有趣的题目？！你决定把它记录下来，并分享给你的朋友们。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    dp: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    ds: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    numbertheory: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    string: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    graph: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    geometry: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    combinatorics: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    linearalgebra: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    gametheory: 1
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    culture: 2
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        水知乎: {
+            title: "水知乎",
+            description: "你在知乎上水到了很多有趣的回答，这个段子怎么这么好笑。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    mood: 2
+                }
+            }, ]
+        },
+        杀戮尖塔很好玩: {
+            title: "杀戮尖塔很好玩",
+            description: "你和戴讲起一起沉迷游玩杀戮尖塔，度过了充实而又深刻的一天。",
+            options: [{
+                text: "得到提升",
+                effects: {
+                    dp: 1,
+                    mood: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    construction: 1,
+                    mood: 2
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    mood: 3
+                }
+            }, {
+                text: "得到提升",
+                effects: {
+                    thinking: 1,
+                    mood: 1
+                }
+            }, ],
+            optionsToShow: 1
+        },
+        不务正业: {
+            title: "不务正业",
+            description: "今天好无聊，不想做算法竞赛了，你想做点什么？",
+            options: [{
+                text: "参加 WPF Puzzle GP",
+                nextEventProbability: {
+                    "做不出来 Puzzle": .4,
+                    "Puzzle 挂分": .2,
+                    完成Puzzle: .4
+                }
+            }, {
+                text: "参加 WPF Sudoku GP",
+                nextEventProbability: {
+                    "做不出来 Puzzle": .5,
+                    "Puzzle 挂分": .25,
+                    完成Puzzle: .25
+                }
+            }, {
+                text: "参加 LMI Puzzle 比赛",
+                nextEventProbability: {
+                    "做不出来 Puzzle": .25,
+                    完成Puzzle: .75
+                }
+            }, {
+                text: "参加 OMC (Online Math Contest)",
+                getNextEventProbability: function() {
+                    let e = Math.min(.25, .04 * (playerStats.combinatorics || 0))
+                      , t = Math.min(.25, .04 * (playerStats.numbertheory || 0))
+                      , n = Math.min(.25, .04 * (playerStats.geometry || 0))
+                      , r = Math.min(.1, .02 * (playerStats.linearalgebra || 0))
+                      , a = Math.min(.1, .02 * (playerStats.graph || 0))
+                      , o = Math.min(.99, .4 + e + t + n + r + a);
+                    return {
+                        做不出来数学题: 1 - o,
+                        完成OMC: o
+                    }
+                }
+            }, {
+                text: "刷刷 AoPS (Art of Problem Solving)",
+                getNextEventProbability: function() {
+                    let e = Math.min(.25, .05 * (playerStats.thinking || 0))
+                      , t = Math.min(.25, .04 * (playerStats.combinatorics || 0))
+                      , n = Math.min(.25, .04 * (playerStats.numbertheory || 0))
+                      , r = Math.min(.25, .04 * (playerStats.geometry || 0))
+                      , a = Math.min(.1, .02 * (playerStats.linearalgebra || 0))
+                      , o = Math.min(.1, .02 * (playerStats.graph || 0))
+                      , s = Math.min(.99, .1 + t + n + r + a + o + e);
+                    return {
+                        做不出来数学题: 1 - s,
+                        完成AoPS: s
+                    }
+                }
+            }, {
+                text: "水水知乎",
+                nextEventProbability: {
+                    抑郁: .1,
+                    水知乎: .5,
+                    发现一个有趣的题目: .4
+                }
+            }, {
+                text: "玩杀戮尖塔",
+                nextEventProbability: {
+                    抑郁: .1,
+                    杀戮尖塔很好玩: .9
+                }
+            }, {
+                text: "玩 Euclidea",
+                getNextEventProbability: function() {
+                    let e = Math.min(.4, .1 * (playerStats.thinking || 0))
+                      , t = Math.min(.3, .05 * (playerStats.construction || 0))
+                      , n = Math.min(.3, .05 * (playerStats.geometry || 0))
+                      , r = Math.min(.99, .3 + t + n + e);
+                    return {
+                        做不出来数学题: 1 - r,
+                        完成Euclidea: r
+                    }
+                }
+            }, {
+                text: "游玩魔塔",
+                getNextEventProbability: function() {
+                    let e = Math.min(.4, .07 * (playerStats.thinking || 0))
+                      , t = Math.min(.3, .05 * (playerStats.construction || 0))
+                      , n = Math.min(.3, .03 * (playerStats.dp || 0))
+                      , r = Math.min(.99, .4 + t + n + e);
+                    return {
+                        玩不明白魔塔: 1 - r,
+                        完成魔塔: r
+                    }
+                }
+            }, {
+                text: "阅读博客",
+                nextEvent: "阅读博客"
+            }, {
+                text: "好像没什么可做的，还是去提升训练吧",
+                nextEvent: "提升训练"
+            }, {
+                text: "休息",
+                nextEvent: "休息"
+            }],
+            optionsToShow: 3
+        },
+        Codeforces: {
+            title: "Codeforces",
+            description: "你参加了一场 Codeforces 比赛...",
+            options: [{
+                text: "认真打好每一题，必须全神贯注！",
+                effects: {
+                    thinking: 1
+                },
+                nextEventProbability: {
+                    好比赛: .3,
+                    正常比赛: .6,
+                    烂比赛: .1
+                }
+            }, {
+                text: "随便做做，别把 rating 看的太重了",
+                probabilityEffects: [{
+                    probability: .5,
+                    effects: {
+                        thinking: 1
+                    }
+                }, {
+                    probability: .5,
+                    effects: {
+                        mood: +1
+                    }
+                }]
+            }, {
+                text: "你发现第一题做不出来，放弃就不会掉分",
+                effects: {}
+            }],
+            optionsToShow: 3
+        },
+        Atcoder: {
+            title: "Atcoder",
+            description: "你参加了一场 Atcoder 比赛...",
+            options: [{
+                text: "认真打好每一题，必须全神贯注！",
+                effects: {
+                    thinking: 1
+                },
+                nextEventProbability: {
+                    好比赛: .65,
+                    正常比赛: .3,
+                    烂比赛: .05
+                }
+            }, {
+                text: "随便做做，别把 rating 看的太重了",
+                probabilityEffects: [{
+                    probability: .6,
+                    effects: {
+                        thinking: 1
+                    }
+                }, {
+                    probability: .4,
+                    effects: {
+                        mood: +1
+                    }
+                }]
+            }, {
+                text: "你发现第一题做不出来，放弃也会掉分",
+                effects: {
+                    mood: +1
+                }
+            }],
+            optionsToShow: 3
+        },
+        UOJ: {
+            title: "UOJ",
+            description: "你参加了一场 UOJ 比赛...",
+            options: [{
+                text: "认真打好每一题，必须全神贯注！",
+                effects: {
+                    carefulness: 1
+                },
+                nextEventProbability: {
+                    好比赛: .55,
+                    正常比赛: .3,
+                    烂比赛: .15
+                }
+            }, {
+                text: "随便做做，别把 rating 看的太重了",
+                effects: {
+                    thinking: 1
+                }
+            }, {
+                text: "你发现第一题做不出来，放弃也会掉分",
+                effects: {
+                    mood: +1
+                }
+            }],
+            optionsToShow: 3
+        },
+        LOJ: {
+            title: "LOJ",
+            description: "LOJ 现在根本没有比赛！你感到很难过，很气愤！",
+            options: [{
+                text: "真是气死我了！",
+                effects: {
+                    mood: +1
+                }
+            }, ]
+        },
+        赛前一天: {
+            title: "赛前一天",
+            description: "不知不觉已经到了比赛前的最后一天，你不再希望提升你的能力，你只祈祷在比赛中取得一个好成绩——那么现在做什么，才能带来好运呢？",
+            options: [{
+                text: "缓和心态",
+                effects: {
+                    mood: 8 + playerStats.mental
+                },
+                description: "调整心态到恰好为 " + (8 + playerStats.mental)
+            }, {
+                text: "放松一下",
+                effects: {
+                    mood: 2
+                },
+                description: "心态+2"
+            }, {
+                text: "渐入梦境",
+                effects: {},
+                nextEvent: "决心商店",
+                description: "进入决心商店"
+            }, {
+                text: "提升训练",
+                effects: {},
+                nextEvent: "提升训练",
+                description: "进行提升训练"
+            }, {
+                text: "休息一下",
+                effects: {},
+                nextEvent: "休息",
+                description: "休息"
+            }],
+            optionsToShow: 5
+        },
+        步入高二: {
+            title: "步入高二",
+            description: "时光飞逝，转眼间你已经升入高二。新的学年带来了新的挑战，你需要在OI和文化课之间找到平衡。你的决心依然坚定，但你也意识到时间变得更加宝贵。",
+            options: [{
+                text: "专注OI",
+                effects: {
+                    determination: 2e3,
+                    culture: +2
+                },
+                description: "你决定继续专注于OI，为接下来的比赛做准备"
+            }, {
+                text: "均衡发展",
+                effects: {
+                    determination: 1e3,
+                    culture: 2,
+                    mood: 1
+                },
+                description: "你试图在OI和文化课之间找到平衡"
+            }, {
+                text: "感到迷茫",
+                effects: {
+                    determination: +200,
+                    mood: +2
+                },
+                nextEvent: "焦虑",
+                description: "面对繁重的学业压力，你开始质疑自己的选择"
+            }, {
+                text: "重整旗鼓",
+                effects: {
+                    determination: 500,
+                    thinking: 1,
+                    coding: 1
+                },
+                description: "新的学年给了你新的动力，你决定以更好的状态面对挑战"
+            }],
+            optionsToShow: 2
+        },
+        "成为 UOJ 管理员": {
+            title: "UOJ 管理员",
+            description: "你成为了 UOJ 的管理员！你选择投入时间，为 UOJ 的发展贡献自己的力量。",
+            options: [{
+                text: "好",
+                effects: {
+                    mood: 2,
+                    isUOJAdmin: !0
+                }
+            }, ]
+        },
+        UOJ管理员: {
+            title: "UOJ 管理员招募",
+            description: "你听说 UOJ 正在招募下一届管理员！刚好，作为获得了保送资格的集训队选手，你有充分多的时间参与 UOJ 的管理工作。你想要成为 UOJ 的管理员吗？",
+            options: [{
+                text: "成为管理员",
+                effects: {},
+                nextEvent: "UOJ管理员",
+                description: "成为 UOJ 管理员"
+            }, {
+                text: "不感兴趣",
+                effects: {}
+            }, ]
+        },
+        LOJ管理员: {
+            title: "LOJ 管理员招募",
+            description: "你听说 LOJ 正在招募下一届管理员！刚好，作为获得了保送资格的集训队选手，你有充分多的时间参与 LOJ 的管理工作。你想要成为 LOJ 的管理员吗？",
+            options: [{
+                text: "成为管理员",
+                effects: {
+                    isLOJAdmin: !0
+                }
+            }, {
+                text: "不感兴趣",
+                effects: {}
+            }, ]
+        }
+    }
+};
