@@ -7,13 +7,8 @@
 </head>
 <body>
     <script>
-        let path = '';
-        let spl = location.href.split('/');
-        for (let i = 3;i < spl.length;i ++){
-            path += '/';
-            path += spl[i];
-        }
-        location.href = '/domain/redirect/?loc=/domain/ngrok/ngrok.txt&path=' + path;
+        let url = await (await fetch('ngrok.txt')).text();
+        window.location.href = url;
     </script>
 </body>
 </html>
