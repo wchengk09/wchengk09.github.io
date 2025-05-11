@@ -7,8 +7,12 @@
 </head>
 <body>
     <script>
-        let url = await (await fetch('ngrok.txt')).text();
-        window.location.href = url;
+        (async ()=>{
+            let req = await fetch('ngrok.txt');
+            let url = await req.text();
+            window.location.href = url;
+        })();
+        
     </script>
 </body>
 </html>
