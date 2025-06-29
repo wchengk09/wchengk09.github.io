@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-language" content="zh-CN">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线台球模拟器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2c3e50, #1a1a2e);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .game-container {
+            background: rgba(25, 30, 48, 0.85);
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            width: 100%;
+            max-width: 900px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .game-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #3498db, #e74c3c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .game-subtitle {
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #ecf0f1;
+            opacity: 0.8;
+        }
+        
+        #board-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 14px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
+            background: #152620;
+            border: 10px solid #7a5230;
+        }
+        
+        #board-container::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, #7a5230, #583e22, #7a5230);
+            z-index: -1;
+            border-radius: 18px;
+        }
+        
+        #board {
+            display: block;
+            background: linear-gradient(135deg, #0b4a35, #186a4d);
+            width: 100%;
+            touch-action: none;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(30, 40, 60, 0.8);
+            padding: 14px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stats {
+            display: flex;
+            gap: 25px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 15px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.25);
+        }
+        
+        .stat-label {
+            color: #ecf0f1;
+            opacity: 0.8;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            min-width: 28px;
+            text-align: center;
+        }
+        
+        #red-value, #red-label { color: #ff7675; }
+        #blue-value, #blue-label { color: #74b9ff; }
+        #li-value { color: #feca57; }
+        
+        #canhit {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-width: 130px;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25);
+            background: linear-gradient(135deg, #2980b9, #2573a7);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .instructions {
+            margin-top: 25px;
+            text-align: center;
+            color: #bdc3c7;
+            font-size: 14px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .ball-red { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .ball-blue { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .ball-black { background: linear-gradient(135deg, #2c3e50, #1a1a2e); }
+        .ball-white { background: linear-gradient(135deg, #ecf0f1, #bdc3c7); }
+        
+        #mobile {
+            display: flex;
+            gap: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .controls {
+                flex-wrap: wrap;
+            }
+            
+            button {
+                min-width: 120px;
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+        
+        .power-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .power-bar {
+            width: 100px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .power-level {
+            height: 100%;
+            background: linear-gradient(90deg, #f1c40f, #f39c12);
+            border-radius: 5px;
+            width: 20%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="game-title">在线台球模拟器</h1>
+        <p class="game-subtitle">精确瞄准，准确击球，成为台球大师</p>
+        
+        <div id="board-container">
+            <canvas id="board"></canvas>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label" id="red-label">红方：</span>
+                    <span class="stat-value" id="red-value">0</span>
+                    <span>分</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label" id="blue-label">蓝方：</span>
+                    <span class="stat-value" id="blue-value">0</span>
+                    <span>分</span>
+                </div>
+                <div class="power-indicator">
+                    <span class="stat-label">力度：</span>
+                    <span class="stat-value" id="li-value">5</span>
+                    <div class="power-bar">
+                        <div class="power-level" id="power-level"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="canhit">可以击球</div>
+        </div>
+        
+        <div class="controls" id="mobile">
+            <button onclick="increasePower()">力度增加</button>
+            <button onclick="decreasePower()">力度减少</button>
+            <button onclick="resetGame()">重新开始</button>
+        </div>
+        
+        <div class="instructions">
+            <p>操作说明：用鼠标移动瞄准，点击释放白球。将球打入洞中得分。<br>
+            注意：黑8打入游戏结束，白球入洞后需要重新放置位置。</p>
+        </div>
+    </div>
+    
+    <script>
+        // 初始化画布和游戏参数
+        const canvas = document.getElementById('board');
+        const ctx = canvas.getContext('2d');
+        const RADIUS = 15;
+        const HOLE = 30;
+        // const HOLED = HOLE * 2;
+        const EDGE = 10;
+        // 用 let 声明 CX、CY 以便后续可变
+        let CX = 1000, CY = 500;
+        let over = false;
+        let xBase = CX / 3 * 2 - 10;
+        let yBase = CY / 2;
+        let bnClicked = false;
+        let put = false;
+        let col_flag = 0;
+        let red_score = 0, blue_score = 0, steps = 0;
+        let moX = CX / 2, moY = CY / 2;
+        let li = 5, cl = false;
+        let mouseline = true;
+        let balls = [];
+
+        function initCanvas() {
+            canvas.width = CX;
+            canvas.height = CY;
+        }
+
+        // 绘制封闭图形
+        function draw(color, ...args) {
+            console.log(args);
+            if (args.length % 2 !== 0)
+                throw new Error('arguments must be even');
+            ctx.save();
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.moveTo(args[0].x, args[0].y);
+            for (let i = 1; i < args.length; i ++) {
+                // console.log(args[i].x, args[i].y);
+                ctx.lineTo(args[i].x, args[i].y);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // 球体美化渲染函数
+        function drawBall(ball) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(ball.pos.x, ball.pos.y, ball.r, 0, Math.PI * 2);
+
+            // 添加球体光照效果
+            const gradient = ctx.createRadialGradient(
+                ball.pos.x - ball.r * 0.3,
+                ball.pos.y - ball.r * 0.3,
+                ball.r * 0.1,
+                ball.pos.x,
+                ball.pos.y,
+                ball.r * 1.5
+            );
+
+            // 为不同颜色球定制渐变
+            if (ball.color === '#000') {
+                gradient.addColorStop(0, '#555');
+                gradient.addColorStop(1, '#000');
+            } else if (ball.color === '#f9b') {
+                gradient.addColorStop(0, '#ffd0d0');
+                gradient.addColorStop(0.5, '#ff9e9e');
+                gradient.addColorStop(1, '#f9b');
+            } else if (ball.color === '#acf') {
+                gradient.addColorStop(0, '#d0d0ff');
+                gradient.addColorStop(0.5, '#9e9eff');
+                gradient.addColorStop(1, '#acf');
+            } else { // 白球
+                gradient.addColorStop(0, '#ffffff');
+                gradient.addColorStop(1, '#f0f0f0');
+            }
+
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            // 添加高光
+            ctx.beginPath();
+            ctx.arc(ball.pos.x - ball.r * 0.3, ball.pos.y - ball.r * 0.3, ball.r * 0.4, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.fill();
+
+            // 添加数字（对于花色球）
+            if (ball.color !== '#fff' && ball.color !== '#000') {
+                ctx.font = `${ball.r * 0.6}px Arial`;
+                ctx.fillStyle = '#ffffff';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('8', ball.pos.x, ball.pos.y);
+            }
+
+            ctx.restore();
+        }
+
+        function Vec(x, y) {
+            this.x = x;
+            this.y = y;
+
+            this.add = function(v) {
+                return new Vec(this.x + v.x, this.y + v.y);
+            };
+
+            this.sub = function(v) {
+                return new Vec(this.x - v.x, this.y - v.y);
+            };
+
+            this.mul = function(k) {
+                return new Vec(this.x * k, this.y * k);
+            };
+
+            this.div = function(k) {
+                return new Vec(this.x / k, this.y / k);
+            };
+
+            this.len = function() {
+                return Math.sqrt(this.x * this.x + this.y * this.y);
+            };
+
+            this.normalize = function() {
+                const len = this.len();
+                if (len === 0) return new Vec(0, 0);
+                return this.div(len);
+            };
+
+            this.dot = function(v) {
+                return this.x * v.x + this.y * v.y;
+            };
+
+            this.angle = function() {
+                return Math.atan2(this.y, this.x);
+            };
+
+            this.rotate = function(angle) {
+                const c = Math.cos(angle);
+                const s = Math.sin(angle);
+                const x = this.x * c - this.y * s;
+                const y = this.x * s + this.y * c;
+                return new Vec(x, y);
+            }
+        }
+
+        // 重写球类draw方法
+        function Ball(canvas, r, m, color, x, y, dx, dy) {
+            this.canvas = canvas;
+            this.r = r;
+            this.m = m;
+            this.color = color;
+            this.pos = new Vec(x, y);
+            this.v = new Vec(dx, dy);
+
+            this.draw = function() {
+                drawBall(this);
+            };
+
+            this.isCrash = function(ball) {
+                return this.pos.sub(ball.pos).len() <= this.r + ball.r;
+            };
+
+            this.move = function() {
+                this.pos = this.pos.add(this.v);
+            };
+
+            this.isCrashEdge = function(h1, h2, h3, h4) {
+                const crashLeft = this.pos.x - this.r <= h1;
+                const crashTop = this.pos.y - this.r <= h2;
+                const crashRight = this.pos.x + this.r >= CX - h3;
+                const crashBottom = this.pos.y + this.r >= CY - h4;
+
+                return {
+                    left: crashLeft,
+                    top: crashTop,
+                    right: crashRight,
+                    bottom: crashBottom,
+                    either: crashLeft || crashTop || crashRight || crashBottom
+                };
+            };
+
+            this.crashEdge = function(h1, h2, h3, h4) {
+                const crash = this.isCrashEdge(h1, h2, h3, h4);
+                if (crash.left || crash.right) this.v.x = -this.v.x;
+                if (crash.top || crash.bottom) this.v.y = -this.v.y;
+
+                // 位置修正防止卡边
+                if (crash.left) this.pos.x = this.r + h1 + 1;
+                if (crash.top) this.pos.y = this.r + h2 + 1;
+                if (crash.right) this.pos.x = CX - this.r - h3 - 1;
+                if (crash.bottom) this.pos.y = CY - this.r - h4 - 1;
+            };
+
+            this.crash = function(ball) {
+                if (!this.isCrash(ball)) return;
+
+                // 计算碰撞后速度
+                const nx = this.pos.x - ball.pos.x;
+                const ny = this.pos.y - ball.pos.y;
+                const d = Math.sqrt(nx * nx + ny * ny);
+                if (d === 0) return; // 防止除以0
+
+                const nx2 = nx / d;
+                const ny2 = ny / d;
+
+                // p的计算式要按分量
+                const p = 2 * (this.v.x * nx2 + this.v.y * ny2 - ball.v.x * nx2 - ball.v.y * ny2) / (this.m + ball.m);
+
+                // 修正碰撞响应，按分量
+                this.v = this.v.sub(new Vec(nx2 * p * ball.m, ny2 * p * ball.m));
+                ball.v = ball.v.add(new Vec(nx2 * p * this.m, ny2 * p * this.m));
+
+                // 分离重叠的球体
+                const overlap = (this.r + ball.r) - d;
+                if (overlap > 0) {
+                    const sepX = nx2 * (overlap / 2);
+                    const sepY = ny2 * (overlap / 2);
+
+                    this.pos = this.pos.add(new Vec(sepX, sepY));
+                    ball.pos = ball.pos.sub(new Vec(sepX, sepY));
+                }
+            };
+        }
+
+        // 初始化游戏
+        function initGame() {
+            initCanvas();
+            balls = [];
+            balls.push(new Ball(canvas, RADIUS, 1, '#fff', CX / 4, CY / 2 + 3, 0, 0)); // 白球
+
+            col_flag = 0;
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j <= i; j++) {
+                    col_flag ^= 1;
+                    let color;
+                    if (i == 2 && j == 1) color = '#000';
+                    else if (col_flag) color = '#f9b';
+                    else color = '#acf';
+
+                    balls.push(new Ball(canvas, RADIUS, 1, color,
+                        xBase + (RADIUS) * 2 * i,
+                        yBase - (RADIUS) * i + (RADIUS) * 2 * j,
+                        0, 0));
+                }
+            }
+        }
+        initGame();
+
+        // 事件监听
+        canvas.addEventListener('mousemove', function(e) {
+            if (over) return;
+            const rect = canvas.getBoundingClientRect();
+            moX = (e.clientX - rect.left) * (canvas.width / rect.width);
+            moY = (e.clientY - rect.top) * (canvas.height / rect.height);
+        });
+
+        canvas.addEventListener('touchmove', function(e) {
+            if (over) return;
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            moX = (touch.clientX - rect.left) * (canvas.width / rect.width);
+            moY = (touch.clientY - rect.top) * (canvas.height / rect.height);
+        }, { passive: false });
+
+        canvas.addEventListener('mouseup', handleRelease);
+        canvas.addEventListener('touchend', handleRelease);
+
+        function handleRelease() {
+            if (over) return;
+            if (moX < 0 || moX >= CX || moY < 0 || moY >= CY) return;
+
+            if (put) {
+                for (let i = 1; i < balls.length; i++) {
+                    if (new Ball(canvas, RADIUS, 1, '#000', moX, moY, 0, 0).isCrash(balls[i])) {
+                        document.getElementById('canhit').innerHTML = '选择的摆放点不能与其他球重合';
+                        return;
+                    }
+                }
+                balls[0].pos = new Vec(moX, moY);
+                put = false;
+                document.getElementById('canhit').innerHTML = '可以击球';
+                return;
+            }
+
+            if (!mouseline) return;
+            mouseline = false;
+            steps++;
+            document.getElementById('canhit').innerHTML = '';
+
+            const targetPos = new Vec(moX, moY);
+            const direction = targetPos.sub(balls[0].pos).normalize().mul(li * 4);
+            balls[0].v = direction;
+        }
+
+        function increasePower() {
+            li = li % 20 + 1;
+            bnClicked = true;
+            dispLi();
+        }
+
+        function decreasePower() {
+            li = (li + 18) % 20 + 1;
+            bnClicked = true;
+            dispLi();
+        }
+
+        function resetGame() {
+            // location.reload(); // 避免直接刷新页面，重新初始化即可
+            over = false;
+            red_score = 0;
+            blue_score = 0;
+            steps = 0;
+            li = 5;
+            put = false;
+            mouseline = true;
+            document.getElementById('red-value').innerHTML = red_score;
+            document.getElementById('blue-value').innerHTML = blue_score;
+            document.getElementById('canhit').innerHTML = '可以击球';
+            initGame();
+            dispLi();
+        }
+
+        function dispLi() {
+            if (over) return;
+            document.getElementById('li-value').innerHTML = li;
+            document.getElementById('power-level').style.width = (li * 5) + '%'; // 20级满100%，每级5%
+        }
+
+        function isGoal(ball) {
+            const holes = [
+                new Vec(HOLE, HOLE),
+                new Vec(CX / 2, HOLE),
+                new Vec(CX - HOLE, HOLE),
+                new Vec(HOLE, CY - HOLE),
+                new Vec(CX / 2, CY - HOLE),
+                new Vec(CX - HOLE, CY - HOLE)
+            ];
+
+            for (const hole of holes)
+                if (ball.pos.sub(hole).len() <= HOLE * 0.9)
+                    return true;
+            return false;
+        }
+
+        function moCa(dx, dy) {
+            let dxneg = 1, dyneg = 1;
+            if (dx < 0) { dx = -dx; dxneg = -1; }
+            if (dy < 0) { dy = -dy; dyneg = -1; }
+            let sum = dx + dy;
+            if (sum === 0) return new Vec(0, 0);
+            dx -= dx / sum * 0.03;
+            dy -= dy / sum * 0.03;
+            return new Vec(dx * dxneg, dy * dyneg);
+        }
+
+        function render(){
+            ctx.clearRect(0, 0, CX, CY);
+
+            // 绘制边框（棕色）
+            ctx.fillStyle = '#7a5230';
+            ctx.fillRect(0, 0, CX, CY);
+
+            // draw('#7a5230', Vec(), [EDGE * 2,HOLED + EDGE], [EDGE * 2,CY - HOLED - EDGE], [EDGE, CY - HOLED]);
+
+            // 绘制桌袋
+            const holes = [
+                new Vec(HOLE, HOLE),
+                new Vec(CX / 2, HOLE),
+                new Vec(CX - HOLE, HOLE),
+                new Vec(HOLE, CY - HOLE),
+                new Vec(CX / 2, CY - HOLE),
+                new Vec(CX - HOLE, CY - HOLE)
+            ];
+
+            ctx.fillStyle = '#000';
+            
+            holes.forEach(hole => {
+                ctx.beginPath();
+                ctx.arc(hole.x, hole.y, HOLE * 0.9, 0, Math.PI * 2);
+                ctx.fill();
+
+                // 添加内阴影使洞有深度感
+                ctx.beginPath();
+                ctx.arc(hole.x, hole.y, HOLE * 0.75, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(40, 40, 40, 0.8)';
+                ctx.fill();
+                ctx.fillStyle = '#000'; // 恢复填充色
+            });
+
+            // 绘制台球桌（深绿色绒面）
+            ctx.fillStyle = '#0a5c36';
+            ctx.fillRect(HOLE, HOLE, CX - HOLE * 2, CY - HOLE * 2);
+
+            // 绘制斜面
+            draw('#7a5230', new Vec(HOLE, HOLE * 2), new Vec(HOLE + EDGE, HOLE * 2 + EDGE), new Vec(HOLE + EDGE, CY - HOLE * 2 - EDGE), new Vec(HOLE,CY - HOLE * 2));
+            draw('#7a5230', new Vec(CX - HOLE, HOLE * 2), new Vec(CX - HOLE -  EDGE, HOLE * 2 + EDGE), new Vec(CX - HOLE -  EDGE, CY - HOLE * 2 - EDGE), new Vec(CX - HOLE,CY - HOLE * 2));
+            draw('#7a5230', new Vec(HOLE * 2,HOLE), new Vec(HOLE * 2 + EDGE, HOLE + EDGE), new Vec(CX / 2 - HOLE - EDGE,HOLE + EDGE), new Vec(CX / 2 - HOLE,HOLE));
+            
+            // 绘制瞄准线
+            if (mouseline && !put) {
+                ctx.beginPath();
+                ctx.moveTo(balls[0].pos.x, balls[0].pos.y);
+                ctx.lineTo(moX, moY);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // 绘制瞄准点
+                ctx.beginPath();
+                ctx.arc(moX, moY, 8, 0, Math.PI * 2);
+                ctx.fillStyle = li === 1 ? '#27ae60' :
+                                    li === 2 ? '#2ecc71' :
+                                    li === 3 ? '#f1c40f' :
+                                    li === 4 ? '#f39c12' : '#e74c3c';
+                ctx.fill();
+            }
+        }
+
+        // 游戏主循环
+        function gameLoop() {
+            if (over) return;
+            render();
+
+            let all = true;
+
+            // 更新球的位置和状态
+            for (let i = 0; i < balls.length; i++) {
+                balls[i].move();
+                let dxdy = moCa(balls[i].v.x, balls[i].v.y);
+                balls[i].v = dxdy;
+
+                if (balls[i].v.len() >= 0.03) {
+                    all = false;
+                } else {
+                    balls[i].v = new Vec(0, 0);
+                }
+
+                const edge = balls[i].isCrashEdge(EDGE, EDGE, EDGE, EDGE);
+                if (edge.either) {
+                    balls[i].crashEdge(EDGE, EDGE, EDGE, EDGE);
+                    balls[i].v = balls[i].v.mul(0.8);
+                }
+            }
+
+            if (all) {
+                mouseline = true;
+                if (!put) document.getElementById('canhit').innerHTML = '可以击球';
+            }
+
+            // 碰撞检测
+            for (let i = 0; i < balls.length; i++) {
+                for (let j = i + 1; j < balls.length; j++) {
+                    balls[i].crash(balls[j]);
+                }
+            }
+
+            // 检测进球
+            let removed = false;
+            for (let i = balls.length - 1; i >= 0; i--) { // 倒序遍历以便splice
+                if (isGoal(balls[i])) {
+                    if (i !== 0) {
+                        if (balls[i].color === '#000') {
+                            document.getElementById('canhit').innerHTML = '黑8打入，游戏结束';
+                            over = true;
+                        } else if (balls[i].color === '#f9b') {
+                            red_score++;
+                        } else {
+                            blue_score++;
+                        }
+                        document.getElementById('red-value').innerHTML = red_score;
+                        document.getElementById('blue-value').innerHTML = blue_score;
+                        balls.splice(i, 1);
+                        removed = true;
+                    } else {
+                        if (put) continue;
+                        document.getElementById('canhit').innerHTML = '请选择白球摆放点';
+                        balls[0].v = new Vec(0, 0);
+                        put = true;
+                    }
+                }
+            }
+
+            // 绘制球
+            for (let i = 0; i < balls.length; i++) {
+                if (i || !put) balls[i].draw();
+            }
+
+            // 如果游戏未结束，则继续动画
+            if (!over) {
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        // 启动游戏
+        dispLi();
+        gameLoop();
+
+        // 窗口大小调整处理
+        window.addEventListener('resize', function() {
+            let CXY = Math.min(window.innerWidth * 0.9, window.innerHeight * 0.8 - 40);
+            if (CXY < 300) CXY = 300;
+            CX = CXY * 2;
+            CY = CXY;
+            xBase = CX / 3 * 2 - 10;
+            yBase = CY / 2;
+            canvas.width = CX;
+            canvas.height = CY;
+
+            // 重新定位球和重置游戏
+            over = false;
+            put = false;
+            mouseline = true;
+            initGame();
+            dispLi();
+            gameLoop();
+        });
+    </script>
+
+</body>
+</html>
